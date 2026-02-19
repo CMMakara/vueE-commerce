@@ -17,7 +17,7 @@
       </div>
 
       <!-- RIGHT SIDE (BLUE) -->
-      <div class="d-flex align-items-center gap-3 px-4 py-2  text-black">
+      <div class="d-flex align-items-center gap-3 px-4 py-2  text-black bg-primary">
         <button class="btn border-0 bg-transparent text-black">
           <i class="bi bi-search"></i>
         </button>
@@ -33,7 +33,6 @@
         <button class="btn btn-light btn-sm">Login</button>
         <button class="btn btn-warning btn-sm">Logout</button>
       </div>
-
     </div>
 
   </nav>
