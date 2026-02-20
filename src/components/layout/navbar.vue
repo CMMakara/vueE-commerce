@@ -1,46 +1,140 @@
 <template>
   <header>
-  <nav class="navbar fixed-top p-0" style="z-index:1000;">
-    
-    <div class="container-fluid d-flex p-0">
+    <nav class="navbar fixed-top p-0 mt-3" style="z-index:1000;">
 
-      <!-- LEFT SIDE (RED) -->
-      <div class="d-flex align-items-center px-4 py-2 text-black  bg-danger">
-        <a class="navbar-brand text-black fw-bold me-4" href="#">Commerce_</a>
+      <div class="container d-flex p-0">
 
-        <ul class="navbar-nav flex-row gap-3">
-          <li class="nav-item"><a class="nav-link text-black" href="#">Shop</a></li>
-          <li class="nav-item"><a class="nav-link text-black" href="#">Collections</a></li>
-          <li class="nav-item"><a class="nav-link text-black" href="#">Blog</a></li>
-          <li class="nav-item"><a class="nav-link text-black" href="#">Support</a></li>
-        </ul>
+        <!-- LEFT SIDE (RED) -->
+        <div class="d-flex align-items-center px-4 py-2 text-black rounded-5 shadow-sm">
+          <a class="navbar-brand text-black fw-bold me-4" href="#">Commerce_</a>
+
+          <ul class="navbar-nav flex-row gap-3">
+            <li class="nav-item"><a class="nav-link text-black" href="#">Shop</a></li>
+            <li class="nav-item"><a class="nav-link text-black" href="#">Collections</a></li>
+            <li class="nav-item"><a class="nav-link text-black" href="#">Blog</a></li>
+            <li class="nav-item"><a class="nav-link text-black" href="#">Support</a></li>
+          </ul>
+        </div>
+
+        <!-- RIGHT SIDE (BLUE) -->
+        <div class="d-flex align-items-center gap-3 px-3 py-2 text-black shadow-sm rounded-5">
+          <button class="btn border-0 bg-transparent text-black me-2">
+            <i class="bi bi-search"></i>
+          </button>
+
+          <button type="button" class="btn border-0 p-0 position-relative bg-transparent me-2">
+            <i class="bi bi-cart fs-4"></i>
+            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="top: 10px;">
+              99+
+            </span>
+          </button>
+
+          <button class="btn border-0 bg-transparent text-black me-2" v-if="isProfile">
+            <img
+              src="https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png"
+              alt="" class="bg-black rounded-circle" style="width: 35px; height: 35px;">
+          </button>
+          <button class="btn btn-info btn-sm text-white fw-bold px-4 rounded-5" v-else>Login</button>
+          <button class="Btn">
+            <div class="sign"><svg viewBox="0 0 512 512">
+                <path
+                  d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                </path>
+              </svg></div>
+
+            <div class="text">Logout</div>
+          </button>
+        </div>
       </div>
 
-      <!-- RIGHT SIDE (BLUE) -->
-      <div class="d-flex align-items-center gap-3 px-4 py-2  text-black">
-        <button class="btn border-0 bg-transparent text-black">
-          <i class="bi bi-search"></i>
-        </button>
-
-        <button class="btn border-0 bg-transparent text-black">
-          <i class="bi bi-cart"></i> <small>0</small>
-        </button>
-
-        <button class="btn border-0 bg-transparent text-black">
-          <i class="bi bi-person-fill"></i>
-        </button>
-
-        <button class="btn btn-light btn-sm">Login</button>
-        <button class="btn btn-warning btn-sm">Logout</button>
-      </div>
-
-    </div>
-
-  </nav>
-</header>
+    </nav>
+  </header>
 
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
 
-<style lang="scss" scoped></style>
+let isProfile = ref(false)
+</script>
+
+<style scoped>
+.nav-link  {
+  font-size: 1rem;
+}
+
+.badge {
+  font-size: 0.5rem;
+}
+
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign svg {
+  width: 17px;
+}
+
+.sign svg path {
+  fill: white;
+}
+
+/* text */
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  transition-duration: .3s;
+}
+
+/* hover effect on button width */
+.Btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: .3s;
+  padding-left: 20px;
+}
+
+/* hover effect button's text */
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: .3s;
+  padding-right: 10px;
+}
+
+/* button click effect*/
+.Btn:active {
+  transform: translate(2px, 2px);
+}
+</style>
