@@ -1,20 +1,19 @@
 <template>
   <div class="empty-cart-container">
     <div class="empty-cart-box">
-      
-      
+
       <div class="icon-wrapper">
-        <i class="bi bi-bag"></i>
+        <img :src="image" alt="empty cart" class="icon-image" />
       </div>
 
-      <h2 class="title">Your cart is empty</h2>
+      <h2 class="title">{{ title }}</h2>
 
       <p class="subtitle">
-        Add some products to get started
+        {{ subtitle }}
       </p>
 
-      <RouterLink to="/" class="continue-btn">
-        Continue Shopping
+      <RouterLink :to="link" class="continue-btn">
+        {{ buttonText }}
         <i class="bi bi-arrow-right ms-2"></i>
       </RouterLink>
 
@@ -23,7 +22,28 @@
 </template>
 
 <script setup>
-
+defineProps({
+  title: {
+    type: String,
+    default: "Your cart is empty"
+  },
+  subtitle: {
+    type: String,
+    default: "Add some products to get started"
+  },
+  buttonText: {
+    type: String,
+    default: "Continue Shopping"
+  },
+  link: {
+    type: String,
+    default: "/"
+  },
+  image: {
+    type: String,
+    default: "/images/empty-cart.png" // default image path
+  }
+})
 </script>
 
 <style scoped>
@@ -40,9 +60,13 @@
 }
 
 .icon-wrapper {
-  font-size: 60px;
-  color: #c4c4c4;
   margin-bottom: 20px;
+}
+
+.icon-image {
+  width: 120px;
+  height: auto;
+  opacity: 0.7;
 }
 
 .title {
