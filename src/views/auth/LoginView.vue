@@ -9,14 +9,14 @@
                <div class="mt-4 ms-4">
                   <h1>Login Account</h1>
                   <p>Please login your account</p>
-                  <form action="">
+                  <form @submit.prevent="handleLogin">
                      <div class="col-md-8">
                         <label for="" class="mb-2">Email</label>
-                        <input type="text" class="form-control" placeholder="Enter your Email">
+                        <input type="text" class="form-control" placeholder="Enter your Email" v-model="email">
                      </div>
                      <div class="col-md-8 mt-3">
                         <label for="" class="mb-2">Password</label>
-                        <input type="text" class="form-control" placeholder="Enter your password">
+                        <input type="text" class="form-control" placeholder="Enter your password" v-model="password">
                      </div>
                      <div class="col-md-8 mt-2 d-flex align-items-center">
                         <div class="d-flex align-items-center justify-content-between">
@@ -43,6 +43,25 @@
 </template>
 
 <script setup>
+import router from '@/router';
+import { UseAuthStore } from '@/stores/auth';
+import { ref } from 'vue';
+
+let email = ref("")
+let password = ref("")
+let auth = UseAuthStore();
+
+async function handleLogin(){
+   try{
+      await auth.login(email.value  , password.value);
+      router.push('/');
+
+   }
+   catch(err){
+      console.error(err);
+      
+   }
+}
 
 
 
