@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1 class="text-primary">home page</h1>
-  </div>
+  <RouterView/>
 </template>
 
 <script setup>

@@ -1,13 +1,20 @@
-<template>
-  <div>
+<script setup lang="ts">
+import { allProductStore } from '@/stores/products';
+import { onMounted, ref } from 'vue'
 
-  </div>
-</template>
 
-<script setup>
+const allProducts = allProductStore();
+
+
+onMounted(async () => {
+   await allProducts.getAllProduct();
+})
+
 
 </script>
 
-<style lang="scss" scoped>
+<template>
+   
+</template>
 
-</style>
+<style scoped></style>
