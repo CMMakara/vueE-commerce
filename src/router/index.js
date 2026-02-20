@@ -3,6 +3,7 @@ import { UseAuthStore } from '@/stores/auth'
 import LoginView from '@/views/auth/LoginView.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
 import CartView from '@/views/cart/CartView.vue'
+import CheckoutView from '@/views/cart/CheckoutView.vue'
 import HomeView from '@/views/HomeView.vue'
 import PaymentsView from '@/views/payments/PaymentsView.vue'
 import ProductView from '@/views/products/ProductView.vue'
@@ -54,6 +55,11 @@ const router = createRouter({
       name : 'product',
       component : ProductView,
     },
+    {
+      path: '/checkout',
+      name:'checkout',
+      component: CheckoutView
+    }
 
   ],
 })
