@@ -48,7 +48,7 @@
 <style scoped>
 .register {
    padding: 30px;
-   margin-top: 100px;
+   margin-top: 130px;
    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
    animation: ease-in 0.5s;
 }

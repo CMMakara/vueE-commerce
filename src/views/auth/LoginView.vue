@@ -43,35 +43,32 @@
 </template>
 
 <script setup>
-import router from '@/router';
 import { UseAuthStore } from '@/stores/auth';
+import { notify } from '@/util/toast';
 import { ref } from 'vue';
 
 let email = ref("")
 let password = ref("")
 let auth = UseAuthStore();
 
-async function handleLogin(){
-   try{
-      await auth.login(email.value  , password.value);
-      router.push('/');
+async function handleLogin() {
+   try {
+      await auth.login(email.value, password.value)
+      console.log(email.value, password.value);
+      notify.sucess('login successfully', '/')
 
    }
-   catch(err){
-      console.error(err);
-      
+   catch (err) {
+      notify.error(err?.data?.message || 'Login failed');
    }
 }
-
-
-
 
 </script>
 
 <style scoped>
 .login {
-   padding: 30px;
-   margin-top: 100px;
+   padding-top: 30px;
+   margin-top: 130px;
    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
    animation: ease-in 0.5s;
 }
@@ -80,7 +77,8 @@ async function handleLogin(){
    transition: 0.5s;
    box-shadow: #C47BE4 0px 10px 15px -3px, #B153D7 0px 4px 6px -2px;
 }
-.forget{
+
+.forget {
    margin-left: 130px;
 }
 </style>
