@@ -1,5 +1,4 @@
 import Navbar from '@/components/layout/navbar.vue'
-import BaseEmpty from '@/components/ui/BaseEmpty.vue'
 import { UseAuthStore } from '@/stores/auth'
 import LoginView from '@/views/auth/LoginView.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
@@ -41,9 +40,9 @@ const router = createRouter({
       component : Navbar,
     },
     {
-      path : '/empty',
-      name : 'empty',
-      component : BaseEmpty,
+      path : '/cart',
+      name : 'cart',
+      component : CartView,
     },
     {
       path : '/payment',

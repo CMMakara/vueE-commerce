@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import CartView from './views/cart/CartView.vue';
+
+</script>
 
 <template>
   <router-view></router-view>
