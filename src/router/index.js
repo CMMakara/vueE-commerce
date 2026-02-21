@@ -27,7 +27,14 @@ const router = createRouter({
       path : '/',
       name : 'home',
       component : HomeView,
-      // meta : {requiresAuth : true}
+      // meta : {requiresAuth : true},
+      children: [
+         {
+            path : '/',
+            // name : 'product',
+            component : ProductView,
+         }
+      ]
     },
     {
       path : '/profile',

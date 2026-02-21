@@ -1,8 +1,70 @@
 @import "bootstrap/scss/functions";
 
+$border-radius: 30px;
 
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/variables-dark";
+
+$carousel-control-color: $primary;
+$carousel-control-width: 15%;
+$carousel-control-opacity: 0.6;
+$carousel-control-hover-opacity: 1;
+$carousel-control-transition: opacity 0.15s ease;
+$carousel-control-icon-filter: null;
+
+$carousel-indicator-width: 10px;
+$carousel-indicator-height: 10px;
+$carousel-indicator-hit-area-height: 0px;
+$carousel-indicator-spacer: 3px;
+$carousel-indicator-opacity: 0.5;
+$carousel-indicator-active-bg: $primary;
+$carousel-indicator-active-opacity: 1;
+$carousel-indicator-transition: opacity 0.6s ease;
+
+$carousel-caption-width: 70%;
+$carousel-caption-color: $white;
+$carousel-caption-padding-y: 1.25rem;
+$carousel-caption-spacer: 1.25rem;
+
+$carousel-control-icon-width: 2rem;
+
+$carousel-control-prev-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' stroke='#{$carousel-control-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7.66667 15L1 8M1 8L7.66667 1M1 8L17 8'/></svg>");
+$carousel-control-next-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' stroke='#{$carousel-control-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.3333 1L17 8M17 8L10.3333 15M17 8L1 8'/></svg>");
+
+$carousel-transition-duration: 0.6s;
+$carousel-transition: transform $carousel-transition-duration ease-in-out; // Define transform transition first if using multiple transitions (e.g., `transform 2s ease, opacity .5s ease-out`)
+// scss-docs-end carousel-variables
+
+// scss-docs-start carousel-dark-variables
+$carousel-dark-indicator-active-bg: $black; // Deprecated in v5.3.4
+$carousel-dark-caption-color: $black; // Deprecated in v5.3.4
+$carousel-dark-control-icon-filter: invert(1) grayscale(100); // Deprecated in v5.3.4
+// scss-docs-end carousel-dark-variables
+
+.card {
+   img {
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: calc($card-border-radius - 6px);
+   }
+
+   button,
+   a {
+      padding-block: 10px;
+      border-radius: $border-radius-2xl;
+   }
+}
+
+.carousel {
+   .carousel-inner {
+      border-radius: $border-radius-2xl;
+      overflow: hidden;
+   }
+
+   .carousel-indicators button {
+      border-radius: $border-radius-pill;
+   }
+}
 
 @import "bootstrap/scss/bootstrap";
