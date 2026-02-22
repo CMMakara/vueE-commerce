@@ -33,7 +33,6 @@ function test (id) {
 </script>
 
 <template>
-   <div style="height: 120px;"></div>
    <section>
       <div class="container">
          <div class="p-3 border shadow-sm" style="background-color: #f7f7f7; border-radius: 40px;">

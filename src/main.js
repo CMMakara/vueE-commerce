@@ -9,6 +9,8 @@ import './assets/css/main.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
+// vue toast 
+import 'vue3-toastify/dist/index.css';
 
 const app = createApp(App)
 
