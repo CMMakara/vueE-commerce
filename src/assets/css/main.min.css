@@ -1,4 +1,23 @@
 @charset "UTF-8";
+.card img {
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: calc(var(--bs-border-radius) - 6px);
+}
+.card button,
+.card a {
+  padding-block: 10px;
+  border-radius: 2rem;
+}
+
+.carousel .carousel-inner {
+  border-radius: 2rem;
+  overflow: hidden;
+}
+.carousel .carousel-indicators button {
+  border-radius: 50rem;
+}
+
 /*!
  * Bootstrap  v5.3.8 (https://getbootstrap.com/)
  * Copyright 2011-2025 The Bootstrap Authors
@@ -105,7 +124,7 @@
   --bs-border-style: solid;
   --bs-border-color: #dee2e6;
   --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
-  --bs-border-radius: 0.375rem;
+  --bs-border-radius: 30px;
   --bs-border-radius-sm: 0.25rem;
   --bs-border-radius-lg: 0.5rem;
   --bs-border-radius-xl: 1rem;
@@ -5286,7 +5305,7 @@ textarea.form-control-lg {
   background: transparent var(--bs-btn-close-bg) center/1em auto no-repeat;
   filter: var(--bs-btn-close-filter);
   border: 0;
-  border-radius: 0.375rem;
+  border-radius: 30px;
   opacity: var(--bs-btn-close-opacity);
 }
 .btn-close:hover {
@@ -6022,12 +6041,12 @@ textarea.form-control-lg {
   justify-content: center;
   width: 15%;
   padding: 0;
-  color: #fff;
+  color: #0d6efd;
   text-align: center;
   background: none;
   filter: var(--bs-carousel-control-icon-filter);
   border: 0;
-  opacity: 0.5;
+  opacity: 0.6;
   transition: opacity 0.15s ease;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -6039,10 +6058,10 @@ textarea.form-control-lg {
 .carousel-control-prev:hover, .carousel-control-prev:focus,
 .carousel-control-next:hover,
 .carousel-control-next:focus {
-  color: #fff;
+  color: #0d6efd;
   text-decoration: none;
   outline: 0;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .carousel-control-prev {
@@ -6064,11 +6083,11 @@ textarea.form-control-lg {
 }
 
 .carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e") /*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e")*/;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' stroke='%230d6efd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M7.66667 15L1 8M1 8L7.66667 1M1 8L17 8'/%3e%3c/svg%3e") /*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' stroke='%230d6efd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M10.3333 1L17 8M17 8L10.3333 15M17 8L1 8'/%3e%3c/svg%3e")*/;
 }
 
 .carousel-control-next-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e") /*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e")*/;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' stroke='%230d6efd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M10.3333 1L17 8M17 8L10.3333 15M17 8L1 8'/%3e%3c/svg%3e") /*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' stroke='%230d6efd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M7.66667 15L1 8M1 8L7.66667 1M1 8L17 8'/%3e%3c/svg%3e")*/;
 }
 
 .carousel-indicators {
@@ -6087,8 +6106,8 @@ textarea.form-control-lg {
 .carousel-indicators [data-bs-target] {
   box-sizing: content-box;
   flex: 0 1 auto;
-  width: 30px;
-  height: 3px;
+  width: 10px;
+  height: 10px;
   padding: 0;
   margin-right: 3px;
   margin-left: 3px;
@@ -6097,8 +6116,8 @@ textarea.form-control-lg {
   background-color: var(--bs-carousel-indicator-active-bg);
   background-clip: padding-box;
   border: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
+  border-top: 0px solid transparent;
+  border-bottom: 0px solid transparent;
   opacity: 0.5;
   transition: opacity 0.6s ease;
 }
@@ -6130,7 +6149,7 @@ textarea.form-control-lg {
 
 :root,
 [data-bs-theme=light] {
-  --bs-carousel-indicator-active-bg: #fff;
+  --bs-carousel-indicator-active-bg: #0d6efd;
   --bs-carousel-caption-color: #fff;
   --bs-carousel-control-icon-filter: ;
 }

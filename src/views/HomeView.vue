@@ -1,13 +1,12 @@
-<template>
-  <div>
-    <h1 class="text-primary">home page</h1>
-  </div>
-</template>
-
 <script setup>
+import Navbar from '@/components/layout/navbar.vue';
+
 
 </script>
 
-<style  scoped>
+<template>
+   <Navbar />
+   <RouterView />
+</template>
 
-</style>
+<style scoped></style>
