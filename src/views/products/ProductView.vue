@@ -14,7 +14,7 @@ const src = ref([
 ])
 
 let page = ref(1);
-let per_page = ref(10);
+let per_page = ref(12);
 let sortDir = ref('desc');
 
 
@@ -24,6 +24,10 @@ onMounted(async () => {
 
 function isFilter() {
    filter.value = !filter.value;
+}
+
+function test (id) {
+   alert(id)
 }
 
 </script>
@@ -38,7 +42,7 @@ function isFilter() {
       </div>
    </section>
 
-   <section class="bg-primary-subtle mt-5 p-5">
+   <section class="bg-primary-subtle p-5" style="margin-block: 100px;">
       <div class="container">
          <h3 class="text-primary m-0 fw-bold">New Products</h3>
       </div>
@@ -49,11 +53,10 @@ function isFilter() {
          <button @click="isFilter" class="btn btn-dark py-2 pe-5 ps-2 rounded-4 fw-medium shadow-sm"
             style=""><i class="bi bi-filter-left"></i>&nbsp;<span>Filter</span></button>
          <div class="my-4"></div>
-         <div class="row align-items-start">
-            <Transition name="slide">
-               <div v-if="filter" class="col-3 category-sidebar">
+         <div class="row align-items-start justify-content-center g-3">
+            <Transition name="slide" class="col-lg-3">
+               <div v-if="filter" class="category-sidebar">
                   <div class="rounded p-3 border" style="background-color: #fafafa;">
-                     <h5 class="fw-medium">Category</h5>
                      <h5 class="fw-medium">Date</h5>
                      <label class="form-check" for="checkDefault">
                         <input class="form-check-input" type="checkbox" value="" id="checkDefault">
@@ -66,14 +69,16 @@ function isFilter() {
                   </div>
                </div>
             </Transition>
-            <div :class="filter ? 'col-9' : 'col-12'">
+            <div :class="filter ? 'col-lg-9' : 'col-12'">
                <div class="row g-3">
-                  <div :class="filter ? 'col-4' : 'col-3'" v-for="product in allProducts.allProducts.value" :key="product.id">
+                  <div class="col-12 col-md-6 col-lg-4 col-xl-3" :class="filter ? 'col-12 col-md-6 col-lg-3' : 'col-12 col-md-6 col-lg-4'" v-for="product in allProducts.allProducts.value" :key="product.id">
                      <BaseCard1
-                        :image="product.image"
-                        :title="product.title"
-                        :description="product.description"
-                        :price="product.price"
+                     @add-to-cart="test(product.id)"
+                     :isFilter="filter"
+                     :image="product.image"
+                     :title="product.title"
+                     :description="product.description"
+                     :price="product.price"
                      />
                   </div>
                </div>
@@ -88,8 +93,9 @@ function isFilter() {
 <style scoped>
 .category-sidebar {
    position: sticky;
-   top: 90px;
+   top: 8%;
    align-self: flex-start;
+   z-index: 2;
 }
 
 /* Slide animation */
@@ -101,6 +107,7 @@ function isFilter() {
 
 .slide-enter-from,
 .slide-leave-to {
+   transition: all 0s ease;
    transform: translateX(-30px);
    opacity: 0;
    width: 0;
