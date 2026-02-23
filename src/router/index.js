@@ -5,7 +5,9 @@ import CartView from "@/views/cart/CartView.vue";
 import CheckoutView from "@/views/cart/CheckoutView.vue";
 import HomeView from "@/views/HomeView.vue";
 import PaymentsView from "@/views/payments/PaymentsView.vue";
+import AddProductView from "@/views/products/AddProductView.vue";
 import ProductView from "@/views/products/ProductView.vue";
+import SellerView from "@/views/products/SellerView.vue";
 import ShopView from "@/views/products/ShopView.vue";
 import ProfileView from "@/views/profile/ProfileView.vue";
 import { createRouter, createWebHistory } from "vue-router";
@@ -27,7 +29,7 @@ const router = createRouter({
          path: "/",
          name: "home",
          component: HomeView,
-         meta: { requiresAuth: true },
+         // meta: { requiresAuth: true },
          children: [
             {
                path: "/",
@@ -38,32 +40,45 @@ const router = createRouter({
                path: "/profile",
                name: "profile",
                component: ProfileView,
-               meta: { requiresAuth: true },
+               // meta: { requiresAuth: true },
             },
             {
                path: "/cart",
                name: "cart",
                component: CartView,
-               meta: { requiresAuth: true },
+               // meta: { requiresAuth: true },
             },
             {
                path: "/payment",
                name: "payment",
                component: PaymentsView,
-               meta: { requiresAuth: true },
+               // meta: { requiresAuth: true },
             },
             {
                path: "/checkout",
                name: "checkout",
                component: CheckoutView,
-               meta: { requiresAuth: true },
+               // meta: { requiresAuth: true },
             },
             {
                path: "/shop",
                name: "shop",
                component: ShopView,
-               meta: { requiresAuth: true },
+               // meta: { requiresAuth: true },
             },
+            {
+               path: "/seller",
+               name: "seller",
+               component: SellerView,
+               // meta: { requiresAuth: true },
+            },
+            {
+               path: "/addProduct",
+               name: "addProduct",
+               component: AddProductView,
+               // meta: { requiresAuth: true },
+            },
+            
          ],
       },
    ],
