@@ -27,7 +27,7 @@ const router = createRouter({
          path: "/",
          name: "home",
          component: HomeView,
-         meta: { requiresAuth: true },
+         // meta: { requiresAuth: true },
          children: [
             {
                path: "/",
@@ -62,7 +62,6 @@ const router = createRouter({
                path: "/shop",
                name: "shop",
                component: ShopView,
-               meta: { requiresAuth: true },
             },
          ],
       },
