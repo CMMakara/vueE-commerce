@@ -1,7 +1,6 @@
 <template>
-   <div class="container py-5 checkout-page">
+   <div class="container py-5 checkout-page mt-3 rounded">
 
-      <!-- Back -->
       <RouterLink
          to="cart"
          class="text-decoration-none purple-text fw-bold mb-4 d-inline-block">
