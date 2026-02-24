@@ -20,7 +20,7 @@
         </div>
 
         <div class="ms-auto mt-3 mt-md-0">
-          <button class="btn btn-primary rounded-pill px-4 fw-bold">View Portfolio</button>
+          <router-link :to="{name : 'profile'}" class="btn btn-primary rounded-pill px-4 fw-bold">View Portfolio</router-link>
         </div>
       </div>
 
@@ -33,12 +33,15 @@
       </div>
     </div>
 
-    <h3 class="mb-4 fw-bold text-dark">Active Assets 
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 class="mb-4 fw-bold text-dark">Active Assets 
       <span class="badge bg-dark fs-6">{{productStore.total}}</span>
-    </h3>
+      </h3>
+      <router-link :to="{name : 'addProduct'}" class="btn btn-primary rounded-pill px-4 py-2 fw-bold">Add New product</router-link>
+    </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      <div class="col-4" v-for="items in productStore.ownProduct.value" :key="items.id">
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4" v-for="items in productStore.ownProduct.value" :key="items.id">
         <BaseCard1 :image="items.image" :title="items.title" :description="items.description"
           :price="items.price" />
       </div>

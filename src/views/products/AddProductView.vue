@@ -2,9 +2,7 @@
   <div class="min-vh-100 bg-white py-5">
     <div class="container" style="max-width: 800px">
       <div class="d-flex justify-content-between align-items-center mb-5">
-        <button class="btn btn-link text-dark p-0 text-decoration-none fw-bold">
-          ← Back
-        </button>
+        <router-link :to="{name : 'seller'}" class="btn btn-link text-dark p-0 text-decoration-none fw-bold">← Back</router-link>
         <div class="d-flex gap-2">
           <button class="btn btn-outline-dark border-0 fw-medium" @click="resetForm">
             Clear Draft
@@ -88,6 +86,7 @@
 <script setup>
 import api from "@/api/http";
 import { UseCategoryStore } from "@/stores/category";
+import { notify } from "@/util/toast";
 import { onMounted, reactive, ref } from "vue";
 
 const categoryStore = UseCategoryStore();
@@ -116,9 +115,46 @@ const handleImageUpload = (e) => {
   console.log(imageFile.value);
 };
 const handleSubmit = async () => {
+
+  if (!product.title) {
+    notify.error("Please enter product title")
+    return
+  }
+  if (!product.price) {
+    notify.error("Please enter price")
+    return
+  }
   if (!imageFile.value) {
-    alert("Please select an image");
+    notify.error('Please select an image')
     return;
+  }
+  if (!product.category_ids || product.category_ids.length === 0) {
+    notify.error('Please select an category')
+    return;
+  }
+  if (!product.description) {
+    notify.error("Please enter description")
+    return
+  }
+  if (!product.detail) {
+    notify.error("Please enter detail")
+    return
+  }
+  if (!product.story) {
+    notify.error("Please enter story")
+    return
+  }
+
+  if (!product.title ||
+    !product.description ||
+    !product.price ||
+    !product.category_ids ||
+    !imageFile.value ||
+    !product.detail ||
+    !product.story) {
+
+    notify.error("Please fill all required fields")
+    return
   }
 
   const fmdata = new FormData();
@@ -139,11 +175,10 @@ const handleSubmit = async () => {
         "Content-Type": "multipart/form-data",
       },
     });
-    alert("Product created successfully!");
+    notify.sucess('Product created successfully!', '/addProduct')
     resetForm();
   } catch (err) {
-    console.error(err.response?.data) 
-    alert("Error creating product")
+    notify.error("Error creating product")
   }
 };
 
