@@ -56,7 +56,7 @@ function handleButton(id, title, type) {
       <img :src="image" class="card-img" alt="...">
       <div class="card-body p-0 pt-3">
          <h5 class="card-title">{{ title.substring(0, 20) }} {{ title.length > 20 ? '...' : '' }} {{ !title ? 'No title' : '' }}</h5>
-         <p class="card-text">{{ description.substring(0, 50) }} {{ description.length > 50 ? '...' : '' }} {{ !description ? 'No description' : '' }}</p>
+         <p class="card-text">{{ description.substring(0, 20) }} {{ description.length > 20 ? '...' : '' }} {{ !description ? 'No description' : '' }}</p>
          <div
             class="card-footer p-0 border-0 bg-transparent d-flex flex-wrap justify-content-between align-items-center gap-3">
             <h6 class="card-price badge fw-bold mb-0 bg-success bg-opacity-10 text-success p-2 px-3 border-success rounded-5 text-nowrap"

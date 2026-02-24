@@ -9,7 +9,7 @@
             class="rounded-4 border border-light border-3 shadow-sm" width="120" height="120">
         </div>
 
-        <div class="mt-3 mt-md-0">
+        <div class="mt-3 mt-md-0 rounded">
           <h1 class="display-6 fw-bold mb-1 text-dark"> seller.name</h1>
           <p class="text-primary mb-2 small fw-bold uppercase tracking-widest">seller.specialty</p>
           <div class="d-flex gap-3 text-muted">
@@ -42,7 +42,7 @@
 
     <div class="row g-4">
       <div class="col-12 col-md-6 col-lg-4" v-for="items in productStore.ownProduct.value" :key="items.id">
-        <BaseCard1 :image="items.image" :title="items.title" :description="items.description"
+        <BaseCard1 :id="items.id" :image="items.image" :title="items.title" :description="items.description"
           :price="items.price" />
       </div>
     </div>
