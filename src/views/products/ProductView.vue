@@ -29,9 +29,37 @@ function isFilter() {
 </script>
 
 <template>
+
+   <section>
+      <div class="container-fluid  bg-dark p-5 mt-3 mb-5">
+         <div class="row justify-content-center gap-5 py-5">
+            <div class="col-4">
+               <div class="d-flex gap-3">
+                  <span class="badge bg-primary py-2 px-3">Tinh Luk Tam Jit</span>
+                  <span class="badge bg-primary py-2 px-3"><i class="bi bi-graph-up"></i> Trending now</span>
+               </div>
+               <h1 class="text-primary display-1 fw-bold">
+                  BUY & SELL WHATEVER YOU WANT
+               </h1>
+               <p class="text-white fs-5 py-3">
+                  Discover curated pieces that blend comfort with contemporary design. Up to 50% off selected items.
+               </p>
+               <router-link :to="{name: 'shop'}" class="btn btn-primary w-100 py-3">Shop now</router-link>
+            </div>
+            <div class="col-6">
+               <div class="rounded overflow-hidden" style="width: 100%; height: 100%; background-color: #fff;">
+                  <div class="position-relative w-100 h-100">
+                     <img class="position-absolute top-0 start-0 w-100 h-100 object-cover" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnh6cTJtZ2JudHc3NGwxNGZjZGhpNXJuOHg4eTl2cTcwYmF0cTB5NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fAhOtxIzrTxyE/giphy.gif" alt="">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   
    <section>
       <div class="container">
-         <div class="p-3 border shadow-sm" style="background-color: #f7f7f7; border-radius: 40px;">
+         <div class="p-3 border shadow-sm rounded">
             <BaseCarousel :src="src" />
          </div>
       </div>

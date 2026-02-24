@@ -17,9 +17,9 @@ defineProps({
             :data-bs-slide-to="index" :class="index == 0 ? 'active' : ''" :aria-current="true"
             :aria-label="'slide' + index"></button>
       </div>
-      <div class="carousel-inner" :style="src.length >= 2 ? 'height: calc(100% - 60px)' : 'height: 100%'">
+      <div class="carousel-inner rounded-4" :style="src.length >= 2 ? 'height: 90%' : 'height: 100%'">
          <div data-bs-interval="3000" class="carousel-item" :class="index === 0 ? 'active' : ''" v-for="(value, index) in src" :key="index">
-            <div class="img"><img :src="value" alt="..." :style="src.length >= 2 ? 'height: calc(600px - 60px)' : 'height: 600px'"></div>
+            <div class="img"><img :src="value" alt="..." :style="src.length >= 2 ? 'height: 90%' : 'height: 100%'"></div>
             <div class="carousel-caption">
                <slot name="caption"></slot>
             </div>
@@ -41,12 +41,14 @@ defineProps({
 <style scoped>
 
 .carousel {
-   height: 600px;
+   --bs-border-radius: 0;
+   border-radius: var(--bs-border-radius) !important;
+   height: 700px;
    position: relative;
 }
 
 .carousel-caption {
-   height: calc(600px - 60px);
+   height: 90%;
    position: absolute;
    top: 0;
    bottom: 0;
@@ -87,10 +89,6 @@ defineProps({
    align-items: end;
    gap: 20px;
    touch-action: none;
-}
-
-.carousel-inner {
-   /* height: calc(100% - 60px); */
 }
 
 .carousel-inner img {

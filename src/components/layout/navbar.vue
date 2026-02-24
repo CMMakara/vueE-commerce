@@ -5,7 +5,7 @@
       <div class="container d-flex p-0">
 
         <!-- LEFT SIDE (RED) -->
-        <div class="d-flex align-items-center px-4 py-2 text-black rounded shadow-sm bg-primary bg-opacity-10">
+        <div class="d-flex align-items-center px-4 py-2 text-black rounded shadow-sm navbar-bg">
           <router-link :to="{name : 'product'}" class="navbar-brand text-black fw-bold me-4">Commerce_</router-link>
           <ul class="navbar-nav flex-row gap-3">
             <li class="nav-item">
@@ -19,7 +19,7 @@
         </div>
 
         <!-- RIGHT SIDE (BLUE) -->
-        <div class="d-flex align-items-center gap-3 px-3 py-2 text-black shadow-sm rounded bg-primary bg-opacity-10">
+        <div class="d-flex align-items-center gap-3 px-3 py-2 text-black shadow-sm rounded navbar-bg">
           <button class="btn border-0 bg-transparent text-black me-2">
             <i class="bi bi-search"></i>
           </button>
@@ -63,6 +63,13 @@ let isCheck = computed(() => auth.isLogin)
 </script>
 
 <style scoped>
+
+.navbar-bg {
+   /* background-color: color-mix(in srgb, var(--bs-primary) 10%, rgb(255, 255, 255) 10%); */
+   background-color: hsl(from var(--bs-white) h s l / 0.3);
+   backdrop-filter: blur(10px);
+}
+
 .nav-link {
   font-size: 1rem;
 }

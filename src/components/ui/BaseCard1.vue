@@ -52,7 +52,7 @@ function handleButton(id, title, type) {
 </script>
 
 <template>
-   <div class="card" style="padding: 10px;" @click="$router.push({name: 'shop'})">
+   <div class="card" style="padding: 10px; cursor: pointer" @click="$router.push({name: 'shop'})">
       <img :src="image" class="card-img" alt="...">
       <div class="card-body p-0 pt-3">
          <h5 class="card-title">{{ title.substring(0, 20) }} {{ title.length > 20 ? '...' : '' }} {{ !title ? 'No title' : '' }}</h5>
