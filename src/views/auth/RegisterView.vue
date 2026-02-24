@@ -1,63 +1,99 @@
 <template>
-   <div class="container">
-      <div class="register rounded-5">
-         <div class="row d-flex justify-content-between">
-            <div class="col-sm-12 col-md-6">
-               <img src="../../../src/assets/image/logo_register.png" alt="" width="500px" />
-            </div>
-            <div class="col-sm-12 col-md-6">
-               <div class="ms-4">
-                  <h1>Create Account</h1>
-                  <form @submit.prevent="handleregister">
-                     <div class="col-md-8">
-                        <label for="" class="mb-1">Email</label>
-                        <input type="text" class="form-control" placeholder="Enter your Email" v-model="form.email" />
-                        <p v-if="error.email" class="text-danger small">{{ error.email }}</p>
-                     </div>
-                     <div class="col-md-8 mt-3">
-                        <label for="" class="mb-1">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter your Name" v-model="form.name" />
-                        <p v-if="error.name" class="text-danger small">{{ error.name }}</p>
-                     </div>
-                     <div class="col-md-8 mt-3">
-                        <label for="" class="mb-1">Password</label>
-                        <input type="text" class="form-control" placeholder="Enter your password"
-                           v-model="form.password" />
-                        <p v-if="error.password" class="text-danger small">{{ error.password }}</p>
-                     </div>
-                     <div class="col-md-8 mt-3">
-                        <label for="" class="mb-1">Confirm Password</label>
-                        <input type="text" class="form-control" placeholder="Confirm Password"
-                           v-model="form.password_confirmation" />
-                        <p v-if="error.password_confirmation" class="text-danger small">{{ error.password_confirmation
-                           }}</p>
-                     </div>
-                     <div class="col-md-8 mt-4">
-                        <button type="submit" :disabled="isLoading" class="btn btn-primary w-100">
-                           <div v-if="isLoading" class="spinner-border text-light" role="status">
-                              <span class="visually-hidden">Loading...</span>
-                           </div>
-                           <div v-else>Sign Up</div>
-                        </button>
-                     </div>
-                     <div class="col-md-8 mt-3">
-                        <p>
-                           Already have account?
-                           <router-link to="/login">Sign In</router-link>
-                        </p>
-                     </div>
-                  </form>
-               </div>
-            </div>
-         </div>
+  <div class="container py-4">
+    <div class="register rounded-5 shadow-sm p-3 p-md-4">
+      <div class="row g-4 align-items-center">
+        
+        <!-- Left: Image -->
+        <div class="col-12 col-md-6 text-center">
+          <img
+            src="../../../src/assets/image/logo_register.png"
+            alt="Register"
+            class="img-fluid"
+            style="max-width: 500px;"
+          />
+        </div>
+
+        <!-- Right: Form -->
+        <div class="col-12 col-md-6">
+          <div class="px-0 px-md-3">
+            <h1 class="h3 mb-3 text-center text-md-start">Create Account</h1>
+
+            <form @submit.prevent="handleregister" class="mx-auto" style="max-width: 420px;">
+              <!-- Email -->
+              <div class="mb-3">
+                <label class="form-label mb-1">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter your Email"
+                  v-model="form.email"
+                />
+                <p v-if="error.email" class="text-danger small mb-0 mt-1">{{ error.email }}</p>
+              </div>
+
+              <!-- Name -->
+              <div class="mb-3">
+                <label class="form-label mb-1">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter your Name"
+                  v-model="form.name"
+                />
+                <p v-if="error.name" class="text-danger small mb-0 mt-1">{{ error.name }}</p>
+              </div>
+
+              <!-- Password -->
+              <div class="mb-3">
+                <label class="form-label mb-1">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Enter your password"
+                  v-model="form.password"
+                />
+                <p v-if="error.password" class="text-danger small mb-0 mt-1">{{ error.password }}</p>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="mb-4">
+                <label class="form-label mb-1">Confirm Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Confirm Password"
+                  v-model="form.password_confirmation"
+                />
+                <p v-if="error.password_confirmation" class="text-danger small mb-0 mt-1">
+                  {{ error.password_confirmation }}
+                </p>
+              </div>
+
+              <!-- Button -->
+              <button type="submit" :disabled="isloading" class="btn btn-primary w-100">
+                <span v-if="isloading" class="spinner-border spinner-border-sm text-light me-2" role="status"></span>
+                <span>{{ isloading ? "Loading..." : "Sign Up" }}</span>
+              </button>
+
+              <!-- Link -->
+              <p class="mt-3 mb-0 text-center">
+                Already have account?
+                <router-link to="/login">Sign In</router-link>
+              </p>
+            </form>
+
+          </div>
+        </div>
+
       </div>
-   </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { UseAuthStore } from "@/stores/auth";
 import { notify } from "@/util/toast";
-import { isEmail, required, validation } from "@/util/validation";
+import { isEmail, isPassword, minlength, required, validation } from "@/util/validation";
 import { reactive, ref } from "vue";
 
 const auth = UseAuthStore();
@@ -74,16 +110,23 @@ const error = reactive({
    password: "",
    password_confirmation: "",
 })
-let isloading = ref(false)
+let isloading = ref(false);
 
 function validate() {
    error.email = validation(form.email, [
       (v) => required(v, 'Email is required'),
       (v) => isEmail(v, 'Email is wrong format')
    ])
+   error.password = validation(form.password ,[
+      (v) => required(v , 'Email is required'),
+      (v) => isPassword(v, 'Password must contain uppercase, lowercase, number and special character'),
+      (v) => minlength(v, 8, "Content must be at least 8 characters")
+   ])
    error.name = required(form.name, "Name is required")
-   error.password = required(form.password, "Password is required");
-   error.password_confirmation = required(form.password_confirmation, "Confirm Password is required");
+   error.password_confirmation = validation(form.password_confirmation, [
+    (v) => required(v, 'Confirm Password is required'),
+    (v) => v === form.password ? '' : 'Password confirmation does not match',
+  ]);
    return !error.email && !error.name && !error.password && !error.password_confirmation;
 }
 

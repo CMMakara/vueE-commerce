@@ -1,47 +1,91 @@
 <template>
-   <div class="container">
-      <div class="login rounded-5">
-         <div class="row d-flex justify-content-between">
-            <div class="col-sm-12 col-md-6">
-               <img src="../../../src/assets/image/login-image.png" alt="" width="500px">
-            </div>
-            <div class="col-sm-12 col-md-6">
-               <div class="mt-2 ms-4">
-                  <h1>Login Account</h1>
-                  <p>Please login your account</p>
-                  <form @submit.prevent="handleLogin">
-                     <div class="col-md-8">
-                        <label for="" class="mb-2">Email</label>
-                        <input type="text" class="form-control" placeholder="Enter your Email" v-model="email">
-                        <p v-if="error.email" class="text-danger small mt-1">{{ error.email }}</p>
-                     </div>
-                     <div class="col-md-8 mt-3">
-                        <label for="" class="mb-2">Password</label>
-                        <input type="text" class="form-control" placeholder="Enter your password" v-model="password">
-                        <p v-if="error.password" class="text-danger small mt-1">{{ error.password }}</p>
-                     </div>
-                     <div class="col-md-8 mt-2 d-flex align-items-center">
-                        <div class="d-flex align-items-center justify-content-between">
-                           <input type="checkbox">
-                           <p class="mt-3 px-2">remember me</p>
-                           <div class="forget">
-                              <router-link to="">Forget Password?</router-link>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-md-8">
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                     </div>
-                     <div class="col-md-8 mt-3">
-                        <p>Don't have account? <router-link to="/register">Sign Up</router-link></p>
-                     </div>
-                  </form>
-               </div>
+  <div class="container-fluid py-4 py-md-5">
+    <div class="container">
+      <div class="bg-white rounded-5 shadow-sm overflow-hidden">
+        <div class="row g-0 align-items-center">
 
+          <!-- Image -->
+          <div class="col-12 col-md-6 p-3 p-md-4 p-lg-5 text-center">
+            <img
+              src="../../../src/assets/image/login-image.png"
+              alt="Login"
+              class="img-fluid"
+              style="max-width: 520px;"
+            />
+          </div>
+
+          <!-- Form -->
+          <div class="col-12 col-md-6 p-3 p-md-4 p-lg-5">
+            <div class="mx-auto" style="max-width: 420px;">
+              <h1 class="h3 mb-1">Login Account</h1>
+              <p class="text-muted mb-4">Please login your account</p>
+
+              <form @submit.prevent="handleLogin" class="row g-3">
+                <!-- Email -->
+                <div class="col-12">
+                  <label class="form-label mb-1">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Enter your Email"
+                    v-model="email"
+                  />
+                  <p v-if="error.email" class="text-danger small mt-1">
+                    {{ error.email }}
+                  </p>
+                </div>
+
+                <!-- Password -->
+                <div class="col-12">
+                  <label class="form-label mb-1">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    v-model="password"
+                  />
+                  <p v-if="error.password" class="text-danger small mt-1">
+                    {{ error.password }}
+                  </p>
+                </div>
+
+                <!-- Remember + Forget -->
+                <div class="col-12">
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+                    <div class="form-check m-0">
+                      <input class="form-check-input" type="checkbox" id="remember" />
+                      <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <router-link to="" class="small text-decoration-none">
+                      Forget Password?
+                    </router-link>
+                  </div>
+                </div>
+
+                <!-- Button -->
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary w-100">
+                    Login
+                  </button>
+                </div>
+
+                <!-- Sign up -->
+                <div class="col-12">
+                  <p class="mb-0">
+                    Don't have account?
+                    <router-link to="/register" class="text-decoration-none">
+                      Sign Up
+                    </router-link>
+                  </p>
+                </div>
+              </form>
             </div>
-         </div>
+          </div>
+
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
