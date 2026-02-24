@@ -25,12 +25,13 @@ const props = defineProps({
 <template>
 
    <div class="container">
-      <button @click="isFilter" class="btn btn-dark py-3 pe-5 ps-2 rounded-4 fw-medium shadow-sm" style=""><i
-            class="bi bi-filter-left"></i>&nbsp;<span>Filter</span></button>
+      <slot name="filterBtn"/>
+      <!-- <button @click="isFilter" class="btn btn-dark py-3 pe-5 ps-2 rounded-4 fw-medium shadow-sm" style=""><i
+            class="bi bi-filter-left"></i>&nbsp;<span>Filter</span></button> -->
       <div class="my-5"></div>
       <div class="row align-items-start justify-content-center g-4">
          <Transition name="slide" :class="filter ? 'col-lg-3' : 'col-lg-4'">
-            <div v-if="filter" class="category-sidebar">
+            <!-- <div v-if="filter" class="category-sidebar">
                <div class="rounded p-4 border" style="background-color: #fafafa;">
                   <h4 class="fw-medium">Date</h4>
                   <label class="form-check" for="checkDefault">
@@ -42,7 +43,8 @@ const props = defineProps({
                      Oldest
                   </label>
                </div>
-            </div>
+            </div> -->
+            <slot name="filter"/>
          </Transition>
          <div :class="filter ? 'col-lg-9' : 'col-12'">
             <div class="row g-4">
