@@ -53,7 +53,6 @@ import { reactive, ref } from 'vue';
 let email = ref("")
 let password = ref("")
 let auth = UseAuthStore();
-
 let error = reactive({
    email: "",
    password: ""

@@ -23,17 +23,21 @@
                         <label for="" class="mb-1">Password</label>
                         <input type="text" class="form-control" placeholder="Enter your password"
                            v-model="form.password" />
-                           <p v-if="error.password" class="text-danger small">{{ error.password }}</p>
+                        <p v-if="error.password" class="text-danger small">{{ error.password }}</p>
                      </div>
                      <div class="col-md-8 mt-3">
                         <label for="" class="mb-1">Confirm Password</label>
                         <input type="text" class="form-control" placeholder="Confirm Password"
                            v-model="form.password_confirmation" />
-                           <p v-if="error.password_confirmation" class="text-danger small">{{ error.password_confirmation }}</p>
+                        <p v-if="error.password_confirmation" class="text-danger small">{{ error.password_confirmation
+                           }}</p>
                      </div>
                      <div class="col-md-8 mt-4">
-                        <button type="submit" class="btn btn-primary w-100">
-                           Sign Up
+                        <button type="submit" :disabled="isLoading" class="btn btn-primary w-100">
+                           <div v-if="isLoading" class="spinner-border text-light" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                           </div>
+                           <div v-else>Sign Up</div>
                         </button>
                      </div>
                      <div class="col-md-8 mt-3">
@@ -84,7 +88,7 @@ function validate() {
 }
 
 async function handleregister() {
-   if(!validate()) return
+   if (!validate()) return
    if (form.password !== form.password_confirmation) {
       notify.error("Password do not match");
       return;
@@ -101,7 +105,7 @@ async function handleregister() {
       notify.sucess("Register Succcessfully", "/login");
    } else {
       notify.error(res.message || "Register failed");
-      isloading.value= false
+      isloading.value = false
    }
 
 }
