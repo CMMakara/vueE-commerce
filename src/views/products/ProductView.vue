@@ -133,7 +133,7 @@ function isFilter() {
    }
 }
 
-.gif img {
+.img1, .img2 {
    width: 100%;
    height: 100%;
    border-radius: 20px;
