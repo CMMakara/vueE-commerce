@@ -1,5 +1,7 @@
 <script setup>
+import { UseAuthStore } from '@/stores/auth';
 import BaseButton from './BaseButton.vue';
+import router from '@/router';
 
 const TYPE_BUTTON = Object.freeze({
    ADD_TO_CART: 'Add to cart',
@@ -43,8 +45,11 @@ const buttons = [
  * @param {string} title   - [Title product]
  * @param {string} type    - [Add to cart, Buy now]
  */
-
+let auth= UseAuthStore()
 function handleButton(id, title, type) {
+   if(!auth.isLogin){
+      return router.push('/login');
+   }
    if (type === TYPE_BUTTON.ADD_TO_CART) alert(id + ' ' + title + ' ' + type);
    if (type === TYPE_BUTTON.BUY_NOW) alert(id + ' ' + title + ' ' + type);
 }
@@ -52,7 +57,7 @@ function handleButton(id, title, type) {
 </script>
 
 <template>
-   <div class="card" style="padding: 10px; cursor: pointer" @click="$router.push({name: 'shop'})">
+   <div class="card" style="padding: 10px; cursor: pointer" @click="$router.push({name: 'productDetail' ,params: {id}})">
       <img :src="image" class="card-img" alt="...">
       <div class="card-body p-0 pt-3">
          <h5 class="card-title">{{ title.substring(0, 20) }} {{ title.length > 20 ? '...' : '' }} {{ !title ? 'No title' : '' }}</h5>

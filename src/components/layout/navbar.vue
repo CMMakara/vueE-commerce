@@ -62,6 +62,9 @@ import { computed} from 'vue';
 const auth = UseAuthStore()
 let isCheck = computed(() => auth.isLogin)
 
+let addCart = computed(()=>{
+  
+})
 async function handleLogout(){
    await auth.logout();
    router.push('/');
