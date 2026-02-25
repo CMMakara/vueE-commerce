@@ -2,6 +2,7 @@
 import { UseAuthStore } from '@/stores/auth';
 import BaseButton from './BaseButton.vue';
 import router from '@/router';
+import { ref } from 'vue';
 
 const TYPE_BUTTON = Object.freeze({
    ADD_TO_CART: 'Add to cart',
@@ -46,11 +47,16 @@ const buttons = [
  * @param {string} type    - [Add to cart, Buy now]
  */
 let auth= UseAuthStore()
+let addCart = ref(0)
 function handleButton(id, title, type) {
    if(!auth.isLogin){
       return router.push('/login');
    }
-   if (type === TYPE_BUTTON.ADD_TO_CART) alert(id + ' ' + title + ' ' + type);
+   if (type === TYPE_BUTTON.ADD_TO_CART) {
+      // alert(id + ' ' + title + ' ' + type);
+      alert(addCart.value += 1)
+
+   }
    if (type === TYPE_BUTTON.BUY_NOW) alert(id + ' ' + title + ' ' + type);
 }
 
