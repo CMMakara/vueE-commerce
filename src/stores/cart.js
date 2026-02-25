@@ -1,68 +1,42 @@
+import api from "@/api/http";
 import { defineStore } from "pinia";
-import axios from "axios";
+import { ref } from "vue";
 
-export const useCartStore = defineStore("cart", {
-  state: () => ({
-    items: [],
-    loading: false,
-  }),
+export const useCartStore = defineStore("cart", () => {
+  const items = ref([]);
+  const error = ref(null);
+  const loading = ref(false);
 
-  actions: {
-    async fetchCart() {
-      this.loading = true;
-      try {
-        const response = await axios.get("/api/carts");
-        this.items = response.data.data;
-      } catch (error) {
-        console.error("Failed to fetch cart:", error);
-      } finally {
-        this.loading = false;
-      }
-    },
+  // Fetch cart 
+  async function fetchCart() {
+    error.value = null;
+    try {
+      const res = await api.get("/api/profile/carts");
+      items.value = res.data.data.items ;
+    } catch (err) {
+      error.value = err.response?.data?.message || "Something went wrong";
+    }
+  }
 
-    async removeItem(id) {
-      try {
-        await axios.delete(`/api/carts/${id}`);
-        this.items = this.items.filter((item) => item.id !== id);
-      } catch (error) {
-        console.error("Failed to remove item:", error);
-      }
-    },
+  //  Checkout 
+  async function checkout() {
+    error.value = null;
+    loading.value = true;
 
-    increaseQty(item) {
-      item.quantity++;
-    },
+    try {
+      const res = await api.post("/api/carts/checkout");
 
-    decreaseQty(item) {
-      if (item.quantity > 1) {
-        item.quantity--;
-      }
-    },
+      // Clear cart 
+      items.value = [];
+      // return response
+      return res.data;
+      
+    } catch (err) {
+      error.value = err.response?.data?.message || "Checkout failed";
+    } finally {
+      loading.value = false;
+    }
+  }
 
-    getTotalItems() {
-      return this.items.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-    },
-
-    getSubtotal() {
-      return this.items.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-    },
-
-    getTax() {
-      return this.getSubtotal() * 0.08;
-    },
-
-    getTotal() {
-      return this.getSubtotal() + this.getTax();
-    },
-
-    isEmpty() {
-      return this.items.length === 0;
-    },
-  },
+  return { items, error, loading, fetchCart, checkout };
 });
