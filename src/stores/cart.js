@@ -38,5 +38,17 @@ export const useCartStore = defineStore("cart", () => {
     }
   }
 
-  return { items, error, loading, fetchCart, checkout };
+  // add to cart
+  const cart = ref([]);
+  function addToCart(product, qty =1 ){
+    const exiting = cart.value.find(item => item.id === product.id);
+    if(exiting){
+      exiting.qty += qty;
+    }
+    else{
+      cart.value.push({...product, qty});
+    }
+  }
+
+  return { items, error, loading, fetchCart, checkout ,addToCart ,cart };
 });

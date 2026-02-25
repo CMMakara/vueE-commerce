@@ -26,8 +26,9 @@
 
           <button type="button" class="btn border-0 p-0 position-relative bg-transparent me-2">
             <i class="bi bi-cart fs-4"></i>
-            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="top: 10px;">
-              99+
+            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="top: 10px;"
+            v-if="totalCart > 0">
+              {{ totalCart }}
             </span>
           </button>
 
@@ -57,14 +58,17 @@
 <script setup>
 import router from '@/router';
 import { UseAuthStore } from '@/stores/auth';
+import { useCartStore } from '@/stores/cart';
 import { computed} from 'vue';
 
 const auth = UseAuthStore()
 let isCheck = computed(() => auth.isLogin)
-
-let addCart = computed(()=>{
-  
+let cartStore = useCartStore();
+let totalCart = computed(()=>{
+  return cartStore.cart.reduce((sum, item) => sum + item.quantity , 0)
 })
+console.log(totalCart);
+
 async function handleLogout(){
    await auth.logout();
    router.push('/');
