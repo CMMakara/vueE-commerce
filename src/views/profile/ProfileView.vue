@@ -50,29 +50,259 @@
 
       <!-- Home -->
       <div class="tab-pane" :class="{ show: activeTab === 'home' }">
-        <h3>សូមស្វាគមន៍, Fatimah! 👋</h3>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-icon">📦</span>
-            <span class="stat-value">0</span>
-            <span class="stat-label">ការទិញ</span>
+        <!-- <h2>Wellcome, {{ getProfile.profile.name ?? 'Guest' }} <span class="wave" style="font-size: 36px;">👋</span>
+        </h2> -->
+        <h2 class="fw-bold mb-1">
+          Welcome, {{ getProfile.profile.name ?? 'Guest' }}
+          <span class="wave">👋</span>
+        </h2>
+        <p class="text-muted">Here is your marketplace overview.</p>
+
+        <div class="row g-3 mt-3">
+
+          <!-- My Product -->
+          <div class="col-12 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+              <!-- Header -->
+              <div class="card-header bg-primary bg-gradient text-white py-3">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-box-seam fs-4 me-2"></i>
+                  <h5 class="mb-0 fw-bold">My Products</h5>
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body p-4">
+
+                <div class="row g-3">
+
+                  <!-- Total Products Card -->
+                  <div class="col-6">
+                    <div class="p-4 rounded-4 bg-light text-center h-100 border hover-card">
+
+                      <div class="mb-2 text-primary">
+                        <i class="bi bi-archive-fill fs-2"></i>
+                      </div>
+
+                      <h6 class="text-muted mb-1">Total Products</h6>
+
+                      <h2 class="fw-bold text-dark mb-0">
+                        {{ getProfile.OwnProduct.length ?? 0 }}
+                      </h2>
+
+                    </div>
+                  </div>
+
+                  <!-- Active Products Card -->
+                  <div class="col-6">
+                    <div class="p-4 rounded-4 bg-success bg-opacity-10 text-center h-100 border hover-card">
+
+                      <div class="mb-2 text-success">
+                        <!-- <i class="bi bi-check-circle-fill "></i> -->
+                        <i class="bi bi-coin fs-2"></i>
+                      </div>
+
+                      <h6 class="text-muted mb-1">Total Price</h6>
+
+                      <h2 class="fw-bold text-success mb-0">
+                        {{getProfile.OwnProduct.reduce((total, product) => total + product.price, 0) ?? 0}}
+                      </h2>
+
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
           </div>
-          <div class="stat-card">
-            <span class="stat-icon">❤️</span>
-            <span class="stat-value">0</span>
-            <span class="stat-label">ចូលចិត្ត</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-icon">👤</span>
-            <span class="stat-value">0</span>
-            <span class="stat-label">តាមដាន</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-icon">⭐</span>
-            <span class="stat-value">0</span>
-            <span class="stat-label">ពិន្ទុ</span>
+
+          <!-- My Order -->
+          <div class="col-12 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+              <!-- Header -->
+              <div class="card-header bg-success bg-gradient text-white py-3">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-bag-check fs-4 me-2"></i>
+                  <h5 class="mb-0 fw-bold">My Orders</h5>
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body p-4">
+                <div class="row g-3">
+
+                  <!-- Total Orders -->
+                  <div class="col-6">
+                    <div class="p-4 rounded-4 bg-light text-center border hover-card">
+
+                      <div class="mb-2 text-success">
+                        <i class="bi bi-cart-fill fs-2"></i>
+                      </div>
+
+                      <h6 class="text-muted mb-1">Total Orders</h6>
+
+                      <h2 class="fw-bold mb-0">
+                        {{ getProfile.myPurchase.length ?? 0 }}
+                      </h2>
+
+                    </div>
+                  </div>
+
+                  <!-- Completed Orders -->
+                  <div class="col-6">
+                    <div class="p-4 rounded-4 bg-success bg-opacity-10 text-center border hover-card">
+
+                      <div class="mb-2 text-success">
+                        <i class="bi bi-check-circle-fill fs-2"></i>
+                      </div>
+
+                      <h6 class="text-muted mb-1">Completed</h6>
+
+                      <h2 class="fw-bold text-success mb-0">
+                        {{getProfile.myPurchase.filter(order => order.status === 2).length ?? 0}}
+                      </h2>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <!-- <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
+          <h5 class="fw-bold mb-3">
+            <i class="bi bi-lightning-charge me-2 text-warning"></i>
+            Quick Actions
+          </h5>
+
+          <div class="d-flex flex-wrap gap-3">
+
+            <button class="btn btn-primary rounded-pill px-4">
+              <i class="bi bi-plus-circle me-1"></i> Add Product
+            </button>
+
+            <button class="btn btn-outline-success rounded-pill px-4">
+              <i class="bi bi-bag-check me-1"></i> View Orders
+            </button>
+
+            <button class="btn btn-outline-dark rounded-pill px-4">
+              <i class="bi bi-person-gear me-1"></i> Edit Profile
+            </button>
+
+          </div>
+        </div> -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
+              <h5 class="fw-bold mb-3">
+                <i class="bi bi-activity me-2 text-primary"></i>
+                Recent Orders
+              </h5>
+
+              <div v-for="item in getProfile.myPurchase.slice(0, 3)" :key="item.id"
+                class="d-flex justify-content-between align-items-center border-bottom py-2">
+
+                <div>
+                  <div class="fw-semibold">{{ item.product.title }}</div>
+                  <small class="text-muted">{{ item.created_at }}</small>
+                </div>
+
+                <div class="text-end">
+                  <span class="fw-bold text-success">$ {{ item.price }}</span>
+                  <div>
+                    <span class="badge rounded-pill" :class="{
+                      'bg-warning text-dark': item.status === 1,
+                      'bg-success': item.status === 2,
+                      'bg-danger': item.status === 3
+                    }">
+                      {{ item.status === 1 ? 'Pending' : item.status === 2 ? 'Approved' : 'Rejected' }}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
+          <h5 class="fw-bold mb-4">
+            <i class="bi bi-bag-check me-2 text-success"></i>
+            My Orders
+          </h5>
+
+          <!-- Empty State -->
+          <p v-if="getProfile.myPurchase.length === 0" class="text-muted text-center py-4">
+            You have no orders yet.
+          </p>
+
+          <div class="row g-3" v-else>
+            <div class="col-12 col-md-6 col-lg-4" v-for="item in getProfile.myPurchase.slice(0, 3)" :key="item.id">
+              <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 hover-card">
+
+                <!-- Product Image -->
+                <div class="position-relative">
+                  <img :src="item.product?.image || '/images/default.png'" class="w-100"
+                    style="height: 200px; object-fit: cover;" />
+                  <!-- Status Badge -->
+                  <span class="badge rounded-pill position-absolute top-0 end-0 m-3 px-3 py-2" :class="{
+                    'bg-warning text-dark': item.status === 1,
+                    'bg-success': item.status === 2,
+                    'bg-danger': item.status === 3
+                  }">
+                    {{
+                      item.status === 1 ? 'Pending' : item.status === 2 ? 'Approved' : 'Rejected'
+                    }}
+                  </span>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body d-flex flex-column">
+                  <!-- Seller Info -->
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <img :src="item.seller.avatar" class="rounded-circle border" width="35" height="35" />
+                    <div>
+                      <div class="fw-semibold small">{{ item.seller.name }}</div>
+                      <div class="text-muted small">{{ item.seller.email }}</div>
+                    </div>
+                  </div>
+                  <!-- Product Info -->
+                  <h5 class="fw-bold mb-1 text-truncate">{{ item.product.title }}</h5>
+                  <small class="text-muted">{{ item.product.description }}</small>
+
+                  <!-- Order Details -->
+                  <div class="mt-2 small text-muted">
+                    <div class="d-flex justify-content-between">
+                      <span>Quantity:</span>
+                      <span>{{ item.qty }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Total:</span>
+                      <span class="fw-bold text-success">$ {{ item.price }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Delivery:</span>
+                      <span>{{ item.is_delivery == 2 ? 'Yes' : 'No' }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Buyer:</span>
+                      <span class="text-truncate">{{ item.buyer.name }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Date:</span>
+                      <span>{{ item.created_at }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
       <!-- Product Owner -->
@@ -97,32 +327,117 @@
 
       <!-- Purchased -->
       <div class="tab-pane" :class="{ show: activeTab === 'tracking' }">
-        <h3>🚚 Purchased</h3>
-        <p class="empty-state">មិនមានការបញ្ជាទិញដែលកំពុងដឹកជញ្ជូននៅឡើយទេ។</p>
+        <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
+          <h5 class="fw-bold mb-4">
+            <i class="bi bi-bag-check me-2 text-success"></i>
+            My Orders
+          </h5>
+
+          <!-- Empty State -->
+          <p v-if="getProfile.myPurchase.length === 0" class="text-muted text-center py-4">
+            You have no orders yet.
+          </p>
+
+          <div class="row g-3" v-else>
+            <div class="col-12 col-md-6 col-lg-4" v-for="item in getProfile.myPurchase" :key="item.id">
+              <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 hover-card">
+
+                <!-- Product Image -->
+                <div class="position-relative">
+                  <img :src="item.product?.image || '/images/default.png'" class="w-100"
+                    style="height: 200px; object-fit: cover;" />
+                  <!-- Status Badge -->
+                  <span class="badge rounded-pill position-absolute top-0 end-0 m-3 px-3 py-2" :class="{
+                    'bg-warning text-dark': item.status === 1,
+                    'bg-success': item.status === 2,
+                    'bg-danger': item.status === 3
+                  }">
+                    {{
+                      item.status === 1 ? 'Pending' : item.status === 2 ? 'Approved' : 'Rejected'
+                    }}
+                  </span>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body d-flex flex-column">
+
+                  <!-- Seller Info -->
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <img :src="item.seller.avatar" class="rounded-circle border" width="35" height="35" />
+                    <div>
+                      <div class="fw-semibold small">{{ item.seller.name }}</div>
+                      <div class="text-muted small">{{ item.seller.email }}</div>
+                    </div>
+                  </div>
+
+                  <!-- Product Info -->
+                  <h5 class="fw-bold mb-1 text-truncate">{{ item.product.title }}</h5>
+                  <small class="text-muted">{{ item.product.description }}</small>
+
+                  <!-- Order Details -->
+                  <div class="mt-2 small text-muted">
+                    <div class="d-flex justify-content-between">
+                      <span>Quantity:</span>
+                      <span>{{ item.qty }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Total:</span>
+                      <span class="fw-bold text-success">$ {{ item.price }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Delivery:</span>
+                      <span>{{ item.is_delivery == 2 ? 'Yes' : 'No' }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Buyer:</span>
+                      <span class="text-truncate">{{ item.buyer.name }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Date:</span>
+                      <span>{{ item.created_at }}</span>
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <!-- <div class="mt-auto d-flex gap-2 pt-2">
+                    <button class="btn btn-outline-primary w-100 rounded-pill" @click="openDetail(item)">
+                      <i class="bi bi-eye me-1"></i> Detail
+                    </button>
+                    <button class="btn btn-outline-danger w-100 rounded-pill">
+                      <i class="bi bi-trash me-1"></i> Delete
+                    </button>
+                  </div> -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Settings -->
       <div class="tab-pane w-100" :class="{ show: activeTab === 'settings' }">
 
         <div class="row g-3 p-3 mt-3 shadow rounded bg-light">
-            <h6 class="fw-bold mb-4"><i class="bi bi-person-check me-2 text-primary"></i>Profile</h6>
+          <h6 class="fw-bold mb-4"><i class="bi bi-person-check me-2 text-primary"></i>Profile</h6>
 
           <div class="col-md-6">
-            <label for=""  class="mb-2"><i class="bi bi-highlighter "></i>  USER NAME</label>
+            <label for="" class="mb-2"><i class="bi bi-highlighter "></i> USER NAME</label>
             <input type="text" class="form-control" disabled :value="getProfile.profile.name ?? ''"
               placeholder="username">
           </div>
           <div class="col-md-6">
-            <label for="" class="mb-2"><i class="bi bi-telephone"></i>  TELL</label>
+            <label for="" class="mb-2"><i class="bi bi-telephone"></i> TELL</label>
             <input type="text" class="form-control" disabled :value="getProfile.profile.phone ?? ''" placeholder="Tell">
           </div>
           <div class="col-md-12">
-            <label for="" class="mb-2"><i class="bi bi-envelope"></i>  EMAIL</label>
+            <label for="" class="mb-2"><i class="bi bi-envelope"></i> EMAIL</label>
             <input type="email" class="form-control" disabled :value="getProfile.profile.email ?? ''"
               placeholder="email">
           </div>
           <div class="col-md-12">
-            <label class="mb-2"><i class="bi bi-geo-alt"></i>  LOCATION</label>
+            <label class="mb-2"><i class="bi bi-geo-alt"></i> LOCATION</label>
             <input type="email" class="form-control" disabled :value="getProfile.profile.location ?? ''"
               placeholder="location">
           </div>
@@ -183,43 +498,58 @@
         </BaseModal>
         <!-- Account Security -->
         <div class="row g-3 shadow mt-4 p-3 bg-light rounded mb-5">
-            <h6 class="fw-bold mb-4"><i class="bi bi-shield-lock-fill me-2 text-primary"></i>Account Security</h6>
-            <div class="col-md-6">
-              <label for="">  PASSWORD</label>
-              <input type="password" class="form-control" placeholder="..........." disabled>
-            </div>
-            <div class="col-md-6">
-              <label for=""> NEW PASSWORD</label>
-              <input type="password" class="form-control" placeholder="..........." disabled>
-            </div>
-            <div class="col-md-12">
-              <label for=""> CONFIRM PASSWORD</label>
-              <input type="password" class="form-control" placeholder="..........." disabled>
-            </div>
-            <div class="col-md-12">
-              <div class="float-end">
-                <button class="btn btn-warning text-light fw-bold">change password</button>
-              </div>
+          <h6 class="fw-bold mb-4"><i class="bi bi-shield-lock-fill me-2 text-primary"></i>Account Security</h6>
+          <div class="col-md-6">
+            <label for=""> PASSWORD</label>
+            <input type="password" class="form-control" placeholder="..........." disabled>
+          </div>
+          <div class="col-md-6">
+            <label for=""> NEW PASSWORD</label>
+            <input type="password" class="form-control" placeholder="..........." disabled>
+          </div>
+          <div class="col-md-12">
+            <label for=""> CONFIRM PASSWORD</label>
+            <input type="password" class="form-control" placeholder="..........." disabled>
+          </div>
+          <div class="col-md-12">
+            <div class="float-end">
+              <button class="btn btn-warning text-light fw-bold">change password</button>
             </div>
           </div>
+        </div>
       </div>
       <!-- -------------Edit avatar -->
       <BaseModal v-if="openModalEditProfile" header="Edit Avatar" @close="closeAvatar">
         <template #content>
           <form @submit.prevent="saveAvatar">
+            <div
+              style="height: 200px;background-color: color-mix(in srgb, var(--bs-primary) 5%, rgb(255, 255, 255) 2%); position: relative; display: flex; justify-content: center; align-items: center;border-radius: 20px; "
+              class="w-100">
+              <i class="bi bi-box-arrow-in-up text-primary" v-if="isFile" style="font-size: 50px;"></i>
+              <div v-else>
+                <img :src="preview" alt="" style="width: 150px;height: 150px; border-radius: 20px;">
+              </div>
 
-            <label>Image</label>
-            <input type="file" class="form-control" @change="handleFile" />
+              <input type="file" class="form-control field-input " 
+                style="height: 200px; width: 100%; position: absolute; top: 0;opacity: 0;" @change="handleFile" />
+
+            </div>
             <span class="text-danger">{{ errFile }}</span>
-            <div class="text-end mt-3">
-              <button type="button" class="btn btn-secondary me-2" @click="closeAvatar">
-                Cancel
+            <div class="text-end mt-3 d-flex justify-content-between">
+              <button type="button" class="btn btn-danger me-2 rounded-1 " :disabled="isDelete" @click="deleteAvatar">
+                <span v-if="isDelete" class="spinner-border spinner-border-sm"></span>
+                <span v-else>Delete</span>
               </button>
+              <div>
+                <button type="button" class="btn btn-outline-secondary border-0 me-3 rounded-1" @click="closeAvatar">
+                  Cancel
+                </button>
 
-              <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
-                <span v-else>Save</span>
-              </button>
+                <button type="submit" class="btn btn-primary rounded-1 px-4" :disabled="isLoading">
+                  <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+                  <span v-else>Save</span>
+                </button>
+              </div>
             </div>
 
           </form>
@@ -249,6 +579,8 @@ const openModalEditProfile = ref(false)
 const isLoading = ref(false)
 const File = ref(null)
 const errFile = ref(null)
+const preview = ref(null)
+const isDelete = ref(null)
 const form = ref({
   userName: '',
   tell: '',
@@ -264,7 +596,10 @@ const errors = ref({
 })
 
 onMounted(async () => {
-  await getProfile.fetchProfile();
+  // await getProfile.fetchOwnProduct(1, per_page.value);
+  // await getProfile.fetchPayment(1, per_payment.value)
+  await getProfile.fetchPurchase()
+    await getProfile.fetchProfile();
 })
 
 
@@ -280,18 +615,42 @@ const editProfile = () => {
 const closeModal = () => openModal.value = false
 
 // ---------------- Avatar Modal Edit
+const isFile = ref(true)
 const Editavatar = () => {
-  openModalEditProfile.value = true
   errFile.value = '';
+  openModalEditProfile.value = true;
+
 }
 const closeAvatar = () => {
   openModalEditProfile.value = false
+  preview.value = null;
+  isFile.value = true;
+  File.value = ''
 }
 const handleFile = (event) => {
   const selected = event.target.files[0]
   if (selected) {
     File.value = selected;
+    preview.value = URL.createObjectURL(selected);
+    isFile.value = false;
   }
+
+}
+// -----------Delete Avatae
+
+const deleteAvatar = async () => {
+  isDelete.value = true;
+  try {
+    const res = await api.delete('/api/profile/image')
+    await getProfile.fetchProfile();
+    closeAvatar();
+  } catch (e) {
+    console.error(e)
+  }
+  finally {
+    isDelete.value = false;
+  }
+
 }
 
 
@@ -317,6 +676,7 @@ const saveAvatar = async () => {
     notify.error('Failed to upload avatar')
   } finally {
     File.value = '';
+    isFile.value = true
   }
   isLoading.value = false
 }
@@ -421,6 +781,50 @@ const saveData = async () => {
   /* margin-top: 90px; */
   border-radius: 10px;
 
+}
+.shadow:hover {
+  transform: translateY(-5px);
+  transition: 0.3s ease;
+}
+
+.wave {
+  display: inline-block;
+  animation: wave-animation 2s infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(14deg);
+  }
+
+  20% {
+    transform: rotate(-8deg);
+  }
+
+  30% {
+    transform: rotate(14deg);
+  }
+
+  40% {
+    transform: rotate(-4deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
+
+  60% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 
@@ -587,7 +991,7 @@ const saveData = async () => {
 }
 
 .tab-btn.active {
-  background-color:#0E6EFD;
+  background-color: #0E6EFD;
   color: #fff;
   font-weight: 600;
 }
