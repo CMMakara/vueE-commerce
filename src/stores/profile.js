@@ -39,8 +39,17 @@ export const useProfileStore = defineStore("profile", () => {
             console.error(e);
         }
     }
+    const myPurchase = ref([])
+    const fetchPurchase = async() =>{
+        try{
+            const res = await api.get('/api/profile/purchased');
+            myPurchase.value = res.data.data
+            console.log("myPurchase.value:", res);
+        }catch(e){
+            console.error(e);
+        }
+    }
 
 
-
-    return {profile,fetchProfile,fetchOwnProduct,OwnProduct,fetchPayment,myPayment,myTotal}
+    return {profile,fetchProfile,fetchOwnProduct,OwnProduct,fetchPayment,myPayment,myTotal,fetchPurchase,myPurchase}
 })
