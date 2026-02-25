@@ -49,7 +49,7 @@
     <div class="content-area">
 
       <!-- Home -->
-       <div class="tab-pane" :class="{ show: activeTab === 'home' }">
+      <div class="tab-pane" :class="{ show: activeTab === 'home' }">
         <!-- <h2>Wellcome, {{ getProfile.profile.name ?? 'Guest' }} <span class="wave" style="font-size: 36px;">👋</span>
         </h2> -->
         <h2 class="fw-bold mb-1">
@@ -58,7 +58,7 @@
         </h2>
         <p class="text-muted">Here is your marketplace overview.</p>
 
-         <div class="row g-3 mt-3">
+        <div class="row g-3 mt-3">
 
           <!-- My Product -->
           <div class="col-12 col-md-6">
@@ -106,7 +106,7 @@
                       <h6 class="text-muted mb-1">Total Price</h6>
 
                       <h2 class="fw-bold text-success mb-0">
-                        {{ getProfile.OwnProduct.reduce((total, product) => total + product.price, 0) ?? 0 }}
+                        {{getProfile.OwnProduct.reduce((total, product) => total + product.price, 0) ?? 0}}
                       </h2>
 
                     </div>
@@ -326,7 +326,7 @@
       </div>
 
       <!-- Purchased -->
-       <div class="tab-pane" :class="{ show: activeTab === 'tracking' }">
+      <div class="tab-pane" :class="{ show: activeTab === 'tracking' }">
         <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
           <h5 class="fw-bold mb-4">
             <i class="bi bi-bag-check me-2 text-success"></i>
@@ -420,24 +420,24 @@
       <div class="tab-pane w-100" :class="{ show: activeTab === 'settings' }">
 
         <div class="row g-3 p-3 mt-3 shadow rounded bg-light">
-            <h6 class="fw-bold mb-4"><i class="bi bi-person-check me-2 text-primary"></i>Profile</h6>
+          <h6 class="fw-bold mb-4"><i class="bi bi-person-check me-2 text-primary"></i>Profile</h6>
 
           <div class="col-md-6">
-            <label for=""  class="mb-2"><i class="bi bi-highlighter "></i>  USER NAME</label>
+            <label for="" class="mb-2"><i class="bi bi-highlighter "></i> USER NAME</label>
             <input type="text" class="form-control" disabled :value="getProfile.profile.name ?? ''"
               placeholder="username">
           </div>
           <div class="col-md-6">
-            <label for="" class="mb-2"><i class="bi bi-telephone"></i>  TELL</label>
+            <label for="" class="mb-2"><i class="bi bi-telephone"></i> TELL</label>
             <input type="text" class="form-control" disabled :value="getProfile.profile.phone ?? ''" placeholder="Tell">
           </div>
           <div class="col-md-12">
-            <label for="" class="mb-2"><i class="bi bi-envelope"></i>  EMAIL</label>
+            <label for="" class="mb-2"><i class="bi bi-envelope"></i> EMAIL</label>
             <input type="email" class="form-control" disabled :value="getProfile.profile.email ?? ''"
               placeholder="email">
           </div>
           <div class="col-md-12">
-            <label class="mb-2"><i class="bi bi-geo-alt"></i>  LOCATION</label>
+            <label class="mb-2"><i class="bi bi-geo-alt"></i> LOCATION</label>
             <input type="email" class="form-control" disabled :value="getProfile.profile.location ?? ''"
               placeholder="location">
           </div>
@@ -498,43 +498,58 @@
         </BaseModal>
         <!-- Account Security -->
         <div class="row g-3 shadow mt-4 p-3 bg-light rounded mb-5">
-            <h6 class="fw-bold mb-4"><i class="bi bi-shield-lock-fill me-2 text-primary"></i>Account Security</h6>
-            <div class="col-md-6">
-              <label for="">  PASSWORD</label>
-              <input type="password" class="form-control" placeholder="..........." disabled>
-            </div>
-            <div class="col-md-6">
-              <label for=""> NEW PASSWORD</label>
-              <input type="password" class="form-control" placeholder="..........." disabled>
-            </div>
-            <div class="col-md-12">
-              <label for=""> CONFIRM PASSWORD</label>
-              <input type="password" class="form-control" placeholder="..........." disabled>
-            </div>
-            <div class="col-md-12">
-              <div class="float-end">
-                <button class="btn btn-warning text-light fw-bold">change password</button>
-              </div>
+          <h6 class="fw-bold mb-4"><i class="bi bi-shield-lock-fill me-2 text-primary"></i>Account Security</h6>
+          <div class="col-md-6">
+            <label for=""> PASSWORD</label>
+            <input type="password" class="form-control" placeholder="..........." disabled>
+          </div>
+          <div class="col-md-6">
+            <label for=""> NEW PASSWORD</label>
+            <input type="password" class="form-control" placeholder="..........." disabled>
+          </div>
+          <div class="col-md-12">
+            <label for=""> CONFIRM PASSWORD</label>
+            <input type="password" class="form-control" placeholder="..........." disabled>
+          </div>
+          <div class="col-md-12">
+            <div class="float-end">
+              <button class="btn btn-warning text-light fw-bold">change password</button>
             </div>
           </div>
+        </div>
       </div>
       <!-- -------------Edit avatar -->
       <BaseModal v-if="openModalEditProfile" header="Edit Avatar" @close="closeAvatar">
         <template #content>
           <form @submit.prevent="saveAvatar">
+            <div
+              style="height: 200px;background-color: color-mix(in srgb, var(--bs-primary) 5%, rgb(255, 255, 255) 2%); position: relative; display: flex; justify-content: center; align-items: center;border-radius: 20px; "
+              class="w-100">
+              <i class="bi bi-box-arrow-in-up text-primary" v-if="isFile" style="font-size: 50px;"></i>
+              <div v-else>
+                <img :src="preview" alt="" style="width: 150px;height: 150px; border-radius: 20px;">
+              </div>
 
-            <label>Image</label>
-            <input type="file" class="form-control" @change="handleFile" />
+              <input type="file" class="form-control field-input " 
+                style="height: 200px; width: 100%; position: absolute; top: 0;opacity: 0;" @change="handleFile" />
+
+            </div>
             <span class="text-danger">{{ errFile }}</span>
-            <div class="text-end mt-3">
-              <button type="button" class="btn btn-secondary me-2" @click="closeAvatar">
-                Cancel
+            <div class="text-end mt-3 d-flex justify-content-between">
+              <button type="button" class="btn btn-danger me-2 rounded-1 " :disabled="isDelete" @click="deleteAvatar">
+                <span v-if="isDelete" class="spinner-border spinner-border-sm"></span>
+                <span v-else>Delete</span>
               </button>
+              <div>
+                <button type="button" class="btn btn-outline-secondary border-0 me-3 rounded-1" @click="closeAvatar">
+                  Cancel
+                </button>
 
-              <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
-                <span v-else>Save</span>
-              </button>
+                <button type="submit" class="btn btn-primary rounded-1 px-4" :disabled="isLoading">
+                  <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+                  <span v-else>Save</span>
+                </button>
+              </div>
             </div>
 
           </form>
@@ -564,6 +579,8 @@ const openModalEditProfile = ref(false)
 const isLoading = ref(false)
 const File = ref(null)
 const errFile = ref(null)
+const preview = ref(null)
+const isDelete = ref(null)
 const form = ref({
   userName: '',
   tell: '',
@@ -579,9 +596,10 @@ const errors = ref({
 })
 
 onMounted(async () => {
-  await getProfile.fetchProfile();
-  await getProfile.fetchOwnProduct()
+  // await getProfile.fetchOwnProduct(1, per_page.value);
+  // await getProfile.fetchPayment(1, per_payment.value)
   await getProfile.fetchPurchase()
+    await getProfile.fetchProfile();
 })
 
 
@@ -597,18 +615,42 @@ const editProfile = () => {
 const closeModal = () => openModal.value = false
 
 // ---------------- Avatar Modal Edit
+const isFile = ref(true)
 const Editavatar = () => {
-  openModalEditProfile.value = true
   errFile.value = '';
+  openModalEditProfile.value = true;
+
 }
 const closeAvatar = () => {
   openModalEditProfile.value = false
+  preview.value = null;
+  isFile.value = true;
+  File.value = ''
 }
 const handleFile = (event) => {
   const selected = event.target.files[0]
   if (selected) {
     File.value = selected;
+    preview.value = URL.createObjectURL(selected);
+    isFile.value = false;
   }
+
+}
+// -----------Delete Avatae
+
+const deleteAvatar = async () => {
+  isDelete.value = true;
+  try {
+    const res = await api.delete('/api/profile/image')
+    await getProfile.fetchProfile();
+    closeAvatar();
+  } catch (e) {
+    console.error(e)
+  }
+  finally {
+    isDelete.value = false;
+  }
+
 }
 
 
@@ -634,6 +676,7 @@ const saveAvatar = async () => {
     notify.error('Failed to upload avatar')
   } finally {
     File.value = '';
+    isFile.value = true
   }
   isLoading.value = false
 }
@@ -738,6 +781,50 @@ const saveData = async () => {
   /* margin-top: 90px; */
   border-radius: 10px;
 
+}
+.shadow:hover {
+  transform: translateY(-5px);
+  transition: 0.3s ease;
+}
+
+.wave {
+  display: inline-block;
+  animation: wave-animation 2s infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(14deg);
+  }
+
+  20% {
+    transform: rotate(-8deg);
+  }
+
+  30% {
+    transform: rotate(14deg);
+  }
+
+  40% {
+    transform: rotate(-4deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
+
+  60% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 
@@ -904,7 +991,7 @@ const saveData = async () => {
 }
 
 .tab-btn.active {
-  background-color:#0E6EFD;
+  background-color: #0E6EFD;
   color: #fff;
   font-weight: 600;
 }
