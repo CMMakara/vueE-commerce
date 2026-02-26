@@ -29,7 +29,10 @@
 
 <script setup>
 import { defineProps } from 'vue';
-defineProps({header: String});
+defineProps({
+   header: String
+});
+const emit = defineEmits(['close'])
 
 
 </script>
