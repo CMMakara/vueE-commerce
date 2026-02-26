@@ -29,9 +29,7 @@ export const useCartStore = defineStore("cart", () => {
     try {
       const res = await api.post("/api/carts/checkout");
 
-      // Clear cart 
       items.value = [];
-      // return response
       return res.data;
       
     } catch (err) {
