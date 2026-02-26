@@ -20,7 +20,7 @@
                     <h4 class=" ">All Product</h4>
                     <p class="page-subtitle">product Owner</p>
                 </div>
-                <router-link :to="{name : 'addProduct'}" class="btn btn-primary">
+                <router-link :to="{ name: 'addProduct' }" class="btn btn-primary">
                     <i class="bi bi-patch-plus"></i>
                     New Product
                 </router-link>
@@ -104,8 +104,10 @@
                                     <img :src="item.image" alt="" style="width: 60px; border-radius: 10px;">
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn" @click="gotoEditProduct(item.id)"><i class="bi bi-pencil-square text-warning"></i></button>
-                                    <button class="btn" @click="openModalDelete(item.id)"><i class="bi bi-trash3 text-danger"></i></button>
+                                    <button class="btn" @click="gotoEditProduct(item.id)"><i
+                                            class="bi bi-pencil-square text-warning"></i></button>
+                                    <button class="btn" @click="openModalDelete(item.id)"><i
+                                            class="bi bi-trash3 text-danger"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -185,7 +187,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="own in getProfile.myPurchase" :key="own.id">
+                            <tr v-for="own in getProfile.myPayment" :key="own.id">
                                 <th>{{ own.id }}</th>
                                 <td>{{ new Date(own.created_at).toLocaleDateString('km-KH') }}</td>
                                 <td>
@@ -200,11 +202,15 @@
                                     <img :src="own.product?.image" style="width: 50px; border-radius: 10px;" alt="">
                                 </td>
                                 <td class="fw-bold text-success">
-                                    ${{  Number(own.price) * (own.qty) }}
+                                    ${{ Number(own.price) * (own.qty) }}
                                 </td>
                                 <td>
-                                    <a class="btn bg-primary-subtle me-3" v-if="Approve" @click="handleApprove(own.id)">Ap</a>
-                                    <a class="btn bg-success-subtle" v-if="Reject">Rej</a>
+                                    <div v-if="own.status === 1" >
+                                        <a class="btn bg-primary-subtle me-3"
+                                            @click="handleApprove(own.id)">Ap</a>
+                                        <a class="btn bg-success-subtle" @click="handleReject(own.id)">Rej</a>
+                                    </div>
+                                    <span v-else >{{ own.status === 2 ? 'Approve': 'Reject' }}</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -212,8 +218,8 @@
                 </div>
                 <!-- pagination -->
                 <div class="">
-                    <BasePagination :totalPage=getProfile.paymentPaginate.last_page :current= getProfile.paymentPaginate.current_page
-                        @update:page=handleNexPayment></BasePagination>
+                    <BasePagination :totalPage=getProfile.paymentPaginate.last_page
+                        :current=getProfile.paymentPaginate.current_page @update:page=handleNexPayment></BasePagination>
                 </div>
 
             </div>
@@ -248,7 +254,7 @@ const per_payment = ref(10)
 
 onMounted(async () => {
     await getProfile.fetchOwnProduct(1, per_page.value);
-    await getProfile.fetchPayment(1,per_payment.value)
+    await getProfile.fetchPayment(1, per_payment.value)
 })
 
 let openUi = ref(true)
@@ -261,38 +267,40 @@ function openPayment() {
 const handleNexPage = async (page) => {
     await getProfile.fetchOwnProduct(page, per_page.value)
 }
-const handleNexPayment = async(page)=>{
-    await getProfile.fetchPayment(page,per_payment.value)
+const handleNexPayment = async (page) => {
+    await getProfile.fetchPayment(page, per_payment.value)
 }
-let showModal =ref(false)
-const openModalDelete = (id) =>{
+let showModal = ref(false)
+const openModalDelete = (id) => {
     showModal.value = true
     showModal.value = id
 }
-const closeModal= ()=>{
-    showModal.value =false
+const closeModal = () => {
+    showModal.value = false
 }
-const deleteProduct = async () =>{
+const deleteProduct = async () => {
     await api.delete(`/api/products/${showModal.value}`)
     closeModal()
     notify.sucess('deleted product successful!!')
     await getProfile.fetchOwnProduct(page, per_page.value)
 }
 
-function gotoEditProduct(id){
+function gotoEditProduct(id) {
     router.push({
-        name : 'editProduct',
-        params : {id : id}
+        name: 'editProduct',
+        params: { id: id }
     })
 }
 
-
-let Approve = ref(true)
-let Reject = ref(true)
-const handleApprove = async(id)=>{
+const handleApprove = async (id) => {
     await api.put(`/api/payments/approve/${id}`)
-    Reject.value = false
     notify.sucess('Approval complete. Your product is now active.')
+    await getProfile.fetchOwnProduct(page, per_page.value)
+}
+const handleReject = async (id) =>{
+    await api.put(`/api/payments/reject/${id}`)
+    notify.sucess('Product rejected: Please check the listing details and try again.')
+    await getProfile.fetchOwnProduct(page, per_page.value)
 }
 </script>
 

@@ -47,7 +47,6 @@ export const useProfileStore = defineStore("profile", () => {
             paymentPaginate.last_page = res.data.paginate.last_page;
             console.log(res);
 
-
         } catch (e) {
             console.error(e);
         }
