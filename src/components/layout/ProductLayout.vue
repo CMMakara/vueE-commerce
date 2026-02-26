@@ -18,13 +18,17 @@ const props = defineProps({
    products : Object,
    filter: Boolean,
    isFilter: Function,
+   container: {
+      String,
+      default: 'container'
+   },
 });
 
 </script>
 
 <template>
 
-   <div class="container">
+   <div :class="container">
       <slot name="filterBtn"/>
       <!-- <button @click="isFilter" class="btn btn-dark py-3 pe-5 ps-2 rounded-4 fw-medium shadow-sm" style=""><i
             class="bi bi-filter-left"></i>&nbsp;<span>Filter</span></button> -->
