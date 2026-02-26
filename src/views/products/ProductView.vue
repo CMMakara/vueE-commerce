@@ -24,7 +24,6 @@ onMounted(async () => {
       per_page: per_page.value,
       sortDir: sortDir.value,
    });
-   console.log(allProducts.allProducts.value);
 });
 
 function isFilter() {

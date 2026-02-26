@@ -7,6 +7,7 @@ export const useProfileStore = defineStore("profile", () => {
     
     const profile = ref([]);
     const OwnProduct = ref([])
+    let total = ref(0)
     const pt = reactive({
         current_page: 1,
         last_page: 0,
@@ -30,6 +31,7 @@ export const useProfileStore = defineStore("profile", () => {
         try {
             const res = await api.get(`/api/profile/products?page=${page}&per_page=${per_page}`);
             OwnProduct.value = res.data.data
+            total.value = res.data.paginate.total
             pt.current_page = res.data.paginate.current_page
             pt.last_page = res.data.paginate.last_page
         } catch (e) {
@@ -63,5 +65,5 @@ export const useProfileStore = defineStore("profile", () => {
     }
 
 
-    return {profile,fetchProfile,fetchOwnProduct,OwnProduct,fetchPayment,myPayment,myTotal,fetchPurchase,myPurchase,pt,paymentPaginate}
+    return {profile,fetchProfile,fetchOwnProduct,OwnProduct,fetchPayment,myPayment,myTotal,fetchPurchase,myPurchase,pt,paymentPaginate , total}
 })

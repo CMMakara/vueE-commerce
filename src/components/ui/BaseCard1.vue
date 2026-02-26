@@ -70,7 +70,9 @@ async function handleButton(id, title, type) {
       }
       
    }
-   if (type === TYPE_BUTTON.BUY_NOW) alert(id + ' ' + title + ' ' + type);
+   if (type === TYPE_BUTTON.BUY_NOW) {
+      router.push()
+   };
 }
 
 </script>

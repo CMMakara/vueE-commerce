@@ -5,17 +5,17 @@
 
       <div class="card border-0 shadow-sm mb-5 p-4 rounded-4 d-md-flex flex-row align-items-center gap-4 bg-white">
         <div class="avatar-wrapper">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX8VSe4ww-dpugdJQzw9YOA2RXzgescIam1A&s"
+          <img :src="productStore.profile.avatar"
             class="rounded-4 border border-light border-3 shadow-sm" width="120" height="120">
         </div>
 
         <div class="mt-3 mt-md-0 rounded">
-          <h1 class="display-6 fw-bold mb-1 text-dark"> seller.name</h1>
-          <p class="text-primary mb-2 small fw-bold uppercase tracking-widest">seller.specialty</p>
+          <h1 class="display-6 fw-bold mb-1 text-dark">{{ productStore.profile.name }}</h1>
+          <p class="text-primary mb-2 small fw-bold uppercase tracking-widest">Electronics & Gadgets</p>
           <div class="d-flex gap-3 text-muted">
-            <span><strong class="text-dark">seller.sales</strong> Sales</span>
+            <span><strong class="text-dark">125</strong> Sales</span>
             <span class="text-light">|</span>
-            <span><strong class="text-dark">seller.rating</strong> Rating</span>
+            <span><strong class="text-dark">4.8</strong> Rating</span>
           </div>
         </div>
 
@@ -41,7 +41,7 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-12 col-md-6 col-lg-4" v-for="items in productStore.ownProduct.value" :key="items.id">
+      <div class="col-12 col-md-6 col-lg-4" v-for="items in productStore.OwnProduct" :key="items.id">
         <BaseCard1 :id="items.id" :image="items.image" :title="items.title" :description="items.description"
           :price="items.price" />
       </div>
@@ -53,14 +53,15 @@
 
 <script setup>
 import BaseCard1 from '@/components/ui/BaseCard1.vue';
-import { allProductStore } from '@/stores/products';
+import { useProfileStore } from '@/stores/profile';
 import { onMounted } from 'vue';
 
 
-let productStore = allProductStore()
+let productStore = useProfileStore()
 
 onMounted(async () => {
-  await productStore.getOwnProduct()
+  await productStore.fetchOwnProduct(1,10)
+  await productStore.profile()
 })
 
 

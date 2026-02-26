@@ -6,8 +6,7 @@ const END_POINT = "/api/products";
 export const allProductStore = ('allProduct', () => {
 
    let allProducts = ref([]);
-   let ownProduct = ref([]);
-   let total = ref(0);
+   const lastPage = ref(0);
    async function getAllProduct({page = 1, per_page = 5, sortDir = 'asc'} = {}) {
       let res = await api.get(`${END_POINT}`, {
          params: {
@@ -17,18 +16,10 @@ export const allProductStore = ('allProduct', () => {
          }
       });
       allProducts.value = res.data.data;
+      lastPage.value = res.data.paginate?.last_page || 1;
+      // console.log(lastPage.value);
+      
+      
    }
-
-   async function getOwnProduct({sortDir = 'asc'} = {}) {
-      let res = await api.get('/api/profile/products', {
-         params : {
-            sortDir
-         }
-      })
-      ownProduct.value = res.data.data
-      total.value = res.data.paginate.total
-      console.log(ownProduct.value);
-   }
-
-   return { allProducts, getAllProduct , ownProduct , getOwnProduct , total}
+   return { allProducts, getAllProduct , lastPage }
 })
