@@ -1,16 +1,16 @@
 <template>
   <!-- Empty Cart -->
-  <!-- <BaseEmpty
-    v-if="items.length === 0"
+  <BaseEmpty
+    v-if="cartStore.items.length === 0"
     title="Your Cart is Empty"
     subtitle="Start adding products to your cart!"
     buttonText="Continue Shopping"
     link="/"
     image="/src/assets/image/empty.png"
-  /> -->
+  />
 
   <!-- Cart Page -->
-  <div class="container py-5 bg-body-secondary rounded">
+  <div class="container py-5 bg-body-secondary rounded" v-else>
     <h2 class="fw-bold text-primary mb-5 text-center text-lg-start">
       Shopping Cart
     </h2>

@@ -1,5 +1,5 @@
 <template>
-  <div class="vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div class=" d-flex justify-content-center align-items-center " style="height: 80vh;">
     <div class="text-center">
 
       <div class="mb-3">

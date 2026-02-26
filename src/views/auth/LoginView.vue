@@ -118,7 +118,6 @@ async function handleLogin() {
    isloading.value = true
    try {
       await auth.login(email.value, password.value)
-      console.log(email.value, password.value);
       notify.sucess('login successfully', '/')
 
    }
