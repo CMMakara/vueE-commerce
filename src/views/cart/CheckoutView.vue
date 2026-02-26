@@ -102,7 +102,6 @@
             </div>
          </div>
 
-         <!-- RIGHT SIDE -->
          <div class="col-lg-4">
             <div class="card shadow-lg border-0 p-4 rounded-4">
                <h5 class="fw-bold mb-4">Order Summary</h5>
