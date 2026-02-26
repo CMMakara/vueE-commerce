@@ -1,10 +1,16 @@
 <script setup>
+import { UseAuthStore } from '@/stores/auth';
 import BaseButton from './BaseButton.vue';
+import router from '@/router';
+import { ref } from 'vue';
+import { useCartStore } from '@/stores/cart';
 
 const TYPE_BUTTON = Object.freeze({
    ADD_TO_CART: 'Add to cart',
    BUY_NOW: 'Buy now',
 });
+
+const cart = useCartStore();
 
 const product = defineProps({
    isFilter: Boolean,
@@ -43,17 +49,36 @@ const buttons = [
  * @param {string} title   - [Title product]
  * @param {string} type    - [Add to cart, Buy now]
  */
-
-function handleButton(id, title, type) {
-   if (type === TYPE_BUTTON.ADD_TO_CART) alert(id + ' ' + title + ' ' + type);
+let auth= UseAuthStore()
+async function handleButton(id, title, type) {
+   if(!auth.isLogin){
+      return router.push('/login');
+   }
+   if (type === TYPE_BUTTON.ADD_TO_CART) {
+      // alert(id + ' ' + title + ' ' + type);
+         // qty.value += 1
+         
+         try{
+         // const fmdata = new FormData()
+         // fmdata.append('product_id', id);
+         // fmdata.append('qty' , qty.value)
+         // api.post('/api/carts', fmdata)
+         // alert('add cart success');
+         cart.addToCart(id, qty.value)
+      }
+      catch(error){
+         alert(error)
+      }
+      
+   }
    if (type === TYPE_BUTTON.BUY_NOW) alert(id + ' ' + title + ' ' + type);
 }
 
 </script>
 
 <template>
-   <div class="card" style="padding: 10px; cursor: pointer" @click="$router.push({name: 'shop'})">
-      <img :src="image" class="card-img" alt="image">
+   <div class="card" style="padding: 10px; cursor: pointer" @click="$router.push({name: 'productDetail' ,params: {id}})">
+      <img :src="image" class="card-img" alt="...">
       <div class="card-body p-0 pt-3">
          <h5 class="card-title">{{ title.substring(0, 20) }} {{ title.length > 20 ? '...' : '' }} {{ !title ? 'No title' : '' }}</h5>
          <p class="card-text">{{ description.substring(0, 20) }} {{ description.length > 20 ? '...' : '' }} {{ !description ? 'No description' : '' }}</p>
