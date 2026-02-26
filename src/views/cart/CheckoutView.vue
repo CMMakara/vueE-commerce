@@ -128,7 +128,7 @@
                      <div class="text-center p-3 border rounded-4 bg-light mb-4 shadow-inner">
                         <h6 class="fw-bold mb-3 small">SCAN TO PAY</h6>
                         <div class="bg-white p-2 d-inline-block rounded-3 shadow-sm mb-2">
-                           <img src="@/assets/image/QR.png" class="img-fluid" style="max-height: 150px;" alt="QR" />
+                           <img src="@/assets/image/QR.png" class="img-fluid" style="width:150px ;height: 150px;" alt="QR" />
                         </div>
                      </div>
 
