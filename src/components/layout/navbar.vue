@@ -1,11 +1,11 @@
 <template>
    <header>
-      <nav class="navbar fixed-top p-0 mt-3" style="z-index: 1000">
-         <div class="container d-flex p-0">
+      <nav class="navbar fixed-top mt-3" style="z-index: 1000">
+         <div class="container d-flex">
             <!-- LEFT SIDE (RED) -->
             <div class="d-flex align-items-center px-4 py-2 text-black rounded shadow-sm navbar-bg">
                <router-link :to="{ name: 'product' }"
-                  class="navbar-brand text-black fw-bold me-4">Commerce_</router-link>
+                  class="navbar-brand fw-bold me-4">Commerce_</router-link>
                <ul class="navbar-nav flex-row gap-3">
                   <li class="nav-item">
                      <router-link exact-active-class="active" :to="{ name: 'shop' }" class="nav-link rounded text-black">Shop</router-link>
@@ -37,7 +37,7 @@
                   <img :src="profileStore.profile?.avatar" alt="" class="bg-black rounded-circle"
                      style="width: 35px; height: 35px" />
                </router-link>
-               <router-link :to="{ name: 'login' }" class="btn btn-info btn-sm text-white fw-bold px-4 rounded"
+               <router-link :to="{ name: 'login' }" class="btn btn-secondary btn-sm text-primary fw-bold px-4 rounded"
                   v-else>Login</router-link>
                <button class="Btn" v-if="isCheck" @click="openModal">
                   <div class="sign">
@@ -61,7 +61,7 @@
             </div>
          </template>
          <template #footer>
-            <button class="btn btn-secondary" @click="show = false">
+            <button class="btn btn-secondary-cancel" @click="show = false">
                Cancel
             </button>
 
@@ -113,12 +113,13 @@ async function handleLogout() {
 <style scoped>
 .navbar-bg {
    /* background-color: color-mix(in srgb, var(--bs-primary) 10%, rgb(255, 255, 255) 10%); */
-   background-color: hsl(from var(--bs-white) h s l / 0.3);
+   background-color: hsl(from var(--bs-black) h s l);
    backdrop-filter: blur(10px);
 }
 
-.nav-link {
+.nav-link, i, .navbar-brand {
    font-size: 1rem;
+   color: hsl(from var(--bs-white) h s l) !important;
 }
 
 .badge {
@@ -141,7 +142,7 @@ async function handleLogout() {
    background-color: rgb(255, 65, 65);
 }
 
-.btn-secondary {
+.btn-secondary-cancel {
    border: none;
    background-color: hsl(from var(--bs-gray) h s 30%);
 }
@@ -203,6 +204,7 @@ async function handleLogout() {
 
 .active {
    background-color: hsl(from var(--bs-primary) h s l);
+   color: hsl(from var(--bs-black) h s l) !important;
    padding-inline: 20px;
    transition: all 0.4s ease;
    font-weight: bold;
