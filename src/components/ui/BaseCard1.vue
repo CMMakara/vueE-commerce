@@ -111,7 +111,7 @@ async function handleButton(id, title, type) {
 }
 
 .card {
-   background-color: color-mix(in srgb, var(--bs-primary) 5%, rgb(0, 0, 0) 100%);
+   background-color: color-mix(in srgb, var(--bs-primary) 10%, rgb(0, 0, 0) 90%);
    color: var(--bs-white);
    /* clip-path: path("MZ"); */
 }

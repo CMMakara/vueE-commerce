@@ -41,7 +41,7 @@ function isFilter() {
                   <span class="name-web">Tinh Luk Tam Jit</span>
                   <!-- <span class="badge bg-primary py-2 px-3"><i class="bi bi-graph-up"></i> Trending now</span> -->
                </div>
-               <h1 class="text-light display-1 fw-bold">
+               <h1 class="text-light display-3 fw-bold">
                   <span class="buy-text">BUY</span> <span class="and-sign">&</span> <span class="sell-text">SELL</span> WHATEVER YOU WANT<span class="text-primary" style="scale: 1.5;">.</span>
                </h1>
                <p class="fs-5 py-3 text-light">
