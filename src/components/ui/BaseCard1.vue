@@ -61,14 +61,10 @@ async function handleButton(id, title, type) {
          // qty.value += 1
          
       try{
-<<<<<<< HEAD
          const formData = new FormData()
          formData.append('product_id', id);
          formData.append('qty' , qty.value+=1)
          cart.addToCart(id, qty.value, formData)
-=======
-         cart.addToCart(id, qty.value+=1)
->>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
       }
       catch(error){
          console.log(error)

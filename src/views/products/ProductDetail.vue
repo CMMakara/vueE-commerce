@@ -1,7 +1,7 @@
 <template>
   <div class="container py-5">
     <div class="row g-5">
-
+      
       <!-- LEFT COLUMN -->
       <div class="col-lg-7">
         <template v-if="loading">
@@ -32,8 +32,7 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between border-0 px-0 py-2">
                   <span>Category</span>
-                  <span class="fw-semibold" v-for="category in product.categories" :key="category.id">{{ category.name
-                    }}</span>
+                  <span class="fw-semibold" v-for="category in product.categories" :key="category.id">{{ category.name }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between border-0 px-0 py-2">
                   <span>Location</span>
@@ -134,8 +133,8 @@
     <template v-else>
       <div class="row g-4 mt-5">
         <div class="col-12 col-md-6 col-lg-4" v-for="product in productStore.allProducts.value" :key="product.id">
-          <BaseCard1 :id="product.id" :title="product.title" :image="product.image" :description="product.description"
-            :price="product.price"></BaseCard1>
+          <BaseCard1 :id="product.id" :title="product.title" :image="product.image"
+            :description="product.description" :price="product.price"></BaseCard1>
         </div>
       </div>
     </template>
@@ -172,30 +171,12 @@ const auth = UseAuthStore();
 const cart = useCartStore();
 const productId = route.params.id;
 
-<<<<<<< HEAD
 const increaseQty = () => quantity.value++;
 const decreaseQty = () => { if (quantity.value > 1) quantity.value--; };
-=======
-let route = useRoute()
-let product = ref([])
-onMounted(async(productId)=>{
-  productId = route.params.id;
-  const res = await api.get(`/api/products/${productId}`)
-  product.value = res.data.data;
-})
->>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
 
 watch(() => route.params.id, (newId) => loadProduct(newId));
 
-<<<<<<< HEAD
 onMounted(() => loadProduct(productId));
-=======
-const increaseQty = () => {
-   alert(product.value)
-}
-const decreaseQty = () => { 
-}
->>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
 
 async function loadProduct(id) {
   loading.value = true;
@@ -230,81 +211,18 @@ async function handleButton(id, title, type) {
 </script>
 
 <style scoped>
-.custom {
-  background-color: hsl(from var(--bs-primary) h s l / 0.04);
-  transition: all 0.3s ease;
-}
+.custom { background-color: hsl(from var(--bs-primary) h s l / 0.04); transition: all 0.3s ease; }
+.custom:hover { background-color: hsl(from var(--bs-primary) h s l / 0.07); }
 
-.custom:hover {
-  background-color: hsl(from var(--bs-primary) h s l / 0.07);
-}
+.skeleton { position: relative; overflow: hidden; background-color: #e2e2e2; border-radius: 8px; }
+.skeleton::after { content: ''; position: absolute; top: 0; left: -150px; height: 100%; width: 150px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: loading 1.5s infinite; }
+@keyframes loading { 0% { left: -150px; } 100% { left: 100%; } }
 
-.skeleton {
-  position: relative;
-  overflow: hidden;
-  background-color: #e2e2e2;
-  border-radius: 8px;
-}
-
-.skeleton::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150px;
-  height: 100%;
-  width: 150px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    left: -150px;
-  }
-
-  100% {
-    left: 100%;
-  }
-}
-
-.skeleton-image {
-  height: 500px;
-  border-radius: 12px;
-}
-
-.skeleton-title {
-  height: 28px;
-  width: 60%;
-  border-radius: 6px;
-}
-
-.skeleton-subtitle {
-  height: 20px;
-  width: 40%;
-  border-radius: 6px;
-}
-
-.skeleton-text {
-  height: 15px;
-  width: 100%;
-  border-radius: 4px;
-}
-
-.skeleton-small {
-  height: 25px;
-  width: 50%;
-  border-radius: 6px;
-}
-
-.skeleton-button {
-  height: 50px;
-  width: 100%;
-  border-radius: 8px;
-}
-
-.skeleton-card {
-  background-color: #f4f4f4;
-  overflow: hidden;
-  position: relative;
-}
+.skeleton-image { height: 500px; border-radius: 12px; }
+.skeleton-title { height: 28px; width: 60%; border-radius: 6px; }
+.skeleton-subtitle { height: 20px; width: 40%; border-radius: 6px; }
+.skeleton-text { height: 15px; width: 100%; border-radius: 4px; }
+.skeleton-small { height: 25px; width: 50%; border-radius: 6px; }
+.skeleton-button { height: 50px; width: 100%; border-radius: 8px; }
+.skeleton-card { background-color: #f4f4f4; overflow: hidden; position: relative; }
 </style>

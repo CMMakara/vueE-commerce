@@ -1,33 +1,13 @@
 <template>
-<<<<<<< HEAD
-  <!-- Empty Cart -->
-  <BaseEmpty
-    v-if="cartStore.items.length === 0"
-=======
-   <!-- Empty Cart -->
-   <!-- <BaseEmpty
-    v-if="items.length === 0"
->>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
-    title="Your Cart is Empty"
-    subtitle="Start adding products to your cart!"
-    buttonText="Continue Shopping"
-    link="/"
-    image="/src/assets/image/empty.png"
-  />
 
-<<<<<<< HEAD
-  <!-- Cart Page -->
-  <div class="container py-5 bg-body-secondary rounded" v-else>
-    <h2 class="fw-bold text-primary mb-5 text-center text-lg-start">
-      Shopping Cart
-    </h2>
-=======
+   <!-- Empty Cart -->
+   <BaseEmpty v-if="cartStore.items.length === 0"></BaseEmpty>
+
    <!-- Cart Page -->
-   <div class="container py-5 bg-body-secondary rounded">
+   <div class="container py-5 bg-body-secondary rounded" v-else>
       <h2 class="fw-bold text-primary mb-5 text-center text-lg-start">
          Shopping Cart
       </h2>
->>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
 
       <div class="row g-4">
          <!-- Cart Items -->
@@ -46,14 +26,14 @@
                            item.product?.category
                         }}</small>
                         <div class="mt-2 d-flex align-items-center gap-2">
-                           <button @click="handleQTY(QTY.DECREMENT, item)" class="btn btn-outline-danger btn-sm rounded-1 p-0"
-                              style="width: 32px; height: 32px">
+                           <button @click="handleQTY(QTY.DECREMENT, item)"
+                              class="btn btn-outline-danger btn-sm rounded-1 p-0" style="width: 32px; height: 32px">
                               −
                            </button>
                            <input type="number" name="" id="" v-model="item.qty">
                            <!-- <span class="px-3">{{ item.qty }}</span> -->
-                           <button @click="handleQTY(QTY.INCREMENT, item)" class="btn btn-outline-primary btn-sm rounded-1 p-0"
-                              style="width: 32px; height: 32px">
+                           <button @click="handleQTY(QTY.INCREMENT, item)"
+                              class="btn btn-outline-primary btn-sm rounded-1 p-0" style="width: 32px; height: 32px">
                               +
                            </button>
                         </div>
@@ -63,8 +43,8 @@
                      <div class="fw-bold mb-2">
                         ${{ (item.product?.price * item.qty).toFixed(2) }}
                      </div>
-                     <button @click="confirmDelete(item)"
-                        class="btn btn-outline-danger btn-sm rounded-1 p-2 shadow-sm" title="Remove Item">
+                     <button @click="confirmDelete(item)" class="btn btn-outline-danger btn-sm rounded-1 p-2 shadow-sm"
+                        title="Remove Item">
                         <i class="bi bi-trash"></i>
                      </button>
                   </div>
@@ -125,7 +105,7 @@
                cart?
             </p>
          </template>
-         <template #footer>
+<template #footer>
             <button class="btn btn-secondary me-2" @click="modalVisible = false">
                Cancel
             </button>
@@ -133,7 +113,7 @@
                Yes, Delete
             </button>
          </template>
-      </BaseModal> -->
+</BaseModal> -->
       <BaseModal v-if="modalVisible" @close="modalVisible = false">
          <template #content>
             <div class="text-center py-4">
@@ -194,7 +174,7 @@ async function handleQTY(type, item) {
    if (type === QTY.INCREMENT) {
       try {
          await cartStore.addToCart(item.product.id, item.qty += 1);
-      } catch(error) {
+      } catch (error) {
          console.log(error);
       }
       return;

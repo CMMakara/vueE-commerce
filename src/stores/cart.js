@@ -16,36 +16,6 @@ export const useCartStore = defineStore("cart", () => {
          items.value = res.data.data.items;
          total.value = res.data.data.total
 
-<<<<<<< HEAD
-  //  Checkout 
- // cart.js
-async function checkout(formData) {
-  error.value = null;
-  loading.value = true;
-
-  try {
-    const res = await api.post("/api/carts/checkout", formData);
-
-    // Clear cart locally
-    items.value = [];
-    total.value = 0;
-
-    // Optionally refetch cart from server to be sure
-    await fetchCart();
-
-    return res.data;
-  } catch (err) {
-    error.value = err.response?.data?.message || "Checkout failed";
-    throw err; // important so your component knows checkout failed
-  } finally {
-    loading.value = false;
-  }
-}
- function clearCart() {
-    items.value = [];
-    total.value = 0;
-  }
-=======
       } catch (err) {
          error.value = err.response?.data?.message || "Something went wrong";
       }
@@ -58,14 +28,10 @@ async function checkout(formData) {
 
       try {
          const res = await api.post("/api/carts/checkout");
->>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
 
          items.value = [];
          return res.data;
 
-<<<<<<< HEAD
-  return { items, error, loading, fetchCart, checkout , total, addToCart ,clearCart};
-=======
       } catch (err) {
          error.value = err.response?.data?.message || "Checkout failed";
       } finally {
@@ -87,5 +53,4 @@ async function checkout(formData) {
    }
 
    return { items, error, loading, fetchCart, checkout, total, addToCart };
->>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
 });

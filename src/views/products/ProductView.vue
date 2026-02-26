@@ -52,7 +52,7 @@ function isFilter() {
                      <span>Shop now</span>
                      <i class="bi bi-arrow-right"></i>
                   </router-link>
-                  <router-link :to="{ name: 'shop' }" class="btn banner-btn d-flex align-items-center gap-2 fw-medium">
+                  <router-link :to="{ name: 'seller' }" class="btn banner-btn d-flex align-items-center gap-2 fw-medium">
                      <span>Sell now</span>
                      <i class="bi bi-arrow-right"></i>
                   </router-link>

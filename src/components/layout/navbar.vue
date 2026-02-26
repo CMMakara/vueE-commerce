@@ -56,7 +56,7 @@
       <BaseModal v-if="show" header="Confirm Logout" @close="show = false">
          <template #content>
             <div class="text-center py-3">
-               <i class="bi bi-box-arrow-right text-danger" style="font-size: 60px"></i>
+               <i class="bi bi-box-arrow-right text-black" style="font-size: 60px"></i>
                <p class="mt-3 mb-0 fs-5">Are you sure you want to logout?</p>
             </div>
          </template>
