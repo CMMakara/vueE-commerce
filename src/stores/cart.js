@@ -45,6 +45,10 @@ async function checkout(formData) {
     loading.value = false;
   }
 }
+ function clearCart() {
+    items.value = [];
+    total.value = 0;
+  }
 
   async function addToCart(product_id, qty, formData = Object) {
     try {
@@ -56,5 +60,5 @@ async function checkout(formData) {
     }
   }
 
-  return { items, error, loading, fetchCart, checkout , total, addToCart };
+  return { items, error, loading, fetchCart, checkout , total, addToCart ,clearCart};
 });
