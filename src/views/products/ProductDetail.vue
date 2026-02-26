@@ -172,12 +172,30 @@ const auth = UseAuthStore();
 const cart = useCartStore();
 const productId = route.params.id;
 
+<<<<<<< HEAD
 const increaseQty = () => quantity.value++;
 const decreaseQty = () => { if (quantity.value > 1) quantity.value--; };
+=======
+let route = useRoute()
+let product = ref([])
+onMounted(async(productId)=>{
+  productId = route.params.id;
+  const res = await api.get(`/api/products/${productId}`)
+  product.value = res.data.data;
+})
+>>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
 
 watch(() => route.params.id, (newId) => loadProduct(newId));
 
+<<<<<<< HEAD
 onMounted(() => loadProduct(productId));
+=======
+const increaseQty = () => {
+   alert(product.value)
+}
+const decreaseQty = () => { 
+}
+>>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
 
 async function loadProduct(id) {
   loading.value = true;

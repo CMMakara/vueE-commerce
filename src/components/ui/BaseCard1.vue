@@ -51,6 +51,7 @@ const buttons = [
  */
 let auth= UseAuthStore()
 let qty = ref(0);
+
 async function handleButton(id, title, type) {
    if(!auth.isLogin){
       return router.push('/login');
@@ -60,10 +61,14 @@ async function handleButton(id, title, type) {
          // qty.value += 1
          
       try{
+<<<<<<< HEAD
          const formData = new FormData()
          formData.append('product_id', id);
          formData.append('qty' , qty.value+=1)
          cart.addToCart(id, qty.value, formData)
+=======
+         cart.addToCart(id, qty.value+=1)
+>>>>>>> 703487d9150e071191a7d24322cb5c2bc744bd59
       }
       catch(error){
          console.log(error)
@@ -112,19 +117,5 @@ async function handleButton(id, title, type) {
 </template>
 
 <style scoped>
-
-.custom {
-   background-color: hsl(from var(--bs-primary) h s 100% / 1);
-   transition: all 0.3s ease;
-   &:hover {
-      background-color: hsl(from var(--bs-primary) h s 10% / 1);
-   }
-}
-
-.card {
-   background-color: color-mix(in srgb, var(--bs-primary) 5%, rgb(0, 0, 0) 100%);
-   color: var(--bs-white);
-   /* clip-path: path("MZ"); */
-}
-
+@import '../../assets/css/style.css'
 </style>
