@@ -2,13 +2,15 @@
   <div class="min-vh-100 bg-white py-5">
     <div class="container" style="max-width: 800px">
       <div class="d-flex justify-content-between align-items-center mb-5">
-        <router-link :to="{name : 'seller'}" class="btn btn-link text-dark p-0 text-decoration-none fw-bold">← Back</router-link>
+        <router-link :to="{ name: 'seller' }" class="btn btn-link text-dark p-0 text-decoration-none fw-bold">←
+          Back</router-link>
         <div class="d-flex gap-2">
           <button class="btn btn-outline-dark border-0 fw-medium" @click="resetForm">
             Clear Draft
           </button>
-          <button class="btn bg-primary bg-opacity-50 text-white rounded px-4" @click="handleSubmit">
-            Add Product
+          <button :disabled="isloading" class="btn bg-primary bg-opacity-50 text-white rounded px-4" @click="handleSubmit" >
+            <span v-if="isloading" class="spinner-border spinner-border-sm text-light me-2" role="status"></span>
+            <span>{{ isloading ? "Loading..." : "Add Product" }}</span>
           </button>
         </div>
       </div>
@@ -170,6 +172,7 @@ const handleSubmit = async () => {
     fmdata.append('category_ids', JSON.stringify([product.category_ids]));
   }
   try {
+    isloading.value = true
     const res = await api.post("/api/products", fmdata, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -179,6 +182,7 @@ const handleSubmit = async () => {
     resetForm();
   } catch (err) {
     notify.error("Error creating product")
+    isloading.value = false
   }
 };
 

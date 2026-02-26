@@ -59,7 +59,7 @@ async function handleButton(id, title, type) {
       // alert(id + ' ' + title + ' ' + type);
          // qty.value += 1
          
-         try{
+      try{
          const formData = new FormData()
          formData.append('product_id', id);
          formData.append('qty' , qty.value+=1)
@@ -71,7 +71,16 @@ async function handleButton(id, title, type) {
       
    }
    if (type === TYPE_BUTTON.BUY_NOW) {
-      router.push()
+      router.push({name : 'checkout'})
+      try{
+         const formData = new FormData()
+         formData.append('product_id', id);
+         formData.append('qty' , qty.value+=1)
+         cart.addToCart(id, qty.value, formData)
+      }
+      catch(error){
+         console.log(error)
+      }
    };
 }
 
