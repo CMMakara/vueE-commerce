@@ -6,6 +6,7 @@ import CheckoutView from "@/views/cart/CheckoutView.vue";
 import HomeView from "@/views/HomeView.vue";
 import PaymentsView from "@/views/payments/PaymentsView.vue";
 import AddProductView from "@/views/products/AddProductView.vue";
+import EditProductView from "@/views/products/EditProductView.vue";
 import ProductDetail from "@/views/products/ProductDetail.vue";
 import ProductView from "@/views/products/ProductView.vue";
 import SellerView from "@/views/products/SellerView.vue";
@@ -77,6 +78,12 @@ const router = createRouter({
                path: "/addProduct",
                name: "addProduct",
                component: AddProductView,
+               // meta: { requiresAuth: true },
+            },
+            {
+               path: "/editProduct/:id",
+               name: "editProduct",
+               component: EditProductView,
                // meta: { requiresAuth: true },
             },
             {

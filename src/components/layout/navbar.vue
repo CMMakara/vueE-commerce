@@ -24,19 +24,21 @@
             <i class="bi bi-search"></i>
           </button>
 
-          <button type="button" class="btn border-0 p-0 position-relative bg-transparent me-2">
+          
+          <router-link :to="{name : 'cart'}" type="button" class="btn border-0 p-0 position-relative bg-transparent me-2">
             <i class="bi bi-cart fs-4"></i>
             <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="top: 10px;"
-            v-if="totalCart > 0">
-              {{ totalCart }}
+            v-if="cartStore.items.length > 0">
+              {{ cartStore.items.length }}
             </span>
-          </button>
+          </router-link>
 
-          <button class="btn border-0 bg-transparent text-black" v-if="isCheck">
+          
+          <router-link :to="{name : 'profile'}"  class="btn border-0 bg-transparent text-black" v-if="isCheck">
             <img
               src="https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png"
               alt="" class="bg-black rounded-circle" style="width: 35px; height: 35px;">
-          </button>
+          </router-link>
           <router-link :to="{name : 'login'}" class="btn btn-info btn-sm text-white fw-bold px-4 rounded" v-else>Login</router-link>
           <button class="Btn" v-if="isCheck" @click="handleLogout">
             <div class="sign"><svg viewBox="0 0 512 512">
@@ -59,15 +61,16 @@
 import router from '@/router';
 import { UseAuthStore } from '@/stores/auth';
 import { useCartStore } from '@/stores/cart';
-import { computed} from 'vue';
+import { computed, onMounted} from 'vue';
 
 const auth = UseAuthStore()
 let isCheck = computed(() => auth.isLogin)
 let cartStore = useCartStore();
-let totalCart = computed(()=>{
-  return cartStore.cart.reduce((sum, item) => sum + item.quantity , 0)
+
+onMounted(async()=>{
+  await cartStore.fetchCart()
 })
-console.log(totalCart);
+
 
 async function handleLogout(){
    await auth.logout();

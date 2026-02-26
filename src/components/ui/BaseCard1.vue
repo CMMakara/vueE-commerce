@@ -10,6 +10,8 @@ const TYPE_BUTTON = Object.freeze({
    BUY_NOW: 'Buy now',
 });
 
+const cart = useCartStore();
+
 const product = defineProps({
    isFilter: Boolean,
    id: Number,
@@ -48,18 +50,26 @@ const buttons = [
  * @param {string} type    - [Add to cart, Buy now]
  */
 let auth= UseAuthStore()
-let cartStore = useCartStore()
-let addCart = ref(0)
-function handleButton(id, title, type) {
+async function handleButton(id, title, type) {
    if(!auth.isLogin){
       return router.push('/login');
    }
    if (type === TYPE_BUTTON.ADD_TO_CART) {
       // alert(id + ' ' + title + ' ' + type);
-      // alert(addCart.value += 1)
-      cartStore.addToCart(product, 1);
-      alert(`${product.title} added to cart!`);
-
+         // qty.value += 1
+         
+         try{
+         // const fmdata = new FormData()
+         // fmdata.append('product_id', id);
+         // fmdata.append('qty' , qty.value)
+         // api.post('/api/carts', fmdata)
+         // alert('add cart success');
+         cart.addToCart(id, qty.value)
+      }
+      catch(error){
+         alert(error)
+      }
+      
    }
    if (type === TYPE_BUTTON.BUY_NOW) alert(id + ' ' + title + ' ' + type);
 }

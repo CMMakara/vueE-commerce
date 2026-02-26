@@ -20,10 +20,10 @@
                     <h4 class=" ">All Product</h4>
                     <p class="page-subtitle">product Owner</p>
                 </div>
-                <button class="btn btn-primary">
+                <router-link :to="{name : 'addProduct'}" class="btn btn-primary">
                     <i class="bi bi-patch-plus"></i>
                     New Product
-                </button>
+                </router-link>
             </div>
 
             <!-- Stat Cards -->
@@ -104,8 +104,8 @@
                                     <img :src="item.image" alt="" style="width: 60px; border-radius: 10px;">
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn "><i class="bi bi-pencil-square text-warning"></i></button>
-                                    <button class="btn"><i class="bi bi-trash3 text-danger"></i></button>
+                                    <button class="btn" @click="gotoEditProduct(item.id)"><i class="bi bi-pencil-square text-warning"></i></button>
+                                    <button class="btn" @click="openModalDelete(item.id)"><i class="bi bi-trash3 text-danger"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -185,7 +185,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="own in getProfile.myPayment" :key="own.id">
+                            <tr v-for="own in getProfile.myPurchase" :key="own.id">
                                 <th>{{ own.id }}</th>
                                 <td>{{ new Date(own.created_at).toLocaleDateString('km-KH') }}</td>
                                 <td>
@@ -203,8 +203,8 @@
                                     ${{  Number(own.price) * (own.qty) }}
                                 </td>
                                 <td>
-                                    <a class="btn bg-primary-subtle me-3">Ap</a>
-                                    <a class="btn bg-success-subtle">Rej</a>
+                                    <a class="btn bg-primary-subtle me-3" v-if="Approve" @click="handleApprove(own.id)">Ap</a>
+                                    <a class="btn bg-success-subtle" v-if="Reject">Rej</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -221,15 +221,31 @@
         </div><!-- /tab-history -->
 
     </div>
-
+    <BaseModal v-if="showModal" @close="showModal = false" header="Delete">
+        <template #content>
+            <div class="text-center my-3">
+                <i class="bi bi-trash3 text-danger display-3"></i>
+            </div>
+            <h4 class="text-center mt-2 text-secondary">Do you want delete Product</h4>
+            <div class="text-end mt-5">
+                <button class="btn btn-secondary px-5 me-2" @click="showModal = false">No</button>
+                <button class="btn btn-success px-5" @click="deleteProduct">Yes</button>
+            </div>
+        </template>
+    </BaseModal>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useProfileStore } from '@/stores/profile';
 import BasePagination from '../ui/BasePagination.vue';
+import BaseModal from '../ui/BaseModal.vue';
+import api from '@/api/http';
+import { notify } from '@/util/toast';
+import router from '@/router';
 const getProfile = useProfileStore();
 const per_page = ref(10);
 const per_payment = ref(10)
+
 onMounted(async () => {
     await getProfile.fetchOwnProduct(1, per_page.value);
     await getProfile.fetchPayment(1,per_payment.value)
@@ -248,7 +264,36 @@ const handleNexPage = async (page) => {
 const handleNexPayment = async(page)=>{
     await getProfile.fetchPayment(page,per_payment.value)
 }
+let showModal =ref(false)
+const openModalDelete = (id) =>{
+    showModal.value = true
+    showModal.value = id
+}
+const closeModal= ()=>{
+    showModal.value =false
+}
+const deleteProduct = async () =>{
+    await api.delete(`/api/products/${showModal.value}`)
+    closeModal()
+    notify.sucess('deleted product successful!!')
+    await getProfile.fetchOwnProduct(page, per_page.value)
+}
 
+function gotoEditProduct(id){
+    router.push({
+        name : 'editProduct',
+        params : {id : id}
+    })
+}
+
+
+let Approve = ref(true)
+let Reject = ref(true)
+const handleApprove = async(id)=>{
+    await api.put(`/api/payments/approve/${id}`)
+    Reject.value = false
+    notify.sucess('Approval complete. Your product is now active.')
+}
 </script>
 
 <style scoped>
