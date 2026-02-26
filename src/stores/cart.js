@@ -22,32 +22,37 @@ export const useCartStore = defineStore("cart", () => {
   }
 
   //  Checkout 
-  async function checkout() {
-    error.value = null;
-    loading.value = true;
+ // cart.js
+async function checkout(formData) {
+  error.value = null;
+  loading.value = true;
 
-    try {
-      const res = await api.post("/api/carts/checkout");
+  try {
+    const res = await api.post("/api/carts/checkout", formData);
 
-      items.value = [];
-      return res.data;
-      
-    } catch (err) {
-      error.value = err.response?.data?.message || "Checkout failed";
-    } finally {
-      loading.value = false;
-    }
+    // Clear cart locally
+    items.value = [];
+    total.value = 0;
+
+    // Optionally refetch cart from server to be sure
+    await fetchCart();
+
+    return res.data;
+  } catch (err) {
+    error.value = err.response?.data?.message || "Checkout failed";
+    throw err; // important so your component knows checkout failed
+  } finally {
+    loading.value = false;
   }
+}
 
-  async function addToCart(product_id, qty) {
+  async function addToCart(product_id, qty, formData = Object) {
     try {
-      const fmdata = new FormData()
-      fmdata.append('product_id', product_id);
-      fmdata.append('qty' , qty)
-      const res = api.post('/api/carts', fmdata)
+      const res = api.post('/api/carts', formData)
+      await fetchCart();
       console.log(res)
     } catch (error) {
-      
+      console.log(error)
     }
   }
 

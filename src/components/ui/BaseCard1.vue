@@ -50,6 +50,7 @@ const buttons = [
  * @param {string} type    - [Add to cart, Buy now]
  */
 let auth= UseAuthStore()
+let qty = ref(0);
 async function handleButton(id, title, type) {
    if(!auth.isLogin){
       return router.push('/login');
@@ -59,15 +60,13 @@ async function handleButton(id, title, type) {
          // qty.value += 1
          
          try{
-         // const fmdata = new FormData()
-         // fmdata.append('product_id', id);
-         // fmdata.append('qty' , qty.value)
-         // api.post('/api/carts', fmdata)
-         // alert('add cart success');
-         cart.addToCart(id, qty.value)
+         const formData = new FormData()
+         formData.append('product_id', id);
+         formData.append('qty' , qty.value+=1)
+         cart.addToCart(id, qty.value, formData)
       }
       catch(error){
-         alert(error)
+         console.log(error)
       }
       
    }
@@ -84,7 +83,7 @@ async function handleButton(id, title, type) {
          <p class="card-text">{{ description.substring(0, 20) }} {{ description.length > 20 ? '...' : '' }} {{ !description ? 'No description' : '' }}</p>
          <div
             class="card-footer p-0 border-0 bg-transparent d-flex flex-wrap justify-content-between align-items-center gap-3">
-            <h6 class="card-price badge fw-bold mb-0 bg-success bg-opacity-10 text-success p-2 px-3 border-success rounded-5 text-nowrap"
+            <h6 class="card-price badge fw-bold mb-0 bg-primary bg-opacity-10 text-primary p-2 px-3 border-success rounded-5 text-nowrap"
                style="font-size: 14px;">$ <span>{{ price.toFixed(2) }}</span></h6>
             <div class="d-flex w-100 flex-wrap gap-2 justify-content-between align-items-center">
                <BaseButton v-for="(button, index) in buttons"
@@ -104,15 +103,17 @@ async function handleButton(id, title, type) {
 <style scoped>
 
 .custom {
-   background-color: hsl(from var(--bs-primary) h s l / 0.04);
+   background-color: hsl(from var(--bs-primary) h s 100% / 1);
    transition: all 0.3s ease;
    &:hover {
-      background-color: hsl(from var(--bs-primary) h s l / 0.07);
+      background-color: hsl(from var(--bs-primary) h s 10% / 1);
    }
 }
 
 .card {
-   background-color: color-mix(in srgb, var(--bs-primary) 5%, rgb(255, 255, 255) 2%);
+   background-color: color-mix(in srgb, var(--bs-primary) 5%, rgb(0, 0, 0) 100%);
+   color: var(--bs-white);
    /* clip-path: path("MZ"); */
 }
+
 </style>
