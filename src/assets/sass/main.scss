@@ -2,6 +2,12 @@
 
 $border-radius: 30px;
 
+$orange: hsl(27, 98%, 54%);
+
+$primary: hsl(127, 95%, 57%);
+$secondary: hsl(127, 95%, 20%);
+
+
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/variables-dark";
@@ -68,3 +74,4 @@ $carousel-dark-control-icon-filter: invert(1) grayscale(100); // Deprecated in v
 }
 
 @import "bootstrap/scss/bootstrap";
+@import "../css/style.css";
