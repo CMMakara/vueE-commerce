@@ -3,51 +3,54 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useCartStore = defineStore("cart", () => {
-  const items = ref([]);
-  const total = ref(0)
-  const error = ref(null);
-  const loading = ref(false);
+   const items = ref([]);
+   const total = ref(0)
+   const error = ref(null);
+   const loading = ref(false);
 
-  // Fetch cart 
-  async function fetchCart() {
-    error.value = null;
-    try {
-      const res = await api.get("/api/profile/carts");
-      items.value = res.data.data.items ;
-      total.value = res.data.data.total
-      
-    } catch (err) {
-      error.value = err.response?.data?.message || "Something went wrong";
-    }
-  }
+   // Fetch cart 
+   async function fetchCart() {
+      error.value = null;
+      try {
+         const res = await api.get("/api/profile/carts");
+         items.value = res.data.data.items;
+         total.value = res.data.data.total
 
-  //  Checkout 
-  async function checkout() {
-    error.value = null;
-    loading.value = true;
+      } catch (err) {
+         error.value = err.response?.data?.message || "Something went wrong";
+      }
+   }
 
-    try {
-      const res = await api.post("/api/carts/checkout");
+   //  Checkout 
+   async function checkout() {
+      error.value = null;
+      loading.value = true;
 
-      items.value = [];
-      return res.data;
-      
-    } catch (err) {
-      error.value = err.response?.data?.message || "Checkout failed";
-    } finally {
-      loading.value = false;
-    }
-  }
+      try {
+         const res = await api.post("/api/carts/checkout");
 
-  async function addToCart(product_id, qty, formData = Object) {
-    try {
-      const res = api.post('/api/carts', formData)
-      await fetchCart();
-      console.log(res)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+         items.value = [];
+         return res.data;
 
-  return { items, error, loading, fetchCart, checkout , total, addToCart };
+      } catch (err) {
+         error.value = err.response?.data?.message || "Checkout failed";
+      } finally {
+         loading.value = false;
+      }
+   }
+
+   async function addToCart(product_id, qty) {
+      try {
+         const res = await api.post('/api/carts', {
+            product_id,
+            qty
+         })
+         // await fetchCart();
+         console.log(res)
+      } catch (error) {
+         console.log(error)
+      }
+   }
+
+   return { items, error, loading, fetchCart, checkout, total, addToCart };
 });

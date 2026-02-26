@@ -139,17 +139,20 @@ const buttons = [
 
 
 let route = useRoute()
-let product = ref('')
+let product = ref([])
 onMounted(async(productId)=>{
   productId = route.params.id;
   const res = await api.get(`/api/products/${productId}`)
-  product.value = res.data.data
+  product.value = res.data.data;
 })
 
 const quantity = ref(1)
 
-const increaseQty = () => quantity.value++
-const decreaseQty = () => { if (quantity.value > 1) quantity.value-- }
+const increaseQty = () => {
+   alert(product.value)
+}
+const decreaseQty = () => { 
+}
 
 </script>
 
