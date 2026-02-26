@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ProductLayout from "@/components/layout/ProductLayout.vue";
 import BaseCarousel from "@/components/ui/BaseCarousel.vue";
+import Scroll from "@/components/ui/Scroll.vue";
 import { allProductStore } from "@/stores/products";
 import { onMounted, ref, watch } from "vue";
 
@@ -14,7 +15,7 @@ const src = ref([
 ]);
 
 let page = ref(1);
-let per_page = ref(12);
+let per_page = ref(8);
 let sortDir = ref("desc");
 
 onMounted(async () => {
@@ -84,15 +85,16 @@ function isFilter() {
 
    <section>
       <div class="container">
-         <div class="p-3 border shadow-sm rounded">
+         <div class="p-3 border shadow-sm rounded overflow-hidden">
             <!-- <BaseCarousel :src="src" /> -->
+            <!-- <Scroll/> -->
          </div>
       </div>
    </section>
 
-   <section class="px-5" style="margin-block: 100px">
+   <section class="px-5" style="margin-top: 100px">
       <div class="container-fluid">
-         <h3 class="text-secondary m-0 fw-bold">New Products</h3>
+         <h2 class="text-black fw-bold" style="width: fit-content;">New Products</h2>
       </div>
    </section>
 

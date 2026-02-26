@@ -41,15 +41,13 @@ export const useCartStore = defineStore("cart", () => {
     }
   }
 
-  async function addToCart(product_id, qty) {
+  async function addToCart(product_id, qty, formData = Object) {
     try {
-      const fmdata = new FormData()
-      fmdata.append('product_id', product_id);
-      fmdata.append('qty' , qty)
-      const res = api.post('/api/carts', fmdata)
+      const res = api.post('/api/carts', formData)
+      await fetchCart();
       console.log(res)
     } catch (error) {
-      
+      console.log(error)
     }
   }
 

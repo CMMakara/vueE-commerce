@@ -50,6 +50,7 @@ const buttons = [
  * @param {string} type    - [Add to cart, Buy now]
  */
 let auth= UseAuthStore()
+let qty = ref(0);
 async function handleButton(id, title, type) {
    if(!auth.isLogin){
       return router.push('/login');
@@ -59,15 +60,13 @@ async function handleButton(id, title, type) {
          // qty.value += 1
          
          try{
-         // const fmdata = new FormData()
-         // fmdata.append('product_id', id);
-         // fmdata.append('qty' , qty.value)
-         // api.post('/api/carts', fmdata)
-         // alert('add cart success');
-         cart.addToCart(id, qty.value)
+         const formData = new FormData()
+         formData.append('product_id', id);
+         formData.append('qty' , qty.value+=1)
+         cart.addToCart(id, qty.value, formData)
       }
       catch(error){
-         alert(error)
+         console.log(error)
       }
       
    }
