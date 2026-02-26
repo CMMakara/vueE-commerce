@@ -66,7 +66,7 @@ function isFilter() {
    </section>
 
    <section class="mt-4">
-      <ProductLayout :products="filterProduct" :filter="filter" :isFilter="isFilter">
+      <ProductLayout :products="filterProduct" :filter="filter" :isFilter="isFilter" :container="'container-fluid px-5'">
          <template #filterBtn>
             <button @click="isFilter" class="btn btn-dark py-3 pe-5 ps-2 rounded-4 fw-medium shadow-sm" style=""><i
             class="bi bi-filter-left"></i>&nbsp;<span>Filter</span></button>
