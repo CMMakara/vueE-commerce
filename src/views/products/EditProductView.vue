@@ -2,13 +2,14 @@
   <div class="min-vh-100 bg-white py-5">
     <div class="container" style="max-width: 800px">
       <div class="d-flex justify-content-between align-items-center mb-5">
-        <router-link :to="{name : 'seller'}" class="btn btn-link text-dark p-0 text-decoration-none fw-bold">← Back</router-link>
+        <router-link :to="{ name: 'seller' }" class="btn btn-link text-dark p-0 text-decoration-none fw-bold">←
+          Back</router-link>
         <div class="d-flex gap-2">
           <button class="btn btn-outline-dark border-0 fw-medium" @click="resetForm">
             Clear Draft
           </button>
           <button class="btn bg-primary bg-opacity-50 text-white rounded px-4" @click="handleSubmit">
-            Add Product
+            Edit Product
           </button>
         </div>
       </div>
@@ -88,10 +89,28 @@ import api from "@/api/http";
 import { UseCategoryStore } from "@/stores/category";
 import { notify } from "@/util/toast";
 import { onMounted, reactive, ref } from "vue";
+import { useRoute } from "vue-router";
 
+let route = useRoute()
+let productId = route.params.id
 const categoryStore = UseCategoryStore();
 onMounted(async () => {
   await categoryStore.fetchCategory();
+
+  try {
+    let res = await api.get(`/api/products/${productId}`)
+    product.title = res.data.data?.title
+    product.price = res.data.data?.price
+    product.condition = res.data.data?.condition
+    product.category_ids = res.data.data.categories?.[0]?.id ?? null
+    product.description = res.data.data?.description
+    product.detail = res.data.data?.detail
+    product.story = res.data.data?.story
+    imagePreview.value = res.data.data?.image
+  }
+  catch (error) {
+    alert(error)
+  }
 });
 const product = reactive({
   title: "",
@@ -111,74 +130,44 @@ const handleImageUpload = (e) => {
     imageFile.value = file;
     imagePreview.value = URL.createObjectURL(file);
   }
-
-  console.log(imageFile.value);
 };
 const handleSubmit = async () => {
 
-  if (!product.title) {
-    notify.error("Please enter product title")
-    return
-  }
-  if (!product.price) {
-    notify.error("Please enter price")
-    return
-  }
-  if (!imageFile.value) {
-    notify.error('Please select an image')
-    return;
-  }
-  if (!product.category_ids || product.category_ids.length === 0) {
-    notify.error('Please select an category')
-    return;
-  }
-  if (!product.description) {
-    notify.error("Please enter description")
-    return
-  }
-  if (!product.detail) {
-    notify.error("Please enter detail")
-    return
-  }
-  if (!product.story) {
-    notify.error("Please enter story")
-    return
+  if (!product.title) return notify.error("Please enter product title")
+  if (!product.price) return notify.error("Please enter price")
+  if (!product.category_ids) return notify.error("Please select a category")
+  if (!product.description) return notify.error("Please enter description")
+  if (!product.detail) return notify.error("Please enter detail")
+  if (!product.story) return notify.error("Please enter story")
+
+  if (!imageFile.value && !imagePreview.value) {
+    return notify.error("Please select an image")
   }
 
-  if (!product.title ||
-    !product.description ||
-    !product.price ||
-    !product.category_ids ||
-    !imageFile.value ||
-    !product.detail ||
-    !product.story) {
-
-    notify.error("Please fill all required fields")
-    return
-  }
 
   const fmdata = new FormData();
   fmdata.append("title", product.title);
-  fmdata.append("image", imageFile.value);
   fmdata.append("description", product.description);
   fmdata.append("detail", product.detail);
   fmdata.append("condition", product.condition);
   fmdata.append("story", product.story);
   fmdata.append("price", product.price);
-
+  if (imageFile.value instanceof File) {
+    fmdata.append("image", imageFile.value);
+  }
   if (product.category_ids) {
     fmdata.append('category_ids', JSON.stringify([product.category_ids]));
   }
   try {
-    const res = await api.post("/api/products", fmdata, {
+    const res = await api.post(`/api/products/${productId}`, fmdata, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    notify.sucess('Product created successfully!', '/seller')
+    notify.sucess('Updat product successfully!', '/seller')
     resetForm();
   } catch (err) {
-    notify.error("Error creating product")
+    notify.error("Error cann't update product")
   }
 };
 

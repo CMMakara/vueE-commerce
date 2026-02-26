@@ -20,10 +20,10 @@
                     <h4 class=" ">All Product</h4>
                     <p class="page-subtitle">product Owner</p>
                 </div>
-                <button class="btn btn-primary">
+                <router-link :to="{name : 'addProduct'}" class="btn btn-primary">
                     <i class="bi bi-patch-plus"></i>
                     New Product
-                </button>
+                </router-link>
             </div>
 
             <!-- Stat Cards -->
@@ -34,7 +34,7 @@
                         <div class="stat-icon blue">
                             <i class="bi bi-box"></i>
                         </div>
-                        <div class=""> 
+                        <div class="">
                             <div class="stat-label">Product Items</div>
                             <div class="stat-value blue">{{ getProfile.OwnProduct.length }}</div>
                         </div>
@@ -93,18 +93,19 @@
                                 <th scope="row">{{ item.id }}</th>
                                 <td>{{ item.title }}</td>
                                 <td>
-                                    <span v-for="cat in item.categories" :key="cat.id" class="badge bg-primary-subtle p-2 text-danger me-1">
+                                    <span v-for="cat in item.categories" :key="cat.id"
+                                        class="badge bg-primary-subtle p-2 text-danger me-1">
                                         {{ cat.name || 'null' }}
                                     </span>
                                 </td>
                                 <td class="text-primary">$ {{ item.price }}</td>
-                                <td> {{  new Date (item.created_at).toLocaleDateString('km-KH') }}</td>
+                                <td> {{ new Date(item.created_at).toLocaleDateString('km-KH') }}</td>
                                 <td>
                                     <img :src="item.image" alt="" style="width: 60px; border-radius: 10px;">
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn "><i class="bi bi-pencil-square text-warning"></i></button>
-                                    <button class="btn"><i class="bi bi-trash3 text-danger"></i></button>
+                                    <button class="btn" @click="gotoEditProduct(item.id)"><i class="bi bi-pencil-square text-warning"></i></button>
+                                    <button class="btn" @click="openModalDelete(item.id)"><i class="bi bi-trash3 text-danger"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -112,16 +113,11 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="d-flex justify-content-between align-items-center mt-3 px-1">
-                    <span class="page-info">show 1–3 of 3 items</span>
-                    <nav>
-                        <ul class="pagination pagination-sm mb-0">
-                            <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#">›</a></li>
-                        </ul>
-                    </nav>
+                <div class="">
+                    <BasePagination :totalPage=getProfile.pt.last_page :current=getProfile.pt.current_page
+                        @update:page=handleNexPage></BasePagination>
                 </div>
+
             </div><!-- /table-card -->
 
         </div><!-- /tab-products -->
@@ -173,7 +169,7 @@
             <!-- History Table -->
             <div class="table-card mt-4">
                 <div class="table-header d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="table-title mb-0">Sell</h5>
+                    <h5 class="table-title mb-0  p-3 bg-primary-subtle rounded">Sell</h5>
                     <input type="text" class="form-control search-input" placeholder="ស្វែងរក..." />
                 </div>
                 <div class="table-responsive">
@@ -189,9 +185,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="own in getProfile.myPayment" :key="own.id">
+                            <tr v-for="own in getProfile.myPurchase" :key="own.id">
                                 <th>{{ own.id }}</th>
-                                <td>{{ new Date (own.created_at).toLocaleDateString('km-KH')}}</td>
+                                <td>{{ new Date(own.created_at).toLocaleDateString('km-KH') }}</td>
                                 <td>
                                     <span class="me-2">
                                         <img :src="own.buyer?.avatar" style="width: 20px; border-radius: 50%;" alt="">
@@ -203,77 +199,104 @@
                                 <td>
                                     <img :src="own.product?.image" style="width: 50px; border-radius: 10px;" alt="">
                                 </td>
-                                <td class="fw-bold text-success">${{ own.product?.price }}</td>
-                                <td>
-                                    <a class="btn bg-primary-subtle me-3">Ap</a>
-                                    <a class="btn bg-success-subtle">Rej</a>
+                                <td class="fw-bold text-success">
+                                    ${{  Number(own.price) * (own.qty) }}
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <th>4</th>
-                                <td>2025-01-22</td>
-                                <td>ការដក</td>
-                                <td class="fw-bold" style="color:#ea580c;">$7.00</td>
-                                <td class="text-center"><span class="status-badge pending">កំពុងរង់ចាំ</span></td>
+                                <td>
+                                    <a class="btn bg-primary-subtle me-3" v-if="Approve" @click="handleApprove(own.id)">Ap</a>
+                                    <a class="btn bg-success-subtle" v-if="Reject">Rej</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-3 px-1">
-                    <span class="page-info">បង្ហាញ 1–4 នៃ 12 ធាតុ</span>
-                    <nav>
-                        <ul class="pagination pagination-sm mb-0">
-                            <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">›</a></li>
-                        </ul>
-                    </nav>
+                <!-- pagination -->
+                <div class="">
+                    <BasePagination :totalPage=getProfile.paymentPaginate.last_page :current= getProfile.paymentPaginate.current_page
+                        @update:page=handleNexPayment></BasePagination>
                 </div>
+
             </div>
 
         </div><!-- /tab-history -->
 
     </div>
-
+    <BaseModal v-if="showModal" @close="showModal = false" header="Delete">
+        <template #content>
+            <div class="text-center my-3">
+                <i class="bi bi-trash3 text-danger display-3"></i>
+            </div>
+            <h4 class="text-center mt-2 text-secondary">Do you want delete Product</h4>
+            <div class="text-end mt-5">
+                <button class="btn btn-secondary px-5 me-2" @click="showModal = false">No</button>
+                <button class="btn btn-success px-5" @click="deleteProduct">Yes</button>
+            </div>
+        </template>
+    </BaseModal>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useProfileStore } from '@/stores/profile';
+import BasePagination from '../ui/BasePagination.vue';
+import BaseModal from '../ui/BaseModal.vue';
+import api from '@/api/http';
+import { notify } from '@/util/toast';
+import router from '@/router';
 const getProfile = useProfileStore();
+const per_page = ref(10);
+const per_payment = ref(10)
+
 onMounted(async () => {
-    await getProfile.fetchOwnProduct();
-    await getProfile.fetchPayment()
-    console.log(getProfile.myPayment);
- 
+    await getProfile.fetchOwnProduct(1, per_page.value);
+    await getProfile.fetchPayment(1,per_payment.value)
 })
 
 let openUi = ref(true)
 function openProduct() {
-    openUi.value =! openUi.value
-    console.log(openUi.value);
+    openUi.value = true;
 }
 function openPayment() {
     openUi.value = false;
-    console.log(openUi.value);
+}
+const handleNexPage = async (page) => {
+    await getProfile.fetchOwnProduct(page, per_page.value)
+}
+const handleNexPayment = async(page)=>{
+    await getProfile.fetchPayment(page,per_payment.value)
+}
+let showModal =ref(false)
+const openModalDelete = (id) =>{
+    showModal.value = true
+    showModal.value = id
+}
+const closeModal= ()=>{
+    showModal.value =false
+}
+const deleteProduct = async () =>{
+    await api.delete(`/api/products/${showModal.value}`)
+    closeModal()
+    notify.sucess('deleted product successful!!')
+    await getProfile.fetchOwnProduct(page, per_page.value)
 }
 
+function gotoEditProduct(id){
+    router.push({
+        name : 'editProduct',
+        params : {id : id}
+    })
+}
+
+
+let Approve = ref(true)
+let Reject = ref(true)
+const handleApprove = async(id)=>{
+    await api.put(`/api/payments/approve/${id}`)
+    Reject.value = false
+    notify.sucess('Approval complete. Your product is now active.')
+}
 </script>
 
 <style scoped>
-/* :root {
-    --primary: #2563eb;
-    --primary-light: #eff6ff;
-    --green-light: #dcfce7;
-    --green-text: #16a34a;
-    --purple-light: #f3e8ff;
-    --purple-text: #7c3aed;
-    --body-bg: #f1f5f9;
-    --card-radius: 16px;
-} */
-
 body {
     background: var(--body-bg);
     font-family: 'Hanuman', serif;
