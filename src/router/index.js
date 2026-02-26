@@ -75,6 +75,11 @@ const router = createRouter({
                // meta: { requiresAuth: true },
             },
             {
+               path: "/support",
+               name: "support",
+               component: ShopView
+            },
+            {
                path: "/addProduct",
                name: "addProduct",
                component: AddProductView,

@@ -16,13 +16,11 @@ export const UseAuthStore = defineStore("auth", () => {
          if (!res.data?.data?.token) {
             throw new Error(res.data?.message || "Login failed");
          }
-         // console.log(res);
          user.value = res.data.data.user;
          token.value = res.data.data.token;
          localStorage.setItem("token", token.value);
       } catch (error) {
          throw error.response;
-         // console.log(error);
       }
    }
 
