@@ -29,3 +29,4 @@ export function validation(value , rules = []){
         }
     }
 }
+
