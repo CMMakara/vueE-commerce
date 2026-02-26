@@ -12,9 +12,8 @@
             <!-- Right: Form -->
             <div class="col-12 col-md-6">
                <div class="px-0 px-md-3">
-                  <h1 class="h3 mb-3 text-center text-md-start">Create Account</h1>
-
                   <form @submit.prevent="handleregister" class="mx-auto" style="max-width: 420px;">
+                     <h1 class="h3 mb-3 text-center text-md-start">Create Account</h1>
                      <!-- Email -->
                      <div class="mb-3">
                         <label class="form-label mb-1">Email</label>
@@ -33,17 +32,13 @@
 
                      <div class="mb-3">
                         <label class="form-label mb-1">Password</label>
-
                         <div class="position-relative">
                            <input :type="showPassword ? 'text' : 'password'" class="form-control pe-5"
                               placeholder="Enter your password" v-model="form.password" />
-
-                           <!-- Clickable Eye Icon -->
                            <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
                               class="position-absolute top-50 end-0 translate-middle-y me-3 password-icon"
                               @click="togglePassword"></i>
                         </div>
-
                         <p v-if="error.password" class="text-danger small mb-0 mt-1">
                            {{ error.password }}
                         </p>
@@ -52,8 +47,13 @@
                      <!-- Confirm Password -->
                      <div class="mb-4">
                         <label class="form-label mb-1">Confirm Password</label>
-                        <input type="password" class="form-control" placeholder="Confirm Password"
-                           v-model="form.password_confirmation" />
+                        <div class="position-relative">
+                           <input :type="showConfirmPass ? 'text' : 'password'" class="form-control" placeholder="Confirm Password"
+                              v-model="form.password_confirmation" />
+                           <i :class="showConfirmPass? 'bi bi-eye-slash' : 'bi bi-eye'"
+                              class="position-absolute top-50 end-0 translate-middle-y me-3 password-icon"
+                              @click="toggleConfirmPass"></i>
+                        </div>
                         <p v-if="error.password_confirmation" class="text-danger small mb-0 mt-1">
                            {{ error.password_confirmation }}
                         </p>
@@ -102,11 +102,17 @@ const error = reactive({
    password_confirmation: "",
 })
 let isloading = ref(false);
-let showPassword = ref(false)
+let showPassword = ref(false);
+let showConfirmPass = ref(false);
 
 function togglePassword() {
-  showPassword.value = !showPassword.value
+   showPassword.value = !showPassword.value
 }
+
+function toggleConfirmPass(){
+   showConfirmPass.value = !showConfirmPass.value
+}
+
 function validate() {
    error.email = validation(form.email, [
       (v) => required(v, 'Email is required'),
