@@ -160,6 +160,8 @@
    </div>
 </template>
 
+
+
 <script setup>
 import { reactive, ref, computed, onMounted } from "vue";
 import { useCartStore } from "@/stores/cart";
@@ -174,7 +176,15 @@ const deliveryType = ref("delivery");
 const orderTotalDisplay = ref(0);
 const paymentImage = ref(null);
 
-const form = reactive({ email: "", phone: "", firstName: "", lastName: "", address: "", mapUrl: "" });
+const form = reactive({ 
+   email: "", 
+   phone: "", 
+   firstName: "", 
+   lastName: "", 
+   address: "", 
+   mapUrl: "" 
+});
+
 const errors = reactive({});
 
 onMounted(async () => {
@@ -182,19 +192,25 @@ onMounted(async () => {
    pageLoading.value = false;
 });
 
-// Calculations
-const subtotal = computed(() => cartStore.items.reduce((acc, item) => acc + (parseFloat(item.product?.price || 0) * parseInt(item.qty || 0)), 0));
+const subtotal = computed(() => {
+   return cartStore.items.reduce((acc, item) => {
+      return acc + (parseFloat(item.product?.price || 0) * parseInt(item.qty || 0));
+   }, 0);
+});
+
 const taxAmount = computed(() => subtotal.value * 0.1);
 const deliveryFee = computed(() => deliveryType.value === "delivery" ? 3.00 : 0);
 const total = computed(() => subtotal.value + taxAmount.value + deliveryFee.value);
 
 function handleFileUpload(event) {
    const file = event.target.files[0];
-   if (file) { paymentImage.value = file; errors.paymentImage = null; }
+   if (file) { 
+      paymentImage.value = file; 
+      errors.paymentImage = null; 
+   }
 }
 
 async function placeOrder() {
-   // Reset validation
    Object.keys(errors).forEach(key => delete errors[key]);
 
    if (!form.email || !form.phone || !form.firstName || !paymentImage.value) {
@@ -206,27 +222,27 @@ async function placeOrder() {
    }
 
    orderTotalDisplay.value = total.value;
-
    loading.value = true;
+
    const formData = new FormData();
    formData.append("email", form.email);
    formData.append("phone", form.phone);
    formData.append("first_name", form.firstName);
    formData.append("last_name", form.lastName || "");
-
    formData.append("is_delivery", deliveryType.value === 'delivery' ? "1" : "2");
    formData.append("address", deliveryType.value === 'delivery' ? form.address : 'Pickup');
    formData.append("google_map_url", deliveryType.value === 'delivery' ? form.mapUrl : '');
-
    formData.append("delivery_fee", deliveryFee.value);
    formData.append("total_amount", orderTotalDisplay.value.toFixed(2));
    formData.append("payment_image", paymentImage.value);
 
    try {
-      await cartStore.checkout(formData);
+      await cartStore.checkout(formData); 
+      
       isSuccessModalVisible.value = true;
    } catch (error) {
-      alert(error.response?.data?.message || "Checkout Failed");
+      console.error("Checkout error:", error);
+      alert(error.response?.data?.message || "Checkout Failed. Please try again.");
    } finally {
       loading.value = false;
    }
@@ -234,7 +250,7 @@ async function placeOrder() {
 
 function closeModalAndRedirect() {
    isSuccessModalVisible.value = false;
-   router.push("/");
+   router.push("/"); 
 }
 </script>
 
