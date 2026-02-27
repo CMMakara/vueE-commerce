@@ -273,15 +273,18 @@ function openPayment() {
 //     console.log(page);
     
 // }
-
+let newpageseller = ref(1)
 const handleNexPage = async (page) => {
     await getProfile.fetchOwnProduct({
         page: page,
         per_page: per_page.value
     })
+    newpageseller.value = page
 }
+let newpagepaument = ref(1)
 const handleNexPayment = async (page) => {
     await getProfile.fetchPayment(page, per_payment.value)
+    newpagepaument.value = page
 }
 let showModal = ref(false)
 const openModalDelete = (id) => {
@@ -295,7 +298,7 @@ const deleteProduct = async () => {
     await api.delete(`/api/products/${showModal.value}`)
     closeModal()
     notify.sucess('deleted product successful!!')
-    await getProfile.fetchOwnProduct(page, per_page.value)
+    await getProfile.fetchOwnProduct(newpageseller.value, per_page.value)
 }
 
 function gotoEditProduct(id) {
@@ -307,13 +310,13 @@ function gotoEditProduct(id) {
 
 const handleApprove = async (id) => {
     await api.put(`/api/payments/approve/${id}`)
-    notify.sucess('Approval complete. Your product is now active.')
-    await getProfile.fetchOwnProduct(page, per_page.value)
+    notify.sucess('Approval complete.')
+    await getProfile.fetchPayment( newpagepaument.value || 1, per_page.value)
 }
 const handleReject = async (id) => {
     await api.put(`/api/payments/reject/${id}`)
-    notify.sucess('Product rejected: Please check the listing details and try again.')
-    await getProfile.fetchOwnProduct(page, per_page.value)
+    notify.sucess('Rejected successfully.')
+    await getProfile.fetchPayment(newpagepaument.value || 1, per_page.value)
 }
 </script>
 
