@@ -28,16 +28,10 @@
 
       <!-- ── Tabs Nav ── -->
       <nav class="tabs">
-        <button class="tab-btn" :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">🏠 Home</button>
+        <button class="tab-btn " :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">🏠 Home</button>
         <button class="tab-btn" :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'"><i
             class="bi bi-bag-fill"></i>
           Product Owner</button>
-        <!-- <button class="tab-btn" :class="{ active: activeTab === 'following' }" @click="activeTab = 'following'">👤 My
-          Card</button> -->
-
-        <!-- <button class="tab-btn" :class="{ active: activeTab === 'orders' }" @click="activeTab = 'orders'"><i
-            class="bi bi-currency-dollar"></i>
-          My Payment Check</button> -->
         <button class="tab-btn" :class="{ active: activeTab === 'tracking' }" @click="activeTab = 'tracking'">🚚 My
           Purchased</button>
         <button class="tab-btn" :class="{ active: activeTab === 'settings' }" @click="activeTab = 'settings'">⚙️
@@ -50,275 +44,13 @@
 
       <!-- Home -->
       <div class="tab-pane" :class="{ show: activeTab === 'home' }">
-        <!-- <h2>Wellcome, {{ getProfile.profile.name ?? 'Guest' }} <span class="wave" style="font-size: 36px;">👋</span>
-        </h2> -->
-        <h2 class="fw-bold mb-1">
-          Welcome, {{ getProfile.profile.name ?? 'Guest' }}
-          <span class="wave">👋</span>
-        </h2>
-        <p class="text-muted">Here is your marketplace overview.</p>
-
-        <div class="row g-3 mt-3">
-
-          <!-- My Product -->
-          <div class="col-12 col-md-6">
-            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-
-              <!-- Header -->
-              <div class="card-header bg-primary bg-gradient text-white py-3">
-                <div class="d-flex align-items-center">
-                  <i class="bi bi-box-seam fs-4 me-2"></i>
-                  <h5 class="mb-0 fw-bold">My Products</h5>
-                </div>
-              </div>
-
-              <!-- Body -->
-              <div class="card-body p-4">
-
-                <div class="row g-3">
-
-                  <!-- Total Products Card -->
-                  <div class="col-6">
-                    <div class="p-4 rounded-4 bg-light text-center h-100 border hover-card">
-
-                      <div class="mb-2 text-primary">
-                        <i class="bi bi-archive-fill fs-2"></i>
-                      </div>
-
-                      <h6 class="text-muted mb-1">Total Products</h6>
-
-                      <h2 class="fw-bold text-dark mb-0">
-                        {{ getProfile.OwnProduct.length ?? 0 }}
-                      </h2>
-
-                    </div>
-                  </div>
-
-                  <!-- Active Products Card -->
-                  <div class="col-6">
-                    <div class="p-4 rounded-4 bg-success bg-opacity-10 text-center h-100 border hover-card">
-
-                      <div class="mb-2 text-success">
-                        <!-- <i class="bi bi-check-circle-fill "></i> -->
-                        <i class="bi bi-coin fs-2"></i>
-                      </div>
-
-                      <h6 class="text-muted mb-1">Total Price</h6>
-
-                      <h2 class="fw-bold text-success mb-0">
-                        {{getProfile.OwnProduct.reduce((total, product) => total + product.price, 0) ?? 0}}
-                      </h2>
-
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <!-- My Order -->
-          <div class="col-12 col-md-6">
-            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-
-              <!-- Header -->
-              <div class="card-header bg-success bg-gradient text-white py-3">
-                <div class="d-flex align-items-center">
-                  <i class="bi bi-bag-check fs-4 me-2"></i>
-                  <h5 class="mb-0 fw-bold">My Orders</h5>
-                </div>
-              </div>
-
-              <!-- Body -->
-              <div class="card-body p-4">
-                <div class="row g-3">
-
-                  <!-- Total Orders -->
-                  <div class="col-6">
-                    <div class="p-4 rounded-4 bg-light text-center border hover-card">
-
-                      <div class="mb-2 text-success">
-                        <i class="bi bi-cart-fill fs-2"></i>
-                      </div>
-
-                      <h6 class="text-muted mb-1">Total Orders</h6>
-
-                      <h2 class="fw-bold mb-0">
-                        {{ getProfile.myPurchase.length ?? 0 }}
-                      </h2>
-
-                    </div>
-                  </div>
-
-                  <!-- Completed Orders -->
-                  <div class="col-6">
-                    <div class="p-4 rounded-4 bg-success bg-opacity-10 text-center border hover-card">
-
-                      <div class="mb-2 text-success">
-                        <i class="bi bi-check-circle-fill fs-2"></i>
-                      </div>
-
-                      <h6 class="text-muted mb-1">Completed</h6>
-
-                      <h2 class="fw-bold text-success mb-0">
-                        {{getProfile.myPurchase.filter(order => order.status === 2).length ?? 0}}
-                      </h2>
-
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
-          <h5 class="fw-bold mb-3">
-            <i class="bi bi-lightning-charge me-2 text-warning"></i>
-            Quick Actions
-          </h5>
-
-          <div class="d-flex flex-wrap gap-3">
-
-            <button class="btn btn-primary rounded-pill px-4">
-              <i class="bi bi-plus-circle me-1"></i> Add Product
-            </button>
-
-            <button class="btn btn-outline-success rounded-pill px-4">
-              <i class="bi bi-bag-check me-1"></i> View Orders
-            </button>
-
-            <button class="btn btn-outline-dark rounded-pill px-4">
-              <i class="bi bi-person-gear me-1"></i> Edit Profile
-            </button>
-
-          </div>
-        </div> -->
-        <div class="row">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
-              <h5 class="fw-bold mb-3">
-                <i class="bi bi-activity me-2 text-primary"></i>
-                Recent Orders
-              </h5>
-
-              <div v-for="item in getProfile.myPurchase.slice(0, 3)" :key="item.id"
-                class="d-flex justify-content-between align-items-center border-bottom py-2">
-
-                <div>
-                  <div class="fw-semibold">{{ item.product.title }}</div>
-                  <small class="text-muted">{{ item.created_at }}</small>
-                </div>
-
-                <div class="text-end">
-                  <span class="fw-bold text-success">$ {{ item.price }}</span>
-                  <div>
-                    <span class="badge rounded-pill" :class="{
-                      'bg-warning text-dark': item.status === 1,
-                      'bg-success': item.status === 2,
-                      'bg-danger': item.status === 3
-                    }">
-                      {{ item.status === 1 ? 'Pending' : item.status === 2 ? 'Approved' : 'Rejected' }}
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
-          <h5 class="fw-bold mb-4">
-            <i class="bi bi-bag-check me-2 text-success"></i>
-            My Orders
-          </h5>
-
-          <!-- Empty State -->
-          <p v-if="getProfile.myPurchase.length === 0" class="text-muted text-center py-4">
-            You have no orders yet.
-          </p>
-
-          <div class="row g-3" v-else>
-            <div class="col-12 col-md-6 col-lg-4" v-for="item in getProfile.myPurchase.slice(0, 3)" :key="item.id">
-              <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 hover-card">
-
-                <!-- Product Image -->
-                <div class="position-relative">
-                  <img :src="item.product?.image || '/images/default.png'" class="w-100"
-                    style="height: 200px; object-fit: cover;" />
-                  <!-- Status Badge -->
-                  <span class="badge rounded-pill position-absolute top-0 end-0 m-3 px-3 py-2" :class="{
-                    'bg-warning text-dark': item.status === 1,
-                    'bg-success': item.status === 2,
-                    'bg-danger': item.status === 3
-                  }">
-                    {{
-                      item.status === 1 ? 'Pending' : item.status === 2 ? 'Approved' : 'Rejected'
-                    }}
-                  </span>
-                </div>
-
-                <!-- Card Body -->
-                <div class="card-body d-flex flex-column">
-                  <!-- Seller Info -->
-                  <div class="d-flex align-items-center gap-2 mb-3">
-                    <img :src="item.seller.avatar" class="rounded-circle border" width="35" height="35" />
-                    <div>
-                      <div class="fw-semibold small">{{ item.seller.name }}</div>
-                      <div class="text-muted small">{{ item.seller.email }}</div>
-                    </div>
-                  </div>
-                  <!-- Product Info -->
-                  <h5 class="fw-bold mb-1 text-truncate">{{ item.product.title }}</h5>
-                  <small class="text-muted">{{ item.product.description }}</small>
-
-                  <!-- Order Details -->
-                  <div class="mt-2 small text-muted">
-                    <div class="d-flex justify-content-between">
-                      <span>Quantity:</span>
-                      <span>{{ item.qty }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Total:</span>
-                      <span class="fw-bold text-success">$ {{ item.price }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Delivery:</span>
-                      <span>{{ item.is_delivery == 2 ? 'Yes' : 'No' }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Buyer:</span>
-                      <span class="text-truncate">{{ item.buyer.name }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Date:</span>
-                      <span>{{ item.created_at }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+       <ProfileHome></ProfileHome>
       </div>
-
       <!-- Product Owner -->
       <div class="tab-pane" :class="{ show: activeTab === 'favorites' }">
         <ProductOwner></ProductOwner>
         <p class="empty-state d-none">អ្នកមិនទាន់បន្ថែមមុខទំនិញចូលចិត្តណាមួយនៅឡើយទេ។</p>
       </div>
-
-      <!-- My Card -->
-      <!-- <div class="tab-pane" :class="{ show: activeTab === 'following' }">
-        <h3>👤 My Card</h3>
-
-        <Mycart></Mycart>
-        <p class="empty-state d-none">អ្នកមិនទាន់តាមដានហាងណាមួយនៅឡើយទេ។</p>
-      </div> -->
-
       <!-- Payment Check -->
       <div class="tab-pane" :class="{ show: activeTab === 'orders' }">
         <h3>📦 Payment Check</h3>
@@ -327,92 +59,7 @@
 
       <!-- Purchased -->
       <div class="tab-pane" :class="{ show: activeTab === 'tracking' }">
-        <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
-          <h5 class="fw-bold mb-4">
-            <i class="bi bi-bag-check me-2 text-success"></i>
-            My Orders
-          </h5>
-
-          <!-- Empty State -->
-          <p v-if="getProfile.myPurchase.length === 0" class="text-muted text-center py-4">
-            You have no orders yet.
-          </p>
-
-          <div class="row g-3" v-else>
-            <div class="col-12 col-md-6 col-lg-4" v-for="item in getProfile.myPurchase" :key="item.id">
-              <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 hover-card">
-
-                <!-- Product Image -->
-                <div class="position-relative">
-                  <img :src="item.product?.image || '/images/default.png'" class="w-100"
-                    style="height: 200px; object-fit: cover;" />
-                  <!-- Status Badge -->
-                  <span class="badge rounded-pill position-absolute top-0 end-0 m-3 px-3 py-2" :class="{
-                    'bg-warning text-dark': item.status === 1,
-                    'bg-success': item.status === 2,
-                    'bg-danger': item.status === 3
-                  }">
-                    {{
-                      item.status === 1 ? 'Pending' : item.status === 2 ? 'Approved' : 'Rejected'
-                    }}
-                  </span>
-                </div>
-
-                <!-- Card Body -->
-                <div class="card-body d-flex flex-column">
-
-                  <!-- Seller Info -->
-                  <div class="d-flex align-items-center gap-2 mb-3">
-                    <img :src="item.seller.avatar" class="rounded-circle border" width="35" height="35" />
-                    <div>
-                      <div class="fw-semibold small">{{ item.seller.name }}</div>
-                      <div class="text-muted small">{{ item.seller.email }}</div>
-                    </div>
-                  </div>
-
-                  <!-- Product Info -->
-                  <h5 class="fw-bold mb-1 text-truncate">{{ item.product.title }}</h5>
-                  <small class="text-muted">{{ item.product.description }}</small>
-
-                  <!-- Order Details -->
-                  <div class="mt-2 small text-muted">
-                    <div class="d-flex justify-content-between">
-                      <span>Quantity:</span>
-                      <span>{{ item.qty }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Total:</span>
-                      <span class="fw-bold text-success">$ {{ item.price }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Delivery:</span>
-                      <span>{{ item.is_delivery == 2 ? 'Yes' : 'No' }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Buyer:</span>
-                      <span class="text-truncate">{{ item.buyer.name }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Date:</span>
-                      <span>{{ item.created_at }}</span>
-                    </div>
-                  </div>
-
-                  <!-- Action Buttons -->
-                  <!-- <div class="mt-auto d-flex gap-2 pt-2">
-                    <button class="btn btn-outline-primary w-100 rounded-pill" @click="openDetail(item)">
-                      <i class="bi bi-eye me-1"></i> Detail
-                    </button>
-                    <button class="btn btn-outline-danger w-100 rounded-pill">
-                      <i class="bi bi-trash me-1"></i> Delete
-                    </button>
-                  </div> -->
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+       <Purchased></Purchased>
 
       </div>
 
@@ -569,6 +216,8 @@ import api from '@/api/http';
 import { notify } from '@/util/toast';
 import router from '@/router';
 import ProductOwner from '@/components/layout/ProductOwner.vue';
+import Purchased from '@/components/layout/Purchased.vue';
+import ProfileHome from '@/components/layout/ProfileHome.vue';
 
 
 // ---------------- State
@@ -777,8 +426,6 @@ const saveData = async () => {
   min-height: 100vh;
   max-width: 1100px;
   margin: 0 auto;
-  margin-top: 20px;
-  /* margin-top: 90px; */
   border-radius: 10px;
 
 }
