@@ -34,10 +34,18 @@
 
       <!-- ── Tabs Nav ── -->
       <nav class="tabs">
+<<<<<<< HEAD
         <button class="tab-btn f-6" :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'"><i class="bi bi-house"></i> Home</button>
         <button class="tab-btn fs-6" :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'"><i class="bi bi-box"></i>
           Product Owner</button>
         <button class="tab-btn fs-6" :class="{ active: activeTab === 'tracking' }" @click="activeTab = 'tracking'"><i class="bi bi-bag"></i> My
+=======
+        <button class="tab-btn " :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">🏠 Home</button>
+        <button class="tab-btn" :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'"><i
+            class="bi bi-bag-fill"></i>
+          Product Owner</button>
+        <button class="tab-btn" :class="{ active: activeTab === 'tracking' }" @click="activeTab = 'tracking'">🚚 My
+>>>>>>> d05f70eade608543a7b948dd3c70c67fb57c5f73
           Purchased</button>
         <button class="tab-btn fs-6" :class="{ active: activeTab === 'settings' }" @click="activeTab = 'settings'">⚙️
           Settings</button>
@@ -49,6 +57,7 @@
 
       <!-- Home -->
       <div class="tab-pane" :class="{ show: activeTab === 'home' }">
+<<<<<<< HEAD
         <!-- <h2>Wellcome, {{ getProfile.profile.name ?? 'Guest' }} <span class="wave" style="font-size: 36px;">👋</span>
         </h2> -->
         <h2 class="fw-bold mb-1">
@@ -281,13 +290,19 @@
         </div>
 
 
+=======
+       <ProfileHome></ProfileHome>
+>>>>>>> d05f70eade608543a7b948dd3c70c67fb57c5f73
       </div>
-
       <!-- Product Owner -->
       <div class="tab-pane" :class="{ show: activeTab === 'favorites' }">
         <ProductOwner></ProductOwner>
       </div>
+<<<<<<< HEAD
 
+=======
+      <!-- Payment Check -->
+>>>>>>> d05f70eade608543a7b948dd3c70c67fb57c5f73
       <div class="tab-pane" :class="{ show: activeTab === 'orders' }">
         <h3>📦 Payment Check</h3>
         <p class="empty-state">អ្នកមិនទាន់មានការទិញណាមួយនៅឡើយទេ។</p>
@@ -295,92 +310,7 @@
 
       <!-- Purchased -->
       <div class="tab-pane" :class="{ show: activeTab === 'tracking' }">
-        <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
-          <h5 class="fw-bold mb-4">
-            <i class="bi bi-bag-check me-2 text-success"></i>
-            My Orders
-          </h5>
-
-          <!-- Empty State -->
-          <p v-if="getProfile.myPurchase.length === 0" class="text-muted text-center py-4">
-            You have no orders yet.
-          </p>
-
-          <div class="row g-3" v-else>
-            <div class="col-12 col-md-6 col-lg-4" v-for="item in getProfile.myPurchase" :key="item.id">
-              <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 hover-card">
-
-                <!-- Product Image -->
-                <div class="position-relative">
-                  <img :src="item.product?.image || '/images/default.png'" class="w-100"
-                    style="height: 200px; object-fit: cover;" />
-                  <!-- Status Badge -->
-                  <span class="badge rounded-pill position-absolute top-0 end-0 m-3 px-3 py-2" :class="{
-                    'bg-warning text-dark': item.status === 1,
-                    'bg-success': item.status === 2,
-                    'bg-danger': item.status === 3
-                  }">
-                    {{
-                      item.status === 1 ? 'Pending' : item.status === 2 ? 'Approved' : 'Rejected'
-                    }}
-                  </span>
-                </div>
-
-                <!-- Card Body -->
-                <div class="card-body d-flex flex-column">
-
-                  <!-- Seller Info -->
-                  <div class="d-flex align-items-center gap-2 mb-3">
-                    <img :src="item.seller.avatar" class="rounded-circle border" width="35" height="35" />
-                    <div>
-                      <div class="fw-semibold small">{{ item.seller.name }}</div>
-                      <div class="text-muted small">{{ item.seller.email }}</div>
-                    </div>
-                  </div>
-
-                  <!-- Product Info -->
-                  <h5 class="fw-bold mb-1 text-truncate">{{ item.product.title }}</h5>
-                  <small class="text-muted">{{ item.product.description }}</small>
-
-                  <!-- Order Details -->
-                  <div class="mt-2 small text-muted">
-                    <div class="d-flex justify-content-between">
-                      <span>Quantity:</span>
-                      <span>{{ item.qty }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Total:</span>
-                      <span class="fw-bold text-success">$ {{ item.price }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Delivery:</span>
-                      <span>{{ item.is_delivery == 2 ? 'Yes' : 'No' }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Buyer:</span>
-                      <span class="text-truncate">{{ item.buyer.name }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <span>Date:</span>
-                      <span>{{ item.created_at }}</span>
-                    </div>
-                  </div>
-
-                  <!-- Action Buttons -->
-                  <!-- <div class="mt-auto d-flex gap-2 pt-2">
-                    <button class="btn btn-outline-primary w-100 rounded-pill" @click="openDetail(item)">
-                      <i class="bi bi-eye me-1"></i> Detail
-                    </button>
-                    <button class="btn btn-outline-danger w-100 rounded-pill">
-                      <i class="bi bi-trash me-1"></i> Delete
-                    </button>
-                  </div> -->
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+       <Purchased></Purchased>
 
       </div>
 
@@ -537,6 +467,8 @@ import api from '@/api/http';
 import { notify } from '@/util/toast';
 import router from '@/router';
 import ProductOwner from '@/components/layout/ProductOwner.vue';
+import Purchased from '@/components/layout/Purchased.vue';
+import ProfileHome from '@/components/layout/ProfileHome.vue';
 
 
 // ---------------- State
@@ -748,8 +680,6 @@ const saveData = async () => {
   min-height: 100vh;
   max-width: 1100px;
   margin: 0 auto;
-  margin-top: 20px;
-  /* margin-top: 90px; */
   border-radius: 10px;
 
 }
