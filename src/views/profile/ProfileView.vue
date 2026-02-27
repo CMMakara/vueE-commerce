@@ -34,11 +34,10 @@
 
       <!-- ── Tabs Nav ── -->
       <nav class="tabs">
-        <button class="tab-btn f-6" :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">🏠 Home</button>
-        <button class="tab-btn fs-6" :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'"><i
-            class="bi bi-bag-fill"></i>
+        <button class="tab-btn f-6" :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'"><i class="bi bi-house"></i> Home</button>
+        <button class="tab-btn fs-6" :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'"><i class="bi bi-box"></i>
           Product Owner</button>
-        <button class="tab-btn fs-6" :class="{ active: activeTab === 'tracking' }" @click="activeTab = 'tracking'">🚚 My
+        <button class="tab-btn fs-6" :class="{ active: activeTab === 'tracking' }" @click="activeTab = 'tracking'"><i class="bi bi-bag"></i> My
           Purchased</button>
         <button class="tab-btn fs-6" :class="{ active: activeTab === 'settings' }" @click="activeTab = 'settings'">⚙️
           Settings</button>
