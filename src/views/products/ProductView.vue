@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import FeetBack from "@/components/layout/FeetBack.vue";
+import Footer from "@/components/layout/Footer.vue";
+import Mail from "@/components/layout/Mail.vue";
 import ProductLayout from "@/components/layout/ProductLayout.vue";
+import BannerSkeleton from "@/components/ui/BannerSkeleton.vue";
 import BaseCarousel from "@/components/ui/BaseCarousel.vue";
+import CardSkeleton from "@/components/ui/CardSkeleton.vue";
+import Promote from "@/components/ui/Promote.vue";
 import Scroll from "@/components/ui/Scroll.vue";
 import { allProductStore } from "@/stores/products";
 import { onMounted, ref, watch } from "vue";
@@ -17,13 +23,16 @@ const src = ref([
 let page = ref(1);
 let per_page = ref(8);
 let sortDir = ref("desc");
+let loading = ref(true);
 
 onMounted(async () => {
+   loading.value = true;
    await allProducts.getAllProduct({
       page: page.value,
       per_page: per_page.value,
       sortDir: sortDir.value,
    });
+   loading.value = false;
 });
 
 function isFilter() {
@@ -34,7 +43,8 @@ function isFilter() {
 <template>
    <section>
       <div class="container-fluid px-5 mb-5">
-         <div class="row bg-subtle rounded justify-content-between align-items-center py-5 px-5">
+         <BannerSkeleton v-if="loading"/>
+         <div v-else class="row bg-subtle rounded justify-content-between align-items-center py-5 px-5">
             <div class="col-4">
                <div class="d-flex gap-3 mb-4">
                   <span class="name-web">Tinh Luk Tam Jit</span>
@@ -133,11 +143,25 @@ function isFilter() {
          </div>
       </div>
    </section>
-
+   
    <section class="my-5">
-      <ProductLayout :container="'container-fluid px-5'" :products="allProducts.allProducts.value" :filter="filter" :isFilter="isFilter" />
+      <ProductLayout :loading="loading" :container="'container-fluid px-5'" :products="allProducts.allProducts.value" :filter="filter" :isFilter="isFilter" />
    </section>
 
+   <hr style="margin-top: 100px;">
+   
+   <section class="" style="margin-top: 150px;">
+      <FeetBack/>
+   </section>
+
+   <section class="container-fluid p-5" style="margin-block: 150px; background-color: hsl(from var(--bs-primary) h s 60% / 0.05);">
+      <Promote/>
+   </section>
+
+   <section class="container-fluid p-5" style="background-color: hsl(from var(--bs-orange) h s 60% / 0.05);">
+      <Mail/>
+   </section>
+   <Footer/>
 </template>
 
 <style scoped>
