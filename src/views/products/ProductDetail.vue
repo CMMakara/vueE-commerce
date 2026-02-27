@@ -132,7 +132,7 @@
 
     <template v-else>
       <div class="row g-4 mt-5">
-        <div class="col-12 col-md-6 col-lg-4" v-for="product in productStore.allProducts.value" :key="product.id">
+        <div class="col-12 col-md-6 col-lg-4" v-for="product in productStore.allProducts" :key="product.id">
           <BaseCard1 :id="product.id" :title="product.title" :image="product.image"
             :description="product.description" :price="product.price"></BaseCard1>
         </div>
@@ -158,8 +158,8 @@ const TYPE_BUTTON = Object.freeze({
 });
 
 const buttons = [
-  { nameBtn: TYPE_BUTTON.ADD_TO_CART, type: TYPE_BUTTON.ADD_TO_CART, icon: 'bi bi-cart-fill', btnStyle: 'custom px-3 py-3 rounded me-3 w-100 mb-2' },
-  { nameBtn: TYPE_BUTTON.BUY_NOW, type: TYPE_BUTTON.BUY_NOW, icon: 'bi bi-bag-fill', btnStyle: 'btn-primary px-3 py-3 rounded w-100' }
+  { nameBtn: TYPE_BUTTON.ADD_TO_CART, type: TYPE_BUTTON.ADD_TO_CART, icon: 'bi bi-cart-fill', btnStyle: 'custom px-3 py-3 rounded  mb-2' },
+  { nameBtn: TYPE_BUTTON.BUY_NOW, type: TYPE_BUTTON.BUY_NOW, icon: 'bi bi-bag-fill', btnStyle: 'btn-primary px-3 pt-3 rounded btn-sm ' }
 ];
 
 const route = useRoute();
@@ -184,10 +184,12 @@ async function loadProduct(id) {
     const res = await api.get(`/api/products/${id}`);
     product.value = res.data.data;
 
-    await productStore.getAllProduct({ page: 1, per_page: 6, sortDir: "desc" });
-    const lastPage = productStore.lastPage.value || 1;
-    const randomPage = Math.floor(Math.random() * lastPage) + 1;
-    await productStore.getAllProduct({ page: randomPage, per_page: 6, sortDir: "desc" });
+    await productStore.getAllProduct({ page: 1, per_page: 100, sortDir: "desc" });
+
+    const allExceptCurrent = productStore.allProducts.filter(p => p.id !== id);
+    const shuffled = allExceptCurrent.sort(() => 0.5 - Math.random());
+    productStore.allProducts = shuffled.slice(0, 6);
+
   } catch (err) {
     console.log(err);
   } finally {

@@ -151,11 +151,11 @@
                </div>
             </div>
          </template>
-         <template #footer>
+         <!-- <template #footer>
             <div class="w-100 px-4 pb-4">
                <button class="btn btn-primary w-100 py-2 fw-bold shadow-sm" @click="closeModalAndRedirect">Done</button>
             </div>
-         </template>
+         </template> -->
       </BaseModal>
    </div>
 </template>
@@ -175,7 +175,7 @@ const isSuccessModalVisible = ref(false);
 const deliveryType = ref("delivery");
 const orderTotalDisplay = ref(0);
 const paymentImage = ref(null);
-
+let modalTimeout = null;
 const form = reactive({ 
    email: "", 
    phone: "", 
@@ -240,6 +240,9 @@ async function placeOrder() {
       await cartStore.checkout(formData); 
       
       isSuccessModalVisible.value = true;
+      modalTimeout = setTimeout(() => {
+      closeModalAndRedirect();
+   }, 3000);
    } catch (error) {
       console.error("Checkout error:", error);
       alert(error.response?.data?.message || "Checkout Failed. Please try again.");
@@ -250,6 +253,10 @@ async function placeOrder() {
 
 function closeModalAndRedirect() {
    isSuccessModalVisible.value = false;
+   if (modalTimeout) {
+      clearTimeout(modalTimeout);
+      modalTimeout = null;
+   }
    router.push("/"); 
 }
 </script>

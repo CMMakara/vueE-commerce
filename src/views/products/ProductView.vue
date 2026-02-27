@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import FeetBack from "@/components/layout/FeetBack.vue";
-import Footer from "@/components/layout/Footer.vue";
 import Mail from "@/components/layout/Mail.vue";
 import ProductLayout from "@/components/layout/ProductLayout.vue";
 import BannerSkeleton from "@/components/ui/BannerSkeleton.vue";
@@ -161,7 +160,6 @@ function isFilter() {
    <section class="container-fluid p-5" style="background-color: hsl(from var(--bs-orange) h s 60% / 0.05);">
       <Mail/>
    </section>
-   <Footer/>
 </template>
 
 <style scoped>
