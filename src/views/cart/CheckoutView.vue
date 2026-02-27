@@ -12,11 +12,9 @@
                <h5 class="fw-bold mb-4"><i class="bi bi-person-lines-fill me-2"></i>Contact Information</h5>
                <div v-if="pageLoading" class="row g-3">
                   <div class="col-md-6">
-                     <div class="skeleton-text mb-2 w-25"></div>
                      <div class="skeleton-input"></div>
                   </div>
                   <div class="col-md-6">
-                     <div class="skeleton-text mb-2 w-25"></div>
                      <div class="skeleton-input"></div>
                   </div>
                </div>
@@ -24,13 +22,13 @@
                   <div class="col-md-6">
                      <label class="form-label small fw-semibold">Email</label>
                      <input v-model="form.email" type="email" class="form-control"
-                        :class="{ 'is-invalid': errors.email }" placeholder="example@mail.com" />
+                        :class="{ 'is-invalid': errors.email }" />
                      <div class="invalid-feedback">{{ errors.email }}</div>
                   </div>
                   <div class="col-md-6">
                      <label class="form-label small fw-semibold">Phone Number</label>
                      <input v-model="form.phone" type="text" class="form-control"
-                        :class="{ 'is-invalid': errors.phone }" placeholder="012 345 678" />
+                        :class="{ 'is-invalid': errors.phone }" />
                      <div class="invalid-feedback">{{ errors.phone }}</div>
                   </div>
                </div>
@@ -39,15 +37,7 @@
             <div class="card shadow-sm border-0 p-4 rounded-4">
                <h5 class="fw-bold mb-4"><i class="bi bi-truck me-2"></i>Shipping Method</h5>
                <div v-if="pageLoading">
-                  <div class="skeleton-input mb-4 w-100" style="height: 100px;"></div>
-                  <div class="row g-3">
-                     <div class="col-md-6">
-                        <div class="skeleton-input"></div>
-                     </div>
-                     <div class="col-md-6">
-                        <div class="skeleton-input"></div>
-                     </div>
-                  </div>
+                  <div class="skeleton-input mb-4" style="height: 100px;"></div>
                </div>
                <div v-else>
                   <div class="mb-4 p-3 bg-light rounded-3 border">
@@ -74,14 +64,19 @@
                      </div>
                      <div class="col-md-6">
                         <label class="form-label small fw-semibold">Last Name</label>
-                        <input v-model="form.lastName" type="text" class="form-control"
-                           :class="{ 'is-invalid': errors.lastName }" />
+                        <input v-model="form.lastName" type="text" class="form-control" />
                      </div>
                      <template v-if="deliveryType === 'delivery'">
                         <div class="col-12 mt-4">
                            <label class="form-label small fw-semibold">Full Address</label>
                            <textarea v-model="form.address" class="form-control" rows="2"
                               placeholder="House No, Street, Village..."></textarea>
+                        </div>
+                        <div class="col-12 mt-3">
+                           <label class="form-label small fw-semibold"><i class="bi bi-geo-alt-fill text-danger"></i>
+                              Google Map URL</label>
+                           <input v-model="form.mapUrl" type="url" class="form-control"
+                              placeholder="Paste link here..." />
                         </div>
                      </template>
                   </div>
@@ -94,26 +89,18 @@
                <div class="bg-primary p-3 text-white text-center">
                   <h5 class="fw-bold mb-0">Order Summary</h5>
                </div>
-
                <div class="p-4">
                   <div v-if="pageLoading">
-                     <div class="d-flex justify-content-between mb-3">
-                        <div class="skeleton-text w-50"></div>
-                        <div class="skeleton-text w-25"></div>
-                     </div>
-                     <div class="d-flex justify-content-between mb-3">
-                        <div class="skeleton-text w-50"></div>
-                        <div class="skeleton-text w-25"></div>
-                     </div>
-                     <hr>
-                     <div class="skeleton-input mb-4" style="height: 150px;"></div>
-                     <div class="skeleton-input mb-3"></div>
-                     <div class="skeleton-input" style="height: 50px;"></div>
+                     <div class="skeleton-input mb-3" style="height: 100px;"></div>
                   </div>
                   <div v-else>
                      <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Sub-total:</span>
                         <span>${{ subtotal.toFixed(2) }}</span>
+                     </div>
+                     <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Tax (10%):</span>
+                        <span>${{ taxAmount.toFixed(2) }}</span>
                      </div>
                      <div class="d-flex justify-content-between mb-3 text-danger">
                         <span class="text-muted">Delivery Fee:</span>
@@ -126,16 +113,16 @@
                      </div>
 
                      <div class="text-center p-3 border rounded-4 bg-light mb-4 shadow-inner">
-                        <h6 class="fw-bold mb-3 small">SCAN TO PAY</h6>
-                        <div class="bg-white p-2 d-inline-block rounded-3 shadow-sm mb-2">
-                           <img src="@/assets/image/QR.png" class="img-fluid" style="width:150px ;height: 150px;" alt="QR" />
-                        </div>
+                        <h6 class="fw-bold mb-2 small">SCAN TO PAY</h6>
+                        <img src="@/assets/image/QR.png" class="img-fluid rounded-3"
+                           style="width:160px; height:160px; object-fit: contain;" />
                      </div>
 
                      <div class="mb-4">
                         <label class="form-label fw-bold small">Upload Receipt</label>
-                        <input ref="fileInput" type="file" class="form-control" @change="handleFileUpload"
+                        <input type="file" class="form-control" @change="handleFileUpload"
                            :class="{ 'is-invalid': errors.paymentImage }" />
+                        <div class="invalid-feedback">{{ errors.paymentImage }}</div>
                      </div>
 
                      <button class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow" :disabled="loading"
@@ -181,24 +168,25 @@ import BaseModal from "@/components/ui/BaseModal.vue";
 
 const cartStore = useCartStore();
 const loading = ref(false);
-const pageLoading = ref(true); // Control skeleton visibility
+const pageLoading = ref(true);
 const isSuccessModalVisible = ref(false);
 const deliveryType = ref("delivery");
 const orderTotalDisplay = ref(0);
 const paymentImage = ref(null);
-const fileInput = ref(null);
 
 const form = reactive({ email: "", phone: "", firstName: "", lastName: "", address: "", mapUrl: "" });
 const errors = reactive({});
 
 onMounted(async () => {
    await cartStore.fetchCart();
-   pageLoading.value = false; // Turn off skeleton when data is ready
+   pageLoading.value = false;
 });
 
+// Calculations
 const subtotal = computed(() => cartStore.items.reduce((acc, item) => acc + (parseFloat(item.product?.price || 0) * parseInt(item.qty || 0)), 0));
+const taxAmount = computed(() => subtotal.value * 0.1);
 const deliveryFee = computed(() => deliveryType.value === "delivery" ? 3.00 : 0);
-const total = computed(() => subtotal.value + (subtotal.value * 0.1) + deliveryFee.value);
+const total = computed(() => subtotal.value + taxAmount.value + deliveryFee.value);
 
 function handleFileUpload(event) {
    const file = event.target.files[0];
@@ -206,8 +194,9 @@ function handleFileUpload(event) {
 }
 
 async function placeOrder() {
-   // Form validation (keeping logic same as before)
+   // Reset validation
    Object.keys(errors).forEach(key => delete errors[key]);
+
    if (!form.email || !form.phone || !form.firstName || !paymentImage.value) {
       if (!form.email) errors.email = "Required";
       if (!form.phone) errors.phone = "Required";
@@ -217,15 +206,18 @@ async function placeOrder() {
    }
 
    orderTotalDisplay.value = total.value;
-   loading.value = true;
 
+   loading.value = true;
    const formData = new FormData();
    formData.append("email", form.email);
    formData.append("phone", form.phone);
    formData.append("first_name", form.firstName);
-   formData.append("last_name", form.lastName);
-   formData.append("is_delivery", "1");
+   formData.append("last_name", form.lastName || "");
+
+   formData.append("is_delivery", deliveryType.value === 'delivery' ? "1" : "2");
    formData.append("address", deliveryType.value === 'delivery' ? form.address : 'Pickup');
+   formData.append("google_map_url", deliveryType.value === 'delivery' ? form.mapUrl : '');
+
    formData.append("delivery_fee", deliveryFee.value);
    formData.append("total_amount", orderTotalDisplay.value.toFixed(2));
    formData.append("payment_image", paymentImage.value);
@@ -234,7 +226,7 @@ async function placeOrder() {
       await cartStore.checkout(formData);
       isSuccessModalVisible.value = true;
    } catch (error) {
-      alert("Checkout Failed");
+      alert(error.response?.data?.message || "Checkout Failed");
    } finally {
       loading.value = false;
    }
@@ -247,35 +239,25 @@ function closeModalAndRedirect() {
 </script>
 
 <style scoped>
-/* Skeleton Animation */
-@keyframes skeleton-glow {
+.skeleton-input {
+   background: #e9ecef;
+   height: 38px;
+   border-radius: 8px;
+   animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
    0% {
-      background-color: #e9ecef;
+      opacity: 1;
    }
 
    50% {
-      background-color: #f8f9fa;
+      opacity: 0.5;
    }
 
    100% {
-      background-color: #e9ecef;
+      opacity: 1;
    }
-}
-
-.skeleton-text,
-.skeleton-input {
-   animation: skeleton-glow 1.5s infinite ease-in-out;
-   border-radius: 8px;
-   background-color: #e9ecef;
-}
-
-.skeleton-text {
-   height: 1rem;
-}
-
-.skeleton-input {
-   height: 38px;
-   width: 100%;
 }
 
 .border-dashed {
