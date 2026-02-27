@@ -88,11 +88,7 @@ const productStore = useProfileStore();
 const isPageLoading = ref(true);
 
 // Example features, can be fetched dynamically later
-const features = reactive([
-  { id: 1, title: 'Feature 1', desc: 'Description 1' },
-  { id: 2, title: 'Feature 2', desc: 'Description 2' },
-  { id: 3, title: 'Feature 3', desc: 'Description 3' }
-]);
+
 
 onMounted(async () => {
   try {
