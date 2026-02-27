@@ -1,86 +1,94 @@
 <template>
   <div class="min-vh-100 bg-white py-5">
     <div class="container" style="max-width: 800px">
-      <div class="d-flex justify-content-between align-items-center mb-5">
-        <router-link :to="{ name: 'seller' }" class="btn btn-link text-dark p-0 text-decoration-none fw-bold">←
-          Back</router-link>
-        <div class="d-flex gap-2">
-          <button class="btn btn-outline-dark border-0 fw-medium" @click="resetForm">
-            Clear Draft
-          </button>
-          <button :disabled="isloading" class="btn bg-primary bg-opacity-50 text-white rounded px-4" @click="handleSubmit" >
-            <span v-if="isloading" class="spinner-border spinner-border-sm text-light me-2" role="status"></span>
-            <span>{{ isloading ? "Loading..." : "Add Product" }}</span>
-          </button>
-        </div>
+
+      <!-- Skeleton Loader -->
+      <div v-if="isPageLoading">
+        <div class="skeleton skeleton-title mb-4"></div>
+        <div class="skeleton skeleton-image mb-4"></div>
+        <div class="skeleton skeleton-input mb-3" v-for="n in 3" :key="n"></div>
       </div>
 
-      <form @submit.prevent="handleSubmit">
-        <div class="mb-5 text-center">
-          <input type="text" v-model="product.title" class="title-input" placeholder="Name your Title..." required />
-          <div class="d-flex justify-content-center align-items-center mt-3 gap-2">
-            <span class="fs-4 text-muted">$</span>
-            <input type="number" v-model.number="product.price" class="price-input" placeholder="0.00" step="0.01"
-              required />
+      <!-- Actual Form -->
+      <div v-else>
+        <div class="d-flex justify-content-between align-items-center mb-5">
+          <router-link :to="{ name: 'seller' }" class="btn btn-link text-dark p-0 text-decoration-none fw-bold">← Back</router-link>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-dark border-0 fw-medium" @click="resetForm">Clear Draft</button>
+            <button :disabled="isloading" class="btn bg-primary text-white rounded px-4" @click="handleSubmit">
+              <span v-if="isloading" class="spinner-border spinner-border-sm text-light me-2" role="status"></span>
+              <span>{{ isloading ? "Loading..." : "Add Product" }}</span>
+            </button>
           </div>
         </div>
 
-        <div class="upload-zone mb-5">
-          <input type="file" @change="handleImageUpload" class="file-hidden" id="fileInput" accept="image/*" />
-          <label for="fileInput" class="upload-label" :style="imagePreview
-            ? `background-image: url(${imagePreview})`
-            : ''
-            ">
-            <div v-if="!imagePreview" class="text-center">
-              <div class="upload-icon mb-2">✦</div>
-              <p class="mb-0 small fw-bold text-uppercase tracking-widest">
-                Add Primary Visual
-              </p>
-            </div>
-            <div v-else class="preview-overlay">
-              <span class="badge bg-white text-dark rounded-pill shadow-sm">Change Image</span>
-            </div>
-          </label>
-        </div>
+        <form @submit.prevent="handleSubmit">
+          <!-- Title & Price -->
+          <div class="mb-5 text-center">
+            <input type="text" v-model="product.title" class="title-input" placeholder="Name your Title..." />
+            <small class="text-danger" v-if="errors.title">{{ errors.title }}</small>
 
-        <div class="row g-4 mb-5">
-          <div class="col-md-6">
-            <label class="section-label">Condition</label>
-            <div class="d-flex gap-2 flex-wrap mt-2">
-              <button v-for="opt in ['New', 'Vintage', 'Sample']" :key="opt" type="button" class="tag-button"
-                :class="{ active: product.condition === opt }" @click="product.condition = opt">
-                {{ opt }}
-              </button>
+            <div class="d-flex justify-content-center align-items-center mt-3 gap-2">
+              <span class="fs-4 text-muted">$</span>
+              <input type="number" v-model.number="product.price" class="price-input" placeholder="0.00" step="0.01" />
+            </div>
+            <small class="text-danger" v-if="errors.price">{{ errors.price }}</small>
+          </div>
+
+          <!-- Image Upload -->
+          <div class="upload-zone mb-5">
+            <input type="file" @change="handleImageUpload" class="file-hidden" id="fileInput" accept="image/*" />
+            <label for="fileInput" class="upload-label" :style="imagePreview ? `background-image: url(${imagePreview})` : ''">
+              <div v-if="!imagePreview" class="text-center">
+                <div class="upload-icon mb-2">✦</div>
+                <p class="mb-0 small fw-bold text-uppercase tracking-widest">Add Primary Visual</p>
+              </div>
+              <div v-else class="preview-overlay">
+                <span class="badge bg-white text-dark rounded-pill shadow-sm">Change Image</span>
+              </div>
+            </label>
+            <small class="text-danger" v-if="errors.imageFile">{{ errors.imageFile }}</small>
+          </div>
+
+          <!-- Condition & Category -->
+          <div class="row g-4 mb-5">
+            <div class="col-md-6">
+              <label class="section-label">Condition</label>
+              <div class="d-flex gap-2 flex-wrap mt-2">
+                <button v-for="opt in ['New', 'Vintage', 'Sample']" :key="opt" type="button" class="tag-button" :class="{ active: product.condition === opt }" @click="product.condition = opt">
+                  {{ opt }}
+                </button>
+              </div>
+              <small class="text-danger" v-if="errors.condition">{{ errors.condition }}</small>
+            </div>
+            <div class="col-md-6">
+              <label class="section-label">Category</label>
+              <select v-model="product.category_ids" class="form-select custom-select mt-2">
+                <option value="" disabled>Select Category</option>
+                <option v-for="category in categoryStore.categoryName" :key="category.id" :value="category.id">{{ category.name }}</option>
+              </select>
+              <small class="text-danger" v-if="errors.category_id">{{ errors.category_id }}</small>
             </div>
           </div>
-          <div class="col-md-6">
-            <label class="section-label">category_ids</label>
-            <select v-model="product.category_ids" class="form-select custom-select mt-2">
-              <option v-for="category in categoryStore.categoryName" :key="category.id" :value="category.id">
-                {{ category.name }}
-              </option>
-            </select>
+
+          <!-- Description, Detail, Story -->
+          <div class="content-block mb-4">
+            <label class="section-label">Description</label>
+            <textarea v-model="product.description" rows="2" class="form-control minimal-textarea mt-2" placeholder="The elevator pitch..."></textarea>
+            <small class="text-danger" v-if="errors.description">{{ errors.description }}</small>
           </div>
-        </div>
 
-        <div class="content-block mb-4">
-          <label class="section-label">description</label>
-          <textarea v-model="product.description" rows="2" class="form-control minimal-textarea mt-2"
-            placeholder="The elevator pitch..."></textarea>
-        </div>
+          <div class="content-block mb-4">
+            <label class="section-label">Detail</label>
+            <textarea v-model="product.detail" rows="3" class="form-control minimal-textarea mt-2" placeholder="The technical details..."></textarea>
+          </div>
 
-        <div class="content-block mb-4">
-          <label class="section-label">detail</label>
-          <textarea v-model="product.detail" rows="3" class="form-control minimal-textarea mt-2"
-            placeholder="The technical details..."></textarea>
-        </div>
-
-        <div class="content-block mb-5">
-          <label class="section-label">The Story</label>
-          <textarea v-model="product.story" rows="5" class="form-control minimal-textarea mt-2"
-            placeholder="Share the inspiration, the craft, and the journey..."></textarea>
-        </div>
-      </form>
+          <div class="content-block mb-5">
+            <label class="section-label">The Story</label>
+            <textarea v-model="product.story" rows="5" class="form-control minimal-textarea mt-2" placeholder="Share the inspiration, the craft, and the journey..."></textarea>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -89,17 +97,19 @@
 import api from "@/api/http";
 import { UseCategoryStore } from "@/stores/category";
 import { notify } from "@/util/toast";
-import { onMounted, reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
+
+// Skeleton & loading states
+const isPageLoading = ref(true);
+const isloading = ref(false);
 
 const categoryStore = UseCategoryStore();
-onMounted(async () => {
-  await categoryStore.fetchCategory();
-});
+
 const product = reactive({
   title: "",
   price: null,
   condition: "New",
-  category_ids: [],
+  category_ids: "",
   description: "",
   detail: "",
   story: "",
@@ -107,91 +117,75 @@ const product = reactive({
 
 const imagePreview = ref(null);
 const imageFile = ref(null);
+
+const errors = reactive({});
+
+// Fetch categories
+onMounted(async () => {
+  try {
+    await categoryStore.fetchCategory();
+  } finally {
+    isPageLoading.value = false;
+  }
+});
+
+// Image upload preview
 const handleImageUpload = (e) => {
   const file = e.target.files[0];
   if (file) {
     imageFile.value = file;
     imagePreview.value = URL.createObjectURL(file);
   }
-
-  console.log(imageFile.value);
 };
+
+// Form validation
+const validateProduct = () => {
+  errors.title = !product.title ? "Title is required" : "";
+  errors.price = !product.price || product.price <= 0 ? "Price must be greater than 0" : "";
+  errors.imageFile = !imageFile.value ? "Product image is required" : "";
+  errors.condition = !product.condition ? "Condition is required" : "";
+  errors.category_ids = !product.category_ids ? "Category is required" : "";
+  errors.description = !product.description ? "Description is required" : "";
+
+  return !Object.values(errors).some(e => e);
+};
+
+// Submit handler
 const handleSubmit = async () => {
-
-  if (!product.title) {
-    notify.error("Please enter product title")
-    return
-  }
-  if (!product.price) {
-    notify.error("Please enter price")
-    return
-  }
-  if (!imageFile.value) {
-    notify.error('Please select an image')
+  if (!validateProduct()) {
+    notify.error("Please fix validation errors");
     return;
-  }
-  if (!product.category_ids || product.category_ids.length === 0) {
-    notify.error('Please select an category')
-    return;
-  }
-  if (!product.description) {
-    notify.error("Please enter description")
-    return
-  }
-  if (!product.detail) {
-    notify.error("Please enter detail")
-    return
-  }
-  if (!product.story) {
-    notify.error("Please enter story")
-    return
-  }
-
-  if (!product.title ||
-    !product.description ||
-    !product.price ||
-    !product.category_ids ||
-    !imageFile.value ||
-    !product.detail ||
-    !product.story) {
-
-    notify.error("Please fill all required fields")
-    return
   }
 
   const fmdata = new FormData();
   fmdata.append("title", product.title);
   fmdata.append("image", imageFile.value);
+  fmdata.append("price", product.price);
+  fmdata.append("condition", product.condition);
+  fmdata.append("category_ids", JSON.stringify([product.category_ids]));
   fmdata.append("description", product.description);
   fmdata.append("detail", product.detail);
-  fmdata.append("condition", product.condition);
   fmdata.append("story", product.story);
-  fmdata.append("price", product.price);
 
-  if (product.category_ids) {
-    fmdata.append('category_ids', JSON.stringify([product.category_ids]));
-  }
   try {
-    isloading.value = true
-    const res = await api.post("/api/products", fmdata, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    notify.sucess('Product created successfully!', '/seller')
+    isloading.value = true;
+    await api.post("/api/products", fmdata, { headers: { "Content-Type": "multipart/form-data" } });
+    notify.sucess("Product created successfully!", "/seller");
     resetForm();
   } catch (err) {
-    notify.error("Error creating product")
-    isloading.value = false
+    notify.error("Error creating product");
+  } finally {
+    isloading.value = false;
   }
 };
 
+// Reset form
 const resetForm = () => {
   Object.assign(product, {
     title: "",
     price: null,
     condition: "New",
-    category_ids: [],
+    category_id: "",
     description: "",
     detail: "",
     story: "",
@@ -202,6 +196,7 @@ const resetForm = () => {
 </script>
 
 <style scoped>
+/* Input & textareas */
 .title-input {
   font-size: 3rem;
   font-weight: 700;
@@ -228,6 +223,7 @@ const resetForm = () => {
   color: #adb5bd;
 }
 
+/* Image upload */
 .upload-zone {
   width: 100%;
   height: 400px;
@@ -236,9 +232,7 @@ const resetForm = () => {
   overflow: hidden;
 }
 
-.file-hidden {
-  display: none;
-}
+.file-hidden { display: none; }
 
 .upload-label {
   width: 100%;
@@ -252,15 +246,11 @@ const resetForm = () => {
   transition: transform 0.3s ease;
 }
 
-.upload-label:hover {
-  transform: scale(1.01);
-}
+.upload-label:hover { transform: scale(1.01); }
 
-.upload-icon {
-  font-size: 2.5rem;
-  color: #000;
-}
+.upload-icon { font-size: 2.5rem; color: #000; }
 
+/* Tags */
 .tag-button {
   border: 1px solid #dee2e6;
   background: transparent;
@@ -270,12 +260,9 @@ const resetForm = () => {
   transition: all 0.2s;
 }
 
-.tag-button.active {
-  background: #000;
-  color: #fff;
-  border-color: #000;
-}
+.tag-button.active { background: #000; color: #fff; border-color: #000; }
 
+/* Textarea */
 .minimal-textarea {
   border: none;
   background: #f8f9fa;
@@ -288,6 +275,7 @@ const resetForm = () => {
   box-shadow: none;
 }
 
+/* Select */
 .custom-select {
   border: none;
   background: #f8f9fa;
@@ -295,7 +283,20 @@ const resetForm = () => {
   padding: 0.8rem;
 }
 
-.tracking-widest {
-  letter-spacing: 0.2em;
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+.skeleton-title { height: 50px; margin-bottom: 20px; }
+.skeleton-image { height: 400px; margin-bottom: 20px; }
+.skeleton-input { height: 60px; margin-bottom: 15px; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 </style>
