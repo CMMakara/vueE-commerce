@@ -115,14 +115,17 @@ function validate() {
 }
 async function handleLogin() {
    if (!validate()) return
-   isloading.value = true
+   if (isloading.value) return
    try {
+      isloading.value = true
       await auth.login(email.value, password.value)
       notify.sucess('login successfully', '/')
 
    }
    catch (err) {
       notify.error(err?.data?.message || 'Login failed');
+   }
+   finally{
       isloading.value = false
    }
 }

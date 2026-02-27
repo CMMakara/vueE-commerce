@@ -68,7 +68,7 @@
             </button>
 
             <button class="btn btn-danger d-flex align-items-center gap-2" @click="handleLogout">
-               <i class="bi bi-box-arrow-in-right"></i>
+               <i class="bi bi-box-arrow-left"></i>
                Logout
             </button>
          </template>
