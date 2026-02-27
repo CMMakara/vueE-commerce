@@ -36,8 +36,6 @@ const backPage = () => {
   if (localPage.value > 1) {
     localPage.value--
     emit('update:page', localPage.value)
-    console.log(localPage.value);
-    
   }
 }
 const gotoPage = (page) => {
