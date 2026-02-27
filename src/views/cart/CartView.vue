@@ -1,26 +1,28 @@
 <template>
 
    <!-- Empty Cart -->
-   <BaseEmpty button-text="Continue to shopping" subtitle="Cart Empty" title="404 not found" v-if="cartStore.items.length === 0">
+   <BaseEmpty button-text="Continue to shopping" subtitle="Cart Empty" title="404 not found"
+      v-if="cartStore.items.length === 0">
       <template #img>
-         <img src="../../assets/image/empty.png" alt=" empty cart" class="img-fluid opacity-75" style="width:200px;  filter: drop-shadow(1px 3px 4px rgba(0,0,0,0.5));" />
+         <img src="../../assets/image/empty.png" alt=" empty cart" class="img-fluid opacity-75"
+            style="width:200px;  filter: drop-shadow(1px 3px 4px rgba(0,0,0,0.5));" />
       </template>
    </BaseEmpty>
 
    <!-- Cart Page -->
-   <div class="container py-5 bg-body-secondary rounded" v-else>
-      <h2 class="fw-bold text-primary mb-5 text-center text-lg-start">
+   <div class="container mt-5" v-else>
+      <h2 class="fw-bold text-secondary mb-5 text-center text-lg-start">
          Shopping Cart
       </h2>
 
       <div class="row g-4">
          <!-- Cart Items -->
          <div class="col-lg-8 col-12">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <div class="card border-0 shadow-sm rounded border p-4 bg-white">
                <div v-for="item in cartStore.items" :key="item.id"
                   class="d-flex align-items-center justify-content-between gap-3 mb-4 cart-item">
                   <div class="d-flex align-items-center gap-3 flex-grow-1">
-                     <img :src="item.product?.image" class="rounded-3 border"
+                     <img :src="item.product?.image" class="round-2 border"
                         style="width: 90px; height: 90px; object-fit: cover" />
                      <div>
                         <h6 class="mb-1 fw-semibold">
@@ -29,16 +31,16 @@
                         <small class="text-muted">{{
                            item.product?.category
                         }}</small>
-                        <div class="mt-2 d-flex align-items-center gap-2">
+                        <div class="mt-2 d-flex align-items-center gap-2 p-2 bg-light rounded-pill shadow-sm border">
                            <button @click="handleQTY(QTY.DECREMENT, item)"
-                              class="btn btn-outline-danger btn-sm rounded-1 p-0" style="width: 32px; height: 32px">
-                              −
+                              class="btn btn-danger btn-sm rounded px-3 py-1 fw-bold">
+                              <i class="bi bi-dash"></i>
                            </button>
                            <input type="number" name="" id="" v-model="item.qty">
                            <!-- <span class="px-3">{{ item.qty }}</span> -->
                            <button @click="handleQTY(QTY.INCREMENT, item)"
-                              class="btn btn-outline-primary btn-sm rounded-1 p-0" style="width: 32px; height: 32px">
-                              +
+                              class="btn btn-secondary btn-sm rounded px-3 py-1 fw-bold">
+                              <i class="bi bi-plus"></i>
                            </button>
                         </div>
                      </div>
@@ -47,7 +49,7 @@
                      <div class="fw-bold mb-2">
                         ${{ (item.product?.price * item.qty).toFixed(2) }}
                      </div>
-                     <button @click="confirmDelete(item)" class="btn btn-outline-danger btn-sm rounded-1 p-2 shadow-sm"
+                     <button @click="confirmDelete(item)" class="btn btn-danger btn-sm rounded p-2 px-5 shadow-sm"
                         title="Remove Item">
                         <i class="bi bi-trash"></i>
                      </button>
@@ -58,21 +60,21 @@
 
          <!-- Order Summary -->
          <div class="col-lg-4 col-12">
-            <div class="card border-0 shadow-lg rounded-4 p-4 bg-white summary-card">
+            <div class="card border-0 shadow-sm border rounded-4 p-4 summary-card">
                <h5 class="fw-bold mb-4">Order Summary</h5>
 
                <div class="d-flex justify-content-between mb-3">
-                  <span class="text-muted">Subtotal</span>
+                  <span class="text">Subtotal</span>
                   <span>${{ cartStore.total.toFixed(2) }}</span>
                </div>
 
                <div class="d-flex justify-content-between mb-3">
-                  <span class="text-muted">Shipping</span>
+                  <span class="text">Shipping</span>
                   <span class="text-success">Free</span>
                </div>
 
                <div class="d-flex justify-content-between mb-3">
-                  <span class="text-muted">Tax</span>
+                  <span class="text">Tax</span>
                   <span>${{ (cartStore.total * 0.1).toFixed(2) }}</span>
                </div>
 
@@ -85,15 +87,15 @@
                   }}</span>
                </div>
 
-               <RouterLink to="/checkout">
-                  <button class="btn btn-primary w-100 mb-1 fw-bold shadow-sm rounded-pill summary-btn">
-                     Proceed to Checkout
+               <RouterLink to="/">
+                  <button class="btn btn-secondary w-100 rounded-pill summary-btn">
+                     Continue Shopping
                   </button>
                </RouterLink>
 
-               <RouterLink to="/">
-                  <button class="btn btn-outline-secondary w-100 rounded-pill summary-btn">
-                     Continue Shopping
+               <RouterLink to="/checkout">
+                  <button class="btn btn-primary checkout w-100 mb-1 fw-bold shadow-sm rounded-pill">
+                     Proceed to Checkout
                   </button>
                </RouterLink>
             </div>
@@ -221,4 +223,37 @@ async function deleteItem() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+   -moz-appearance: textfield;
+}
+
+input[type=number] {
+   border-radius: 50px;
+   text-align: center;
+   width: 50px;
+   border: 1px solid var(--bs-black);
+}
+
+.summary-card {
+   background-color: hsl(from var(--bs-primary) h s 100%);
+   /* color: var(--bs-white); */
+}
+
+.checkout {
+   border: none;
+   &:hover {
+      background-color: hsl(from var(--bs-primary) h s 40%);
+      color: hsl(from var(--bs-primary) h s 10%);
+   }
+}
+
+</style>
