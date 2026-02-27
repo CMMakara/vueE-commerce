@@ -4,29 +4,31 @@
          <div class="container d-flex">
             <!-- LEFT SIDE (RED) -->
             <div class="d-flex align-items-center px-4 py-2 text-black rounded shadow-sm navbar-bg">
-               <router-link :to="{ name: 'product' }"
-                  class="navbar-brand fw-bold me-4">Commerce_</router-link>
+               <router-link :to="{ name: 'product' }" class="navbar-brand fw-bold me-4">Commerce_</router-link>
                <ul class="navbar-nav flex-row gap-3">
                   <li class="nav-item">
-                     <router-link exact-active-class="active" :to="{ name: 'shop' }" class="nav-link rounded text-black">Shop</router-link>
+                     <router-link exact-active-class="active" :to="{ name: 'shop' }"
+                        class="nav-link rounded text-black">Shop</router-link>
                   </li>
                   <li class="nav-item">
-                     <router-link exact-active-class="active" :to="{ name: 'seller' }" class="nav-link rounded text-black">Seller</router-link>
+                     <router-link exact-active-class="active" :to="{ name: 'seller' }"
+                        class="nav-link rounded text-black">Seller</router-link>
                   </li>
                   <li class="nav-item">
-                     <router-link exact-active-class="active" :to="{ name: 'support' }" class="nav-link rounded text-black" href="#">Support</router-link>
+                     <router-link exact-active-class="active" :to="{ name: 'support' }"
+                        class="nav-link rounded text-black" href="#">Support</router-link>
                   </li>
                </ul>
             </div>
 
             <!-- RIGHT SIDE (BLUE) -->
             <div class="d-flex align-items-center gap-3 px-3 py-2 text-black shadow-sm rounded navbar-bg">
-               <button class="btn border-0 bg-transparent text-black me-2">
+               <!-- <button class="btn border-0 bg-transparent text-black me-2">
                   <i class="bi bi-search"></i>
-               </button>
+               </button> -->
                <router-link :to="{ name: 'cart' }" type="button"
                   class="btn border-0 p-0 position-relative bg-transparent me-2">
-                  <i class="bi bi-cart fs-4"></i>
+                  <i class="bi bi-cart fs-4 text-white"></i>
                   <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
                      style="top: 10px" v-if="counted">
                      {{ counted }}
@@ -47,7 +49,6 @@
                         </path>
                      </svg>
                   </div>
-
                   <div class="text">Logout</div>
                </button>
             </div>
@@ -56,17 +57,18 @@
       <BaseModal v-if="show" header="Confirm Logout" @close="show = false">
          <template #content>
             <div class="text-center py-3">
-               <i class="bi bi-box-arrow-right text-black" style="font-size: 60px"></i>
+               <i class="bi bi-box-arrow-left text-danger" style="font-size: 60px;"></i>
                <p class="mt-3 mb-0 fs-5">Are you sure you want to logout?</p>
             </div>
          </template>
+
          <template #footer>
-            <button class="btn btn-secondary-cancel" @click="show = false">
+            <button class="btn btn-secondary" @click="show = false">
                Cancel
             </button>
 
             <button class="btn btn-danger d-flex align-items-center gap-2" @click="handleLogout">
-               <i class="bi bi-box-arrow-right"></i>
+               <i class="bi bi-box-arrow-in-right"></i>
                Logout
             </button>
          </template>
@@ -117,7 +119,8 @@ async function handleLogout() {
    backdrop-filter: blur(10px);
 }
 
-.nav-link, i, .navbar-brand {
+.nav-link,
+.navbar-brand {
    font-size: 1rem;
    color: hsl(from var(--bs-white) h s l) !important;
 }
