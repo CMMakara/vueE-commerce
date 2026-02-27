@@ -14,33 +14,33 @@
 
     <!-- ── Profile Card ── -->
     <div class="profile-card">
-      <div class="avatar-wrapper " @click="Editavatar">
-        <img :src="getProfile.profile.avatar" alt="Fatimah" class="avatar" />
+      <div v-if="reload" class="avatar-wrapper placeholder rounded-circle " style="width: 110px;height: 110px;" @click="Editavatar">
+        <!-- <img src="" alt="Fatimah" class="placeholder " /> -->
+      </div>
+      <div v-if="reload == false" class="avatar-wrapper  rounded-circle" @click="Editavatar">
+        <img :src="getProfile.profile.avatar" alt="Fatimah" class="avatar " />
         <button class="avatar-edit" title="Change avatar">✏️</button>
       </div>
 
-      <h2 class="username">{{ getProfile.profile.name ?? '' }}</h2>
+      <h2 class="username placeholder rounded-4" v-if="reload">nnnnn</h2>
+      <h2 class="username " v-if="reload == false">{{ getProfile.profile.name ?? '' }}</h2>
 
       <div class="user-meta">
-        <span><i class="bi bi-geo-alt"></i> {{ getProfile.profile.location }}</span>
-        <span>📅 បានចូលរួម {{ new Date(getProfile.profile.created_at).toLocaleDateString('km-KH') }}</span>
+        <span v-if="reload" class="placeholder rounded-4"><i class="bi bi-geo-alt"></i> dddddd</span>
+        <span v-if="reload ==false"><i class="bi bi-geo-alt"></i> {{ getProfile.profile.location }}</span>
+        <span v-if="reload" class="placeholder rounded-4"> Create At </span>
+        <span v-if="reload ==false" >📅 Create At {{ new Date(getProfile.profile.created_at).toLocaleDateString('km-KH') }}</span>
       </div>
 
       <!-- ── Tabs Nav ── -->
       <nav class="tabs">
-        <button class="tab-btn" :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">🏠 Home</button>
-        <button class="tab-btn" :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'"><i
+        <button class="tab-btn f-6" :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">🏠 Home</button>
+        <button class="tab-btn fs-6" :class="{ active: activeTab === 'favorites' }" @click="activeTab = 'favorites'"><i
             class="bi bi-bag-fill"></i>
           Product Owner</button>
-        <!-- <button class="tab-btn" :class="{ active: activeTab === 'following' }" @click="activeTab = 'following'">👤 My
-          Card</button> -->
-
-        <!-- <button class="tab-btn" :class="{ active: activeTab === 'orders' }" @click="activeTab = 'orders'"><i
-            class="bi bi-currency-dollar"></i>
-          My Payment Check</button> -->
-        <button class="tab-btn" :class="{ active: activeTab === 'tracking' }" @click="activeTab = 'tracking'">🚚 My
+        <button class="tab-btn fs-6" :class="{ active: activeTab === 'tracking' }" @click="activeTab = 'tracking'">🚚 My
           Purchased</button>
-        <button class="tab-btn" :class="{ active: activeTab === 'settings' }" @click="activeTab = 'settings'">⚙️
+        <button class="tab-btn fs-6" :class="{ active: activeTab === 'settings' }" @click="activeTab = 'settings'">⚙️
           Settings</button>
       </nav>
     </div>
@@ -173,28 +173,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
-          <h5 class="fw-bold mb-3">
-            <i class="bi bi-lightning-charge me-2 text-warning"></i>
-            Quick Actions
-          </h5>
 
-          <div class="d-flex flex-wrap gap-3">
-
-            <button class="btn btn-primary rounded-pill px-4">
-              <i class="bi bi-plus-circle me-1"></i> Add Product
-            </button>
-
-            <button class="btn btn-outline-success rounded-pill px-4">
-              <i class="bi bi-bag-check me-1"></i> View Orders
-            </button>
-
-            <button class="btn btn-outline-dark rounded-pill px-4">
-              <i class="bi bi-person-gear me-1"></i> Edit Profile
-            </button>
-
-          </div>
-        </div> -->
         <div class="row">
           <div class="col-12">
             <div class="card border-0 shadow-sm rounded-4 p-4 mt-4">
@@ -308,18 +287,8 @@
       <!-- Product Owner -->
       <div class="tab-pane" :class="{ show: activeTab === 'favorites' }">
         <ProductOwner></ProductOwner>
-        <p class="empty-state d-none">អ្នកមិនទាន់បន្ថែមមុខទំនិញចូលចិត្តណាមួយនៅឡើយទេ។</p>
       </div>
 
-      <!-- My Card -->
-      <!-- <div class="tab-pane" :class="{ show: activeTab === 'following' }">
-        <h3>👤 My Card</h3>
-
-        <Mycart></Mycart>
-        <p class="empty-state d-none">អ្នកមិនទាន់តាមដានហាងណាមួយនៅឡើយទេ។</p>
-      </div> -->
-
-      <!-- Payment Check -->
       <div class="tab-pane" :class="{ show: activeTab === 'orders' }">
         <h3>📦 Payment Check</h3>
         <p class="empty-state">អ្នកមិនទាន់មានការទិញណាមួយនៅឡើយទេ។</p>
@@ -443,7 +412,7 @@
           </div>
           <div class="col-12">
             <div class="float-end">
-              <button class="btn btn-warning text-light" @click="editProfile">Edit</button>
+              <button class="btn btn-primary text-light fw-bold" @click="editProfile">Edit</button>
             </div>
           </div>
         </div>
@@ -485,7 +454,7 @@
                     Cancel
                   </button>
 
-                  <button type="submit" class="btn btn-primary" :disabled="isLoading">
+                  <button type="submit" class="btn btn-primary text-light fw-bold" :disabled="isLoading">
 
                     <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                     <span v-else>Save</span>
@@ -513,7 +482,7 @@
           </div>
           <div class="col-md-12">
             <div class="float-end">
-              <button class="btn btn-warning text-light fw-bold">change password</button>
+              <button class="btn btn-primary text-light fw-bold">change password</button>
             </div>
           </div>
         </div>
@@ -594,12 +563,15 @@ const errors = ref({
   email: '',
   location: ''
 })
-
+const reload = ref(false);
 onMounted(async () => {
+  reload.value = true
   // await getProfile.fetchOwnProduct(1, per_page.value);
   // await getProfile.fetchPayment(1, per_payment.value)
   await getProfile.fetchPurchase()
     await getProfile.fetchProfile();
+
+    reload.value = false
 })
 
 

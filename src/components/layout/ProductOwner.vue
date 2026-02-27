@@ -36,36 +36,11 @@
                         </div>
                         <div class="">
                             <div class="stat-label">Product Items</div>
-                            <div class="stat-value blue">{{ getProfile.OwnProduct.length }}</div>
+                            <div class="stat-value blue">{{ getProfile.total }}</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Total Value -->
-                <div class="col-12 col-md-4">
-                    <div class="stat-card bg-warning-subtle rounded h-100 ">
-                        <div class="stat-icon green">
-                            <i class="bi bi-currency-dollar"></i>
-                        </div>
-                        <div>
-                            <div class="stat-label">Total</div>
-                            <div class="stat-value green">$00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Active Products -->
-                <div class="col-12 col-md-4 ">
-                    <div class="stat-card bg-success-subtle rounded h-100">
-                        <div class="stat-icon purple">
-                            <i class="bi bi-database-fill-up"></i>
-                        </div>
-                        <div>
-                            <div class="stat-label">Sell</div>
-                            <div class="stat-value purple">0</div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Product Table -->
@@ -113,9 +88,14 @@
                         </tbody>
                     </table>
                 </div>
+                <div v-if="!getProfile.total || getProfile.total.length === 0"
+                    class="bg-secondary-subtle d-flex text-center justify-content-center align-items-center"
+                    style="height: 200px;">
+                    <p class="text-secondary m-0">No Product</p>
+                </div>
 
                 <!-- Pagination -->
-                <div class="">
+                <div class="" v-if="getProfile.total">
                     <BasePagination :totalPage=getProfile.pt.last_page :current=getProfile.pt.current_page
                         @update:page=handleNexPage></BasePagination>
                 </div>
@@ -150,19 +130,21 @@
                         <div class="stat-icon green"><i class="bi bi-journal-check"></i></div>
                         <div>
                             <div class="stat-label">Approve</div>
-                            <div class="stat-value green">9</div>
+                            <div class="stat-value green">
+                                {{ countStatus2 }}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <div class="stat-card h-100" style="background:#fff7ed;">
+                    <div class="stat-card h-100 rounded" style="background:#fff7ed;">
                         <div class="stat-icon"
                             style="background:#fed7aa;color:#ea580c;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">
                             <i class="bi bi-shield-x"></i>
                         </div>
                         <div>
                             <div class="stat-label">Reject Payment</div>
-                            <div class="stat-value" style="color:#ea580c;">3</div>
+                            <div class="stat-value" style="color:#ea580c;">{{ countStatus3 }}</div>
                         </div>
                     </div>
                 </div>
@@ -171,8 +153,7 @@
             <!-- History Table -->
             <div class="table-card mt-4">
                 <div class="table-header d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="table-title mb-0  p-3 bg-primary-subtle rounded">Sell</h5>
-                    <input type="text" class="form-control search-input" placeholder="ស្វែងរក..." />
+                    <h5 class="table-title mb-0  p-3 bg-primary-subtle rounded">Payment</h5>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-custom align-middle mb-0">
@@ -192,32 +173,38 @@
                                 <td>{{ new Date(own.created_at).toLocaleDateString('km-KH') }}</td>
                                 <td>
                                     <span class="me-2">
-                                        <img :src="own.buyer?.avatar" style="width: 20px; border-radius: 50%;" alt="">
+                                        <img :src="own.buyer?.avatar"
+                                            style="width: 30px; border-radius: 50%;height: 30px; " class="" alt="">
                                     </span>
                                     <span>
                                         {{ own.buyer?.name }}
                                     </span>
                                 </td>
                                 <td>
-                                    <img :src="own.product?.image" style="width: 50px; border-radius: 10px;" alt="">
+                                    <img :src="own.product?.image"
+                                        style="width: 50px; border-radius: 10px; height: 50px;" alt="">
                                 </td>
                                 <td class="fw-bold text-success">
                                     ${{ Number(own.price) * (own.qty) }}
                                 </td>
                                 <td>
-                                    <div v-if="own.status === 1" >
-                                        <a class="btn bg-primary-subtle me-3"
-                                            @click="handleApprove(own.id)">Ap</a>
+                                    <div v-if="own.status === 1">
+                                        <a class="btn bg-primary-subtle me-3" @click="handleApprove(own.id)">Ap</a>
                                         <a class="btn bg-success-subtle" @click="handleReject(own.id)">Rej</a>
                                     </div>
-                                    <span v-else >{{ own.status === 2 ? 'Approve': 'Reject' }}</span>
+                                    <span v-else>{{ own.status === 2 ? 'Approve' : 'Reject' }}</span>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div v-if="!getProfile.myTotal.paginate.total || getProfile.myTotal.paginate.total.length == 0"
+                    class="bg-secondary-subtle d-flex text-center justify-content-center align-items-center"
+                    style="height: 200px;">
+                    <p class="text-secondary m-0">No Product</p>
+                </div>
                 <!-- pagination -->
-                <div class="">
+                <div class="" v-if="getProfile.myTotal.paginate.total">
                     <BasePagination :totalPage=getProfile.paymentPaginate.last_page
                         :current=getProfile.paymentPaginate.current_page @update:page=handleNexPayment></BasePagination>
                 </div>
@@ -249,13 +236,28 @@ import api from '@/api/http';
 import { notify } from '@/util/toast';
 import router from '@/router';
 const getProfile = useProfileStore();
-const per_page = ref(10);
-const per_payment = ref(10)
+const per_page = ref(20);
+const per_payment = ref(20)
 
+let countStatus2 = ref(0); // counter សម្រាប់ status = 2
+let countStatus3 = ref(0); // counter សម្រាប់ status = 3
 onMounted(async () => {
     await getProfile.fetchOwnProduct(1, per_page.value);
     await getProfile.fetchPayment(1, per_payment.value)
+    
+for (let el of getProfile.myPayment) {
+    console.log(el.status); // បង្ហាញ status នៃ item
+
+    if (el.status === 2) {  
+        countStatus2.value += 1;              
+    } else if (el.status === 3) {
+        countStatus3.value += 1;              
+    }
+}
+
+
 })
+
 
 let openUi = ref(true)
 function openProduct() {
@@ -264,8 +266,19 @@ function openProduct() {
 function openPayment() {
     openUi.value = false;
 }
+
+
+// const handleNexPage = async (page) => {
+//     await getProfile.fetchOwnProduct(page, per_page.value)
+//     console.log(page);
+    
+// }
+
 const handleNexPage = async (page) => {
-    await getProfile.fetchOwnProduct(page, per_page.value)
+    await getProfile.fetchOwnProduct({
+        page: page,
+        per_page: per_page.value
+    })
 }
 const handleNexPayment = async (page) => {
     await getProfile.fetchPayment(page, per_payment.value)
@@ -297,7 +310,7 @@ const handleApprove = async (id) => {
     notify.sucess('Approval complete. Your product is now active.')
     await getProfile.fetchOwnProduct(page, per_page.value)
 }
-const handleReject = async (id) =>{
+const handleReject = async (id) => {
     await api.put(`/api/payments/reject/${id}`)
     notify.sucess('Product rejected: Please check the listing details and try again.')
     await getProfile.fetchOwnProduct(page, per_page.value)
