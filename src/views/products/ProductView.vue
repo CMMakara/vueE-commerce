@@ -145,7 +145,7 @@ function isFilter() {
    </section>
    
    <section class="my-5">
-      <ProductLayout :loading="loading" :container="'container-fluid px-5'" :products="allProducts.allProducts.value" :filter="filter" :isFilter="isFilter" />
+      <ProductLayout :loading="loading" :container="'container-fluid px-5'" :products="allProducts.allProducts" :filter="filter" :isFilter="isFilter" />
    </section>
 
    <hr style="margin-top: 100px;">
