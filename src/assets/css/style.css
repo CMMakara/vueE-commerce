@@ -197,7 +197,7 @@
    gap: 3px;
    &:hover {
       background-color: hsl(from var(--bs-primary) h s 40% / 0.2);
-      padding-inline: 50px !important;
+      padding-inline: 30px !important;
    }
    + button {
       display: flex;
@@ -205,14 +205,13 @@
       gap: 3px;
       border: none;
       &:hover {
-         padding-inline: 50px !important;
+         padding-inline: 30px !important;
          background-color: hsl(from var(--bs-primary) h s 0% / 1);
          color: hsl(from var(--bs-white) h s l);
          transition: all 0.3s ease;
       }
    }
 }
-
 
 .card.product {
    background-color: hsl(from var(--bs-primary) h s 10%);
