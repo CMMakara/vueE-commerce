@@ -1,7 +1,11 @@
 <template>
 
    <!-- Empty Cart -->
-   <BaseEmpty v-if="cartStore.items.length === 0"></BaseEmpty>
+   <BaseEmpty button-text="Continue to shopping" subtitle="Cart Empty" title="404 not found" v-if="cartStore.items.length === 0">
+      <template #img>
+         <img src="../../assets/image/empty.png" alt=" empty cart" class="img-fluid opacity-75" style="width:200px;  filter: drop-shadow(1px 3px 4px rgba(0,0,0,0.5));" />
+      </template>
+   </BaseEmpty>
 
    <!-- Cart Page -->
    <div class="container py-5 bg-body-secondary rounded" v-else>
@@ -157,6 +161,8 @@ const cartStore = useCartStore();
 const modalVisible = ref(false);
 const itemToDelete = ref({});
 const modalHeader = ref("Confirm Deletion");
+
+const img = '../../assets/image/empty.png'
 
 // Fetch cart
 onMounted(async () => {

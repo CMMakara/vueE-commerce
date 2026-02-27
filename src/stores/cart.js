@@ -52,8 +52,7 @@ export const useCartStore = defineStore("cart", () => {
             product_id,
             qty
          })
-         // await fetchCart();
-         console.log(res)
+         await fetchCart();
       } catch (error) {
          console.log(error)
       }

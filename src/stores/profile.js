@@ -68,10 +68,6 @@ export const useProfileStore = defineStore("profile", () => {
             myTotal.value = res.data
             paymentPaginate.current_page = res.data.paginate.current_page;
             paymentPaginate.last_page = res.data.paginate.last_page;
-<<<<<<< HEAD
-=======
-          
->>>>>>> d05f70eade608543a7b948dd3c70c67fb57c5f73
 
         } catch (e) {
             console.error(e);
@@ -82,12 +78,7 @@ export const useProfileStore = defineStore("profile", () => {
         try {
             const res = await api.get('/api/profile/purchased');
             myPurchase.value = res.data.data
-<<<<<<< HEAD
-            console.log("myPurchase.value:", res);
-        } catch (e) {
-=======
         }catch(e){
->>>>>>> d05f70eade608543a7b948dd3c70c67fb57c5f73
             console.error(e);
         }
     }
