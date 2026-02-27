@@ -6,7 +6,8 @@ $orange: hsl(27, 98%, 54%);
 
 $primary: hsl(127, 95%, 57%);
 $secondary: hsl(127, 95%, 20%);
-
+$input-btn-padding-y: 10px;
+$input-btn-padding-x: 20px;
 
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/variables";
