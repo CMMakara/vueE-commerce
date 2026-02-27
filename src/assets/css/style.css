@@ -1,14 +1,5 @@
-
 .bg-subtle {
    background-color: hsl(from var(--bs-primary) h s 10% / 1);
-}
-
-.buy-text {
-   /* color: hsl(from var(--bs-orange) calc(h * 0) calc(s * 0 + 100) calc(l * 0 + 50) / 1); */
-}
-
-.sell-text {
-   /* color: hsl(from var(--bs-orange) calc(h + 100) s l / 1); */
 }
 
 .name-web {
@@ -201,13 +192,34 @@
 .custom {
    background-color: hsl(from var(--bs-primary) h s 100% / 1);
    transition: all 0.3s ease;
+   display: flex;
+   justify-content: space-between;
+   gap: 3px;
    &:hover {
-      background-color: hsl(from var(--bs-primary) h s 10% / 1);
+      background-color: hsl(from var(--bs-primary) h s 40% / 0.2);
+      padding-inline: 50px !important;
+   }
+   + button {
+      display: flex;
+      justify-content: space-between;
+      gap: 3px;
+      border: none;
+      &:hover {
+         padding-inline: 50px !important;
+         background-color: hsl(from var(--bs-primary) h s 0% / 1);
+         color: hsl(from var(--bs-white) h s l);
+         transition: all 0.3s ease;
+      }
    }
 }
 
-.card {
+
+.card.product {
    background-color: hsl(from var(--bs-primary) h s 10%);
    color: var(--bs-white);
+   transition: all 0.4s ease;
    /* clip-path: path("MZ"); */
+   &:hover {
+      box-shadow: 3px 3px 10px 2px rgb(from var(--bs-black) r g b / 0.3);
+   }
 }

@@ -1,5 +1,6 @@
 <script setup>
 import BaseCard1 from '../ui/BaseCard1.vue';
+import CardSkeleton from '../ui/CardSkeleton.vue';
 
 /**
  * This file is ProductLayout that also handle filter and product card
@@ -17,6 +18,7 @@ import BaseCard1 from '../ui/BaseCard1.vue';
 const props = defineProps({
    products : Object,
    filter: Boolean,
+   loading: Boolean,
    isFilter: Function,
    container: {
       String,
@@ -52,8 +54,11 @@ const props = defineProps({
          </Transition>
          <div :class="filter ? 'col-lg-9' : 'col-12'">
             <div class="row g-4">
-               <div class="col-13 col-md-6 col-lg-4 col-xl-3"
-                  :class="filter ? 'col-13 col-md-6 col-lg-3' : 'col-12 col-md-6 col-lg-4'"
+               <div v-if="loading" v-for="skeleton in 8" class="col-13 col-md-6 col-lg-4 col-xl-3" :class="filter ? 'col-12 col-md-6 col-lg-3' : 'col-12 col-md-6 col-lg-4'">
+                  <CardSkeleton/>
+               </div>
+               <div v-else class="col-13 col-md-6 col-lg-4 col-xl-3"
+                  :class="filter ? 'col-12 col-md-6 col-lg-3' : 'col-12 col-md-6 col-lg-4'"
                   v-for="product in products" :key="product.id">
                   <BaseCard1 
                      :id="product.id"
@@ -74,7 +79,7 @@ const props = defineProps({
 
 .category-sidebar {
    position: sticky;
-   top: 8%;
+   top: 10%;
    align-self: flex-start;
    z-index: 2;
 }
