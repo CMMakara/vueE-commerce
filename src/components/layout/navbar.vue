@@ -4,7 +4,7 @@
          <div class="container d-flex">
             <!-- LEFT SIDE (RED) -->
             <div class="d-flex align-items-center px-4 py-2 text-black rounded shadow-sm navbar-bg">
-               <router-link :to="{ name: 'product' }" class="navbar-brand fw-bold me-4">Commerce_</router-link>
+               <router-link :to="{ name: 'product' }" class="navbar-brand fw-bold me-4">E-Commerce_</router-link>
                <ul class="navbar-nav flex-row gap-3">
                   <li class="nav-item">
                      <router-link exact-active-class="active" :to="{ name: 'shop' }"
@@ -22,7 +22,7 @@
             </div>
 
             <!-- RIGHT SIDE (BLUE) -->
-            <div class="d-flex align-items-center gap-3 px-3 py-2 text-black shadow-sm rounded navbar-bg">
+            <div class="d-flex align-items-center gap-3 px-3  text-black shadow-sm rounded navbar-bg">
                <!-- <button class="btn border-0 bg-transparent text-black me-2">
                   <i class="bi bi-search"></i>
                </button> -->
