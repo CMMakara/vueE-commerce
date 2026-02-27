@@ -42,7 +42,7 @@ const router = createRouter({
                path: "/profile",
                name: "profile",
                component: ProfileView,
-               // meta: { requiresAuth: true },
+               meta: { requiresAuth: true },
             },
             {
                path: "/cart",
@@ -83,13 +83,13 @@ const router = createRouter({
                path: "/addProduct",
                name: "addProduct",
                component: AddProductView,
-               // meta: { requiresAuth: true },
+               meta: { requiresAuth: true },
             },
             {
                path: "/editProduct/:id",
                name: "editProduct",
                component: EditProductView,
-               // meta: { requiresAuth: true },
+               meta: { requiresAuth: true },
             },
             {
                path: "/productDetail/:id",
