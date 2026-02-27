@@ -22,7 +22,7 @@
             </div>
 
             <!-- RIGHT SIDE (BLUE) -->
-            <div class="d-flex align-items-center gap-3 px-3  text-black shadow-sm rounded navbar-bg">
+            <div :class="auth.isLogin ? '' : 'py-2'" class="d-flex align-items-center gap-3 px-3 text-black shadow-sm rounded navbar-bg">
                <!-- <button class="btn border-0 bg-transparent text-black me-2">
                   <i class="bi bi-search"></i>
                </button> -->
