@@ -22,18 +22,25 @@ export const useCartStore = defineStore("cart", () => {
    }
 
    //  Checkout 
-   async function checkout() {
+  async function checkout(formData) {
       error.value = null;
       loading.value = true;
 
       try {
-         const res = await api.post("/api/carts/checkout");
+         const res = await api.post("/api/carts/checkout", formData, {
+            headers: {
+               'Content-Type': 'multipart/form-data'
+            }
+         });
 
          items.value = [];
+         total.value = 0;
+
          return res.data;
 
       } catch (err) {
          error.value = err.response?.data?.message || "Checkout failed";
+         
       } finally {
          loading.value = false;
       }
